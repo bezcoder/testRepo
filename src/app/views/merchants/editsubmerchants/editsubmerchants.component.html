@@ -1,0 +1,139 @@
+<p-sidebar  *ngIf="this.smallscreen" [blockScroll]="true" [(visible)]="visibleSidebar4" position="bottom"  [baseZIndex]="10000" styleClass="sidebarheight">
+    <h5 style="font-weight:normal">{{sidebarheader | titlecase}}</h5>
+    <div class="row">
+      <div (click) = "exec(option.method)" class="col-12 centerdt" style="padding-left: 3%;padding-bottom: 3%;padding-top: 1%;" *ngFor="let option of options">
+      <span > <i [ngClass]="option.icon"></i> {{option.name}}</span>
+      </div>
+
+  </div>
+  </p-sidebar>
+
+<p-table  #dt [autoLayout] ="true" [value]="submerchantdata" [lazy]="true" (onLazyLoad)="loadSubMerchants($event)"  dataKey="id" styleClass="p-datatable-customers" [rowHover]="true"
+            [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
+            [paginator]="true" [totalRecords]="collectionSize" [resizableColumns]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [filterDelay]="0" [globalFilterFields]="['name','country.name','representative.name','status']">
+            <ng-template pTemplate="caption">
+                <div class="table-header row" style="margin-top: 1%;margin-bottom: 1%;" >
+                    <div class="col-lg-4 col-sm-12 order-0 headercolor-left">
+                        {{priMerchantName | titlecase}}
+                      </div>
+
+                      <div class="col-lg-3 col-sm-4 order-2 order-md-1 headercolor-right smllscrpad">
+                        <input style="text-align-last: left;" pInputText type="text" [(ngModel)] = "searchterm"  placeholder="Search by Name" class="p-column-filter p-inputtext-sm"><button pButton icon="pi pi-search" class="searchbutton p-button-sm " (click) = "loadSubMerchants(lastLazyLoadEvent,searchterm)"></button>
+                      </div>
+                      <!-- <div class="col-lg-5 col-sm-4 order-1 order-md-2 headercolor-right smllscrpad"> -->
+                        <!-- <button *hasRole="[ Role.SuperUser ]" pButton style="margin-right: 1%;" type="button" [routerLink]="['/zitharamerchants/csubmerc',this.parentMerchantId]" class="p-button-secondary p-button-sm "   icon="pi pi-plus"></button> -->
+                        <!-- <button *hasRole="[ Role.Admin ]" icon="pi pi-cog" label="Merchant Profile" (click) = "clickMerchantProfile()" pButton class="p-button-sm bkground-button create"></button> -->
+                        <!-- <button *hasRole="[ Role.Admin ]" icon="pi pi-cog" label="User Profile" (click) = "showAdminUserInfo()" pButton class="p-button-sm bkground-button create gap"></button> -->
+                        <!-- <button *hasRole="[ Role.Admin ]" icon="pi pi-cog" label="Admin Password" (click) = "changeAdminPassword()" pButton class="p-button-sm bkground-button create gap"></button> -->
+                    <!-- </div> -->
+
+              </div>
+              </ng-template>
+            <ng-template pTemplate="header">
+
+
+                <tr>
+                  <!-- <th style="width: 10%"></th> -->
+                  <th style="width: 10%;text-align-last: left;" >Sub Merchant Name </th>
+                  <th style="width: 10%;text-align-last: center;" >Status </th>
+                  <th style="width: 10%;text-align-last: center;" >Registered Date </th>
+                  <th style="width: 10%;text-align-last: center;">Actions</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-submerchants>
+                <tr class="p-selectable-row">
+                    <!-- <td>
+                        <p-tableCheckbox [value]="customer"></p-tableCheckbox>
+                    </td> -->
+                    <td class="alignoptionscol1 padd-zero-bottom">
+                        <span class="pad-left-3 p-column-title pad-top-10">Store Name</span>
+
+
+                        <div class="rowvaluealigncol1 pad-right-3 pad-top-1half pad-bottom-3" *ngIf="!(submerchants.users.length === 0)">
+                            <b>{{submerchants.name| titlecase}}</b> <br>
+                        <span *ngFor="let obj of submerchants.users" style="font-size: small;">
+                          <span>{{ (obj.firstName===undefined ? '' :obj.firstName) + ' ' + (obj.lastName===undefined ? '' :obj.lastName)}}</span> <br>
+                          <span>{{obj.email}}</span> <br>
+                          <span>{{obj.phone}}</span>
+                        </span>
+                        </div>
+
+                        <div class="rowvaluealigncol1 pad-right-3 pad-top-1half pad-bottom-3 " *ngIf="submerchants.users.length === 0">
+                            <b>{{submerchants.name|titlecase}}</b> <br>
+                            <span style="font-size: small;">
+                                <span> <i>No user added</i> </span> <br>
+                            </span>
+                        </div>
+                    </td>
+                    <td class="alignoptions padd-zero-top-bottom" >
+                        <!-- <span class="p-column-title">Status</span> -->
+                        <span class="pad-left-3 p-column-title" >Status</span>
+                      <span class="rowvaluealign pad-right-3 pad-bottom-3 pad-top-3">
+                        <p-inputSwitch   *ngIf="this.superuser" disabled [(ngModel)]="submerchants.isEnabled"  (click)="activateDeactive(submerchants.id)"></p-inputSwitch>
+                        <p-inputSwitch *ngIf="!this.superuser" disabled [(ngModel)]="submerchants.isEnabled"></p-inputSwitch>
+                    </span>
+                    </td>
+
+
+                    <td class="alignoptions padd-zero-top-bottom">
+
+                        <span class="pad-left-3 p-column-title pad-bottom-3 pad-top-3">Registered Date</span>
+
+                       <span  class="rowvaluealign pad-right-3 pad-bottom-3 pad-top-3" > {{submerchants.regdate}} </span>
+
+                    </td>
+
+                    <!-- <td>
+                        <span class="p-column-title">Activity</span>
+                        <p-progressBar [value]="customer.activity" [showValue]="false"></p-progressBar>
+                    </td> -->
+                    <td class="alignoptions padd-zero-top" >
+                        <span class="pad-left-3 p-column-title pad-bottom-3">Actions</span>
+                      <p-splitButton *ngIf="!this.smallscreen" class="rowvaluealign p-button-sm"   [id]="'drp'+submerchants.id" label="" icon="pi pi-plus" (onDropdownClick) = "update($event)" appendTo ="body" [model]="actionitemsMethodSubM(submerchants)" styleClass="p-button-secondary" #drdwnsubm>
+
+
+                      </p-splitButton>
+
+                      <p-button *ngIf="this.smallscreen" type="button" class="rowvaluealign p-button-sm"  icon="pi pi-ellipsis-v" iconPos="left" styleClass="p-button-secondary"(click)="this.togglesidebar(submerchants.name,submerchants)" ></p-button>
+                        <!-- <button pButton type="button" class="p-button-secondary" style="max-width: 75% !important" label="Add Submerchant" icon="pi pi-plus"></button> -->
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="8">No stores found.</td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+
+<!-- <p-dialog header="Send Payment Link" [(visible)]="displayPosition" [position]="position" [modal]="true" [style]="{width: dialogwidth}" [baseZIndex]="10000"
+        [draggable]="false" [resizable]="false">
+        <div class="row">
+        <div class="col-12" style="margin-top: 8%;">
+            <span class="p-float-label">
+                <input style="width: 200px;" id="float-input-invalid" type="text" pInputText [(ngModel)]="phonepayment" (ngModelChange)="checkValues()" >
+                <label for="float-input-invalid">Mobile Number</label>
+            </span>
+        </div>
+        <div class="col-12"  style="margin-top: 8%;">
+            <span class="p-float-label">
+                <input style="width: 200px;" [(ngModel)]="amountpaymentlink" mode="currency" pInputText  currency="INR" locale="en-IN" (ngModelChange)="checkValues()">
+                <label for="float-input-invalid">Amount</label>
+            </span>
+        </div>
+    </div>
+
+                <div class="row"  style="margin-top: 2%;">
+                    <div class="col-6">
+                        <p-button  [disabled]="this.validators"  icon="pi pi-check"  (click)="sendPaymentLink()" label="Send" styleClass="p-button-success"></p-button>
+                    </div>
+                    <div class="col-6">
+                        <p-button icon="pi pi-times"  (click)="cancelPaymentLink()" label="Cancel" styleClass="p-button-secondary"></p-button>
+                    </div>
+                </div>
+
+
+
+    </p-dialog> -->

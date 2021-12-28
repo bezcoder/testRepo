@@ -1,0 +1,148 @@
+<p-confirmDialog [style]="{width: '50vw'}" [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+<p-toast position="top-right" [baseZIndex]="99999" [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
+
+<p-card styleClass="card-50">
+  <div class="row">
+    <div class="col-12">
+      <span style="font-size: x-small;color: darkgray;">Configure Feedback</span>
+    </div>
+    <div class="col-12">
+      <span style="font-size: large;"><b>{{(this.childName!==''? this.childName : this.parentName) | titlecase }}</b></span>
+    </div>
+    <div class="col-12">
+      <span style="font-size: x-small;color: darkgray;">{{this.parentName | titlecase}}</span>
+    </div>
+    <div class="col-12" style="margin-bottom: 3%;">
+      <button style="font-size: small;" pButton pRipple label="Apply To All Other Stores" class="p-button-success p-mr-2 width-responsive" (click)="applytoAllStore()"></button>
+    </div>
+
+    <div class="col-12" style="margin-bottom: 1%;" > <b style="font-size: small;">Step 1. Choose Question Type</b> </div>
+
+    <div class="col-12" style="margin-bottom: 2%;text-align: center;" >
+      <div>
+      <p-selectButton [options]="menuOptions" (onChange)="changeMenuOption($event)" [(ngModel)]="chosenMenuOption"  optionLabel="name" optionValue="id">
+        <ng-template let-item >
+            <h6>{{item.name}}</h6>
+        </ng-template>
+    </p-selectButton>
+  </div>
+
+
+
+    </div>
+
+    <div class="col-12" style="margin-bottom: 1%;" *ngIf="chosenMenuOption==='dw'" > <i style="font-size: x-small;"> Question: What do you think is working well?</i> </div>
+    <div class="col-12" style="margin-bottom: 1%;" *ngIf="chosenMenuOption==='ni'" > <i style="font-size: x-small;"> Question: What do you think needs to improve?</i> </div>
+
+    <div class="col-12" style="margin-bottom: 1%;" > <b style="font-size: small;">Step 2. Choose Rating between 1 and 5</b> </div>
+
+    <p-selectButton styleClass="center-select" [options]="optionArray" (onChange)="changeRating($event)" [(ngModel)] = "selectedOptionid"  optionLabel="name" optionValue="id">
+      <ng-template let-item >
+        <ul class="merchantRatingStatusPanel mt-2">
+          {{item.name}} &nbsp;
+          <li class="angry active" *ngIf="item.max < 3">
+              <div>
+                  <svg class="eye left">
+                      <use xlink:href="#eye"/>
+                  </svg>
+                  <svg class="eye right">
+                      <use xlink:href="#eye"/>
+                  </svg>
+                  <svg class="mouth">
+                      <use xlink:href="#mouth"/>
+                  </svg>
+              </div>
+          </li>
+          <li class="sad active"  *ngIf="item.max < 3" >
+              <div>
+                  <svg class="eye left">
+                      <use xlink:href="#eye"/>
+                  </svg>
+                  <svg class="eye right">
+                      <use xlink:href="#eye"/>
+                  </svg>
+                  <svg class="mouth">
+                      <use xlink:href="#mouth"/>
+                  </svg>
+              </div>
+          </li>
+          <li class="ok active" *ngIf="item.max == 3"  >
+              <div></div>
+          </li>
+          <li class="good active" *ngIf="item.max > 3" >
+              <div>
+                  <svg class="eye left">
+                      <use xlink:href="#eye"/>
+                  </svg>
+                  <svg class="eye right">
+                      <use xlink:href="#eye"/>
+                  </svg>
+                  <svg class="mouth">
+                      <use xlink:href="#mouth"/>
+                  </svg>
+              </div>
+          </li>
+          <li class="happy active" *ngIf="item.max > 3" >
+              <div>
+                  <svg class="eye left">
+                      <use xlink:href="#eye"/>
+                  </svg>
+                  <svg class="eye right">
+                      <use xlink:href="#eye"/>
+                  </svg>
+              </div>
+          </li>
+      </ul>
+      <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+          <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 7 4" id="eye">
+              <path d="M1,1 C1.83333333,2.16666667 2.66666667,2.75 3.5,2.75 C4.33333333,2.75 5.16666667,2.16666667 6,1"></path>
+          </symbol>
+          <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 7" id="mouth">
+              <path d="M1,5.5 C3.66666667,2.5 6.33333333,1 9,1 C11.6666667,1 14.3333333,2.5 17,5.5"></path>
+          </symbol>
+      </svg>
+      </ng-template>
+  </p-selectButton>
+
+  <div class="col-12"> <div style="float: right;margin-top: 3%;">
+    <p-button type="button" class="bwidth"
+    (click)="submit(false)" label="Save"
+    styleClass="p-button-success bwidth"></p-button>
+  </div></div>
+
+    <div class="col-12" style="margin-bottom: 1%;" > <b style="font-size: small;">Step 3. Choose upto 5 options</b> </div>
+  <div class="col-12">
+
+
+
+<p-pickList *ngIf="chosenMenuOption === 'dw'" styleClass="my-picklist-dw" [showSourceControls]="false" [showTargetControls]="false" [source]="configOptionsDW" [target]="dw_areasObj" sourceHeader="Available Options (Choose upto 5 options from these)" targetHeader="Selected Options (This will be shown in the feedback link)" [dragdrop]="true"
+    [responsive]="true" [sourceStyle]="{'height':'15rem','font-size':'small'}" [targetStyle]="{'height':'15rem','font-size':'small'}" filterBy="name"
+    sourceFilterPlaceholder="Search by name" targetFilterPlaceholder="Search by name" (onMoveToTarget) = "restrictThemesDW()" (onMoveAllToSource) = "restrictThemesDW()" (onMoveAllToTarget) = "restrictThemesDW()" (onMoveToSource) = "restrictThemesDW()" >
+    <ng-template let-product pTemplate="item">
+        <div class="product-item" style="font-size: small;">
+            <div class="product-list-detail">
+              <p-chip [label]="product.name" styleClass="p-mr-2 chiptextdw"></p-chip>
+            </div>
+        </div>
+    </ng-template>
+</p-pickList>
+
+<p-pickList *ngIf="chosenMenuOption === 'ni'" styleClass="my-picklist-dw" [showSourceControls]="false" [showTargetControls]="false" [source]="configOptionsNI" [target]="ni_areasObj" sourceHeader="Available Options (Choose upto 5 options from these)" targetHeader="Selected Options (This will be shown in the feedback link)" [dragdrop]="true"
+    [responsive]="true" [sourceStyle]="{'height':'15rem','font-size':'small'}" [targetStyle]="{'height':'15rem','font-size':'small'}" filterBy="name"
+    sourceFilterPlaceholder="Search by name" targetFilterPlaceholder="Search by name" (onMoveToTarget) = "restrictThemesNI()" (onMoveAllToSource) = "restrictThemesNI()" (onMoveAllToTarget) = "restrictThemesNI()" (onMoveToSource) = "restrictThemesNI()">
+    <ng-template let-product pTemplate="item">
+        <div class="product-item" style="font-size: small;">
+            <div class="product-list-detail">
+              <p-chip [label]="product.name" styleClass="p-mr-2 chiptextni"></p-chip>
+            </div>
+        </div>
+    </ng-template>
+</p-pickList>
+
+</div>
+
+</div>
+</p-card>
+
+<!-- </p-card> -->
+

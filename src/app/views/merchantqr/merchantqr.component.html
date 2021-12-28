@@ -1,0 +1,176 @@
+<p-sidebar *ngIf="this.smallscreen" [blockScroll]="true" [(visible)]="visibleSidebar4" position="bottom"
+  [baseZIndex]="10000">
+  <h4 style="font-weight:normal">{{sidebarheader}}</h4>
+  <div class="row">
+    <div class="col-12 centerdt">
+      <p-listbox [listStyle]="{'max-height':'176px'}" [options]="merchantsData" [(ngModel)]="selectedMerchants"
+        optionLabel="name" [filter]="true" filterBy="name" optionValue="id"></p-listbox>
+    </div>
+    <div class="col-12" style="margin-top: 3%;text-align: center;">
+      <div class="row">
+        <div class="col-6">
+          <p-button type="button" class="bwidth" (click)="visibleSidebar4 = false" label="Cancel"
+            styleClass="p-button-secondary bwidth"></p-button>
+        </div>
+        <!-- <div style="float: right;"> -->
+        <div class="col-6">
+          <p-button type="button" class="bwidth"
+            (click)="getSubMerchantsByParents(selectedMerchants);visibleSidebar4 = false" label="Select"
+            styleClass="p-button-success bwidth"></p-button>
+        </div>
+      </div>
+      <!-- </div> -->
+    </div>
+  </div>
+</p-sidebar>
+
+<p-sidebar *ngIf="this.smallscreen" [blockScroll]="true" [(visible)]="visibleStore" position="bottom"
+  [baseZIndex]="10000">
+  <h4 style="font-weight:normal">Select Store</h4>
+  <div class="row">
+    <div class="col-12 centerdt">
+      <p-listbox [checkbox]="true"  [listStyle]="{'max-height':'176px'}" [options]="subMerchantsData"
+        [(ngModel)]="selectedSubMerchants" optionValue="id" optionLabel="name" [filter]="true" filterBy="name"></p-listbox>
+    </div>
+    <!-- <p-multiSelect #selsubmerchant [maxSelectedLabels]= "2" inputId="selmerchantinput" (click)="onClickSubMerchant(selsubmerchant)"  [options]="subMerchantsData" [(ngModel)]="selectedSubMerchants" defaultLabel="Select Stores" optionLabel="name" display="chip"></p-multiSelect> -->
+    <div class="col-12" style="margin-top: 3%;text-align: center;">
+      <div class="row">
+        <div class="col-6">
+          <p-button type="button" class="bwidth" (click)="visibleStore = false" label="Cancel"
+            styleClass="p-button-secondary bwidth"></p-button>
+        </div>
+        <!-- <div style="float: right;"> -->
+        <div class="col-6">
+          <p-button type="button" class="bwidth" (click)="getQRCodeForSubMerc();visibleStore = false"
+            label="Select" styleClass="p-button-success bwidth"></p-button>
+        </div>
+      </div>
+      <!-- </div> -->
+    </div>
+  </div>
+</p-sidebar>
+
+<p-sidebar *ngIf="this.smallscreen" [blockScroll]="true" [(visible)]="visibleTerminals" position="bottom"
+  [baseZIndex]="10000">
+  <h4 style="font-weight:normal">Select Terminal</h4>
+  <div class="row">
+    <div class="col-12 centerdt">
+      <p-listbox [checkbox]="true" [listStyle]="{'max-height':'176px'}" [options]="terminalsData"
+        [(ngModel)]="selectedTerminal" optionLabel="terminal_name" optionValue="id" [filter]="true" filterBy="terminal_name">
+      </p-listbox>
+    </div>
+    <!-- <p-multiSelect #selsubmerchant [maxSelectedLabels]= "2" inputId="selmerchantinput" (click)="onClickSubMerchant(selsubmerchant)"  [options]="subMerchantsData" [(ngModel)]="selectedSubMerchants" defaultLabel="Select Stores" optionLabel="name" display="chip"></p-multiSelect> -->
+    <div class="col-12" style="margin-top: 3%;text-align: center;">
+      <div class="row">
+        <div class="col-6">
+          <p-button type="button" class="bwidth" (click)="visibleTerminals = false" label="Cancel"
+            styleClass="p-button-secondary bwidth"></p-button>
+        </div>
+        <!-- <div style="float: right;"> -->
+        <div class="col-6">
+          <p-button type="button" class="bwidth" (click)="getQRCodeForSubMerc();visibleTerminals = false"
+            label="Select" styleClass="p-button-success bwidth"></p-button>
+        </div>
+      </div>
+      <!-- </div> -->
+    </div>
+  </div>
+</p-sidebar>
+
+<p-card>
+  <div class="row" style="padding-left: 1%;margin: 1%;">
+    <p-skeleton class="col-lg-6 col-12" *ngIf="!this.showfirst" height="2rem" styleClass="p-mb-2"></p-skeleton>
+      <p-skeleton class="col-lg-6 col-12" *ngIf="!this.showfirst" height="2rem" styleClass="p-mb-2"></p-skeleton>
+      <p-skeleton class="col-lg-6 col-12" *ngIf="!this.showfirst" height="2rem" styleClass="p-mb-2"></p-skeleton>
+    <div *ngIf="this.showfirst" class="col-lg-4 col-sm-12" style="padding-left: 0px !important;padding-right: 0px !important;">
+          <div>
+            <h5 style="padding-top: 2%;"><b>QR Code</b></h5>
+          </div>
+          <div class="row">
+            <div class="col" *hasRole="[Role.SuperUser]">
+              <div>
+                <span class="fieldttitle">Merchant</span><br>
+                <div class="fieldttitle">
+                  <p-dropdown styleClass='drpdown p-inputtext-sm' #selmerchant
+                    (click)="onClickParentMerchant(selmerchant)" [options]="merchantsData"
+                    (onChange)="getSubMerchantsByParents(selectedMerchants)" [(ngModel)]="selectedMerchants"
+                    placeholder="Select Parent" optionLabel="name" optionValue="id" [filter]="true" filterBy="name">
+                  </p-dropdown>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 mrgin" *hasRole="[Role.SuperUser, Role.Admin,Role.Shop,Role.Common]">
+              <div *hasRole="[Role.SuperUser, Role.Admin]">
+                <span class="fieldttitle">Select Store</span><br>
+                <div class="fieldttitle">
+                  <p-dropdown styleClass='mymultiselect p-inputtext-sm' tooltipStyleClass='ttltip' #selsubmerchant
+                     inputId="selmerchantinput" (click)="onClickSubMerchant(selsubmerchant)" (onChange)="closemulti();getTerminals();getQRCodeForSubMerc()"
+                    [options]="subMerchantsData" [(ngModel)]="selectedSubMerchants" defaultLabel="Select Stores"
+                    optionLabel="name" optionValue="id" display="chip">
+                  </p-dropdown>
+                </div>
+              </div>
+              <div *hasRole="[Role.SuperUser, Role.Admin,Role.Shop]">
+                <span class="fieldttitle" >Select Terminal</span><br>
+                <div class="fieldttitle">
+                  <p-dropdown styleClass='mymultiselect p-inputtext-sm' tooltipStyleClass='ttltip' #selterminals
+                     inputId="selmerchantinput" (onChange)="closemulti();getQRCodeForSubMerc()" (click)="onClickTerminals(selterminals)"
+                    [options]="terminalsData" [(ngModel)]="selectedTerminal" defaultLabel="Select Terminals"
+                    optionLabel="terminal_name" optionValue="id" display="chip">
+                  </p-dropdown>
+              </div>
+            </div>
+            </div>
+          </div>
+    </div>
+  </div>
+</p-card>
+<!-- </div> -->
+<div class=" text-center" style="margin-bottom: 2%;" *ngIf="qrExist && showfirst">
+  <!-- <div class="col-xl-12 text-center"> -->
+  <div class="row text-center justify-content-center">
+    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 mt-2 text-center">
+      <button class="btn btn-primary btn-block d-none d-md-block d-lg-block" *ngIf="qrExist"
+        (click)="printPage(subMercQRCode)">
+        Print QR
+      </button>
+    </div>
+    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 mt-2 text-center">
+      <button class="btn btn-primary btn-block" (click)="downLoadQR(subMercQRCode)" *ngIf="qrExist">
+        Download QR
+      </button>
+    </div>
+  </div>
+</div>
+<div style="text-align: center;"  *ngIf="this.showfirst && this.qrExist">
+      <img width="300px"  [src]="subMercQRCode.qr" />
+</div>
+<div class="user-card-image text-center" *ngIf="this.showfirst && !qrExist">
+  <div class="row mb-2">
+    <div class="col-12">
+      <img class="img-fluid" src="../../../assets/images/noqrcode.png" alt="">
+    </div>
+  </div>
+  <div class="row mb-2 text-center">
+    <div class="col-12">
+      <h4 class="task-label">
+        No QR GENERATED
+      </h4>
+    </div>
+  </div>
+  <div class="row mb-2 text-center">
+    <div class="col-12">
+      <span class="add-task-btn">
+        <!-- <button class="btn btn-primary" (click)="createQRCodeForSubMerc(selectedSubMerc)"> -->
+          <!-- <i class="fa fa-qrcode mr-1"></i>Create QR Code -->
+        <!-- </button> -->
+      </span>
+    </div>
+  </div>
+
+<!-- </div> -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- </div> -->
+<!-- </div> -->

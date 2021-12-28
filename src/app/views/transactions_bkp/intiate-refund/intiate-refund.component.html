@@ -1,0 +1,21 @@
+<p-card class="col-lg-4 col-sm-12"  [style]="{'width': '22rem', 'margin-bottom': '2em', 'text-align': 'center','display':'inline-flex','margin-top':'5%'}">
+    <h5>Enter OTP</h5>
+    <span>Will expire in <countdown #cd (event) = "checkCountdown($event)"  [config]="{ leftTime: 300, format: 'm:s' }"></countdown></span>
+    <div class="row">
+      <div class="col-12">
+        {{this.otpMessage}}
+      </div>
+      <br>
+      <div class="col-12">
+        <p-inputNumber [(ngModel)]="inputOTP" mode="decimal" inputId="withoutgrouping" [useGrouping]="false">
+        </p-inputNumber>
+      </div>
+      <br>
+      <div class="col-12" style="margin-top: 2%;">
+        <p-button type="button" class="bwidth mg-1"  label="Submit" styleClass="p-button-success bwidth" (click)="validate()" ></p-button>
+        <p-button type="button" class="bwidth mg-1" [disabled]="disableResend"  label="Resend" styleClass="p-button-secondary bwidth" (click) = "resend()"></p-button>
+        <p-button type="button" class="bwidth mg-1"  label="Cancel" styleClass="p-button-info bwidth" (click) = "cancel()"></p-button>
+      </div>
+      
+    </div>
+</p-card>

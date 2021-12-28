@@ -1,0 +1,44 @@
+.navItemsSidebar .c-sidebar-nav-item.c-active{
+  background: #FFDE32 !important;
+}
+
+.custom-sidebar :hover {
+  background-color: beige;
+}
+
+// @media (hover: hover), not all
+.c-sidebar .c-sidebar-nav-dropdown-toggle:hover, .c-sidebar .c-sidebar-nav-link:hover {
+    color: #fff !important;
+    background: #1fdb67 !important;
+}
+
+.spcl {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+}
+
+.spcl:after, .spcl:before {
+  content: '';
+  width: 150px;
+  height: 2px;
+  background: red;
+  margin: 0 2%;
+}
+
+.custom-logout{
+  cursor: pointer;
+  text-decoration: none !important;
+  color: white !important;
+}
+
+.width-sidebar{
+  width: 15%;
+}
+
+@media screen and (max-width: 960px) {
+  .width-sidebar{
+    width: 45%;
+  }
+}

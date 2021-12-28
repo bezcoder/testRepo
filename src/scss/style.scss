@@ -1,0 +1,399 @@
+// If you want to override variables do it here
+@import "variables";
+@import url('https://fonts.cdnfonts.com/css/sofia-pro');
+
+// Import styles with default layout.
+@import "/src/scss/scss/coreui.scss";
+@import "~@coreui/icons/css/brand.min.css";
+@import "~@coreui/icons/css/free.min.css";
+@import "~@coreui/chartjs";
+
+// Some temp fixes
+@import "fixes";
+
+// If you want to add something do it here
+@import "custom";
+
+.card-50{
+  max-width: 90%;
+}
+
+@media screen and (max-width: 960px) {
+  .card-50{
+    max-width: 100%;
+  }
+}
+
+.my-picklist-dw{
+  font-size: small !important;
+}
+
+.center-select{
+  text-align: center;
+}
+
+.ni-chips  {
+  font-size: x-small !important;
+  background: rgb(146, 29, 0) !important;
+  border:1px solid rgb(146, 29, 0) !important;
+  box-shadow: 0 0 25px #ccc !important;
+  color: white !important;
+}
+
+.dw-chips  {
+  font-size: x-small !important;
+  background: rgb(52, 134, 28) !important;
+  border:1px solid rgb(52, 134, 28) !important;
+  box-shadow: 0 0 25px #ccc !important;
+  color: white !important;
+}
+
+
+body .notify-chips .p-chips-multiple-container .p-chips-token {
+  font-size: x-small !important;
+  background: rgb(0, 120, 189) !important;
+  border:1px solid rgb(0, 120, 189) !important;
+  box-shadow: 0 0 25px #ccc !important;
+  color: white !important;
+}
+
+
+.merchantRatingStatusPanel {
+  --normal: #ECEAF3;
+  --normal-shadow: #D9D8E3;
+  --normal-mouth: #9795A4;
+  --normal-eye: #595861;
+  --active: #F8DA69;
+  --active-shadow: #F4B555;
+  --active-mouth: #F05136;
+  --active-eye: #313036;
+  --active-tear: #76b5e7;
+  --active-shadow-angry: #e94f1d;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: inline-flex;
+}
+.merchantRatingStatusPanel li {
+  position: relative;
+  border-radius: 50%;
+  background: var(--sb, var(--normal));
+  box-shadow: inset 3px -3px 4px var(--sh, var(--normal-shadow));
+  transition: background 0.4s, box-shadow 0.4s, transform 0.3s;
+  -webkit-tap-highlight-color: transparent;
+}
+.merchantRatingStatusPanel li:not(:last-child) {
+  margin-right: 20px;
+}
+.merchantRatingStatusPanel li div {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  transform: perspective(240px) translateZ(4px);
+}
+.merchantRatingStatusPanel li div svg, .merchantRatingStatusPanel li div:before, .merchantRatingStatusPanel li div:after {
+  display: block;
+  position: absolute;
+  left: var(--l, 9px);
+  top: var(--t, 13px);
+  width: var(--w, 8px);
+  height: var(--h, 2px);
+  transform: rotate(var(--r, 0deg)) scale(var(--sc, 1)) translateZ(0);
+}
+.merchantRatingStatusPanel li div svg {
+  fill: none;
+  stroke: var(--s);
+  stroke-width: 2px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke 0.4s;
+}
+.merchantRatingStatusPanel li div svg.eye {
+  --s: var(--e, var(--normal-eye));
+  --t: 17px;
+  --w: 7px;
+  --h: 4px;
+}
+.merchantRatingStatusPanel li div svg.eye.right {
+  --l: 23px;
+}
+.merchantRatingStatusPanel li div svg.mouth {
+  --s: var(--m, var(--normal-mouth));
+  --l: 11px;
+  --t: 23px;
+  --w: 18px;
+  --h: 7px;
+}
+.merchantRatingStatusPanel li div:before, .merchantRatingStatusPanel li div:after {
+  content: "";
+  z-index: var(--zi, 1);
+  border-radius: var(--br, 1px);
+  background: var(--b, var(--e, var(--normal-eye)));
+  transition: background 0.4s;
+}
+.merchantRatingStatusPanel li.angry {
+  --step-1-rx: -24deg;
+  --step-1-ry: 20deg;
+  --step-2-rx: -24deg;
+  --step-2-ry: -20deg;
+}
+.merchantRatingStatusPanel li.angry div:before {
+  --r: 20deg;
+}
+.merchantRatingStatusPanel li.angry div:after {
+  --l: 23px;
+  --r: -20deg;
+}
+.merchantRatingStatusPanel li.angry div svg.eye {
+  stroke-dasharray: 4.55;
+  stroke-dashoffset: 8.15;
+}
+.merchantRatingStatusPanel li.angry.active {
+  -webkit-animation: angry 1s linear;
+          animation: angry 1s linear;
+}
+.merchantRatingStatusPanel li.angry.active div:before {
+  --middle-y: -2px;
+  --middle-r: 22deg;
+  -webkit-animation: toggle 0.8s linear forwards;
+          animation: toggle 0.8s linear forwards;
+}
+.merchantRatingStatusPanel li.angry.active div:after {
+  --middle-y: 1px;
+  --middle-r: -18deg;
+  -webkit-animation: toggle 0.8s linear forwards;
+          animation: toggle 0.8s linear forwards;
+}
+.merchantRatingStatusPanel li.sad {
+  --step-1-rx: 20deg;
+  --step-1-ry: -12deg;
+  --step-2-rx: -18deg;
+  --step-2-ry: 14deg;
+}
+.merchantRatingStatusPanel li.sad div:before, .merchantRatingStatusPanel li.sad div:after {
+  --b: var(--active-tear);
+  --sc: 0;
+  --w: 5px;
+  --h: 5px;
+  --t: 15px;
+  --br: 50%;
+}
+.merchantRatingStatusPanel li.sad div:after {
+  --l: 25px;
+}
+.merchantRatingStatusPanel li.sad div svg.eye {
+  --t: 16px;
+}
+.merchantRatingStatusPanel li.sad div svg.mouth {
+  --t: 24px;
+  stroke-dasharray: 9.5;
+  stroke-dashoffset: 33.25;
+}
+.merchantRatingStatusPanel li.sad.active div:before, .merchantRatingStatusPanel li.sad.active div:after {
+  -webkit-animation: tear 0.6s linear forwards;
+          animation: tear 0.6s linear forwards;
+}
+.merchantRatingStatusPanel li.ok {
+  --step-1-rx: 4deg;
+  --step-1-ry: -22deg;
+  --step-1-rz: 6deg;
+  --step-2-rx: 4deg;
+  --step-2-ry: 22deg;
+  --step-2-rz: -6deg;
+}
+.merchantRatingStatusPanel li.ok div:before {
+  --l: 12px;
+  --t: 17px;
+  --h: 4px;
+  --w: 4px;
+  --br: 50%;
+  box-shadow: 12px 0 0 var(--e, var(--normal-eye));
+}
+.merchantRatingStatusPanel li.ok div:after {
+  --l: 13px;
+  --t: 26px;
+  --w: 14px;
+  --h: 2px;
+  --br: 1px;
+  --b: var(--m, var(--normal-mouth));
+}
+.merchantRatingStatusPanel li.ok.active div:before {
+  --middle-s-y: .35;
+  -webkit-animation: toggle 0.2s linear forwards;
+          animation: toggle 0.2s linear forwards;
+}
+.merchantRatingStatusPanel li.ok.active div:after {
+  --middle-s-x: .5;
+  -webkit-animation: toggle 0.7s linear forwards;
+          animation: toggle 0.7s linear forwards;
+}
+.merchantRatingStatusPanel li.good {
+  --step-1-rx: -14deg;
+  --step-1-rz: 10deg;
+  --step-2-rx: 10deg;
+  --step-2-rz: -8deg;
+}
+.merchantRatingStatusPanel li.good div:before {
+  --b: var(--m, var(--normal-mouth));
+  --w: 5px;
+  --h: 5px;
+  --br: 50%;
+  --t: 22px;
+  --zi: 0;
+  opacity: 0.5;
+  box-shadow: 16px 0 0 var(--b);
+  filter: blur(2px);
+}
+.merchantRatingStatusPanel li.good div:after {
+  --sc: 0;
+}
+.merchantRatingStatusPanel li.good div svg.eye {
+  --t: 15px;
+  --sc: -1;
+  stroke-dasharray: 4.55;
+  stroke-dashoffset: 8.15;
+}
+.merchantRatingStatusPanel li.good div svg.mouth {
+  --t: 22px;
+  --sc: -1;
+  stroke-dasharray: 13.3;
+  stroke-dashoffset: 23.75;
+}
+.merchantRatingStatusPanel li.good.active div svg.mouth {
+  --middle-y: 1px;
+  --middle-s: -1;
+  -webkit-animation: toggle 0.8s linear forwards;
+          animation: toggle 0.8s linear forwards;
+}
+.merchantRatingStatusPanel li.happy div {
+  --step-1-rx: 18deg;
+  --step-1-ry: 24deg;
+  --step-2-rx: 18deg;
+  --step-2-ry: -24deg;
+}
+.merchantRatingStatusPanel li.happy div:before {
+  --sc: 0;
+}
+.merchantRatingStatusPanel li.happy div:after {
+  --b: var(--m, var(--normal-mouth));
+  --l: 11px;
+  --t: 23px;
+  --w: 18px;
+  --h: 8px;
+  --br: 0 0 8px 8px;
+}
+.merchantRatingStatusPanel li.happy div svg.eye {
+  --t: 14px;
+  --sc: -1;
+}
+.merchantRatingStatusPanel li.happy.active div:after {
+  --middle-s-x: .95;
+  --middle-s-y: .75;
+  -webkit-animation: toggle 0.8s linear forwards;
+          animation: toggle 0.8s linear forwards;
+}
+.merchantRatingStatusPanel li:not(.active) {
+  cursor: pointer;
+}
+.merchantRatingStatusPanel li:not(.active):active {
+  transform: scale(0.925);
+}
+.merchantRatingStatusPanel li.active {
+  --sb: var(--active);
+  --sh: var(--active-shadow);
+  --m: var(--active-mouth);
+  --e: var(--active-eye);
+}
+.merchantRatingStatusPanel li.active div {
+  -webkit-animation: shake 0.8s linear forwards;
+          animation: shake 0.8s linear forwards;
+}
+
+.searchdrpdwn{
+  width: 100%;
+}
+
+@-webkit-keyframes shake {
+  30% {
+    transform: perspective(240px) rotateX(var(--step-1-rx, 0deg)) rotateY(var(--step-1-ry, 0deg)) rotateZ(var(--step-1-rz, 0deg)) translateZ(10px);
+  }
+  60% {
+    transform: perspective(240px) rotateX(var(--step-2-rx, 0deg)) rotateY(var(--step-2-ry, 0deg)) rotateZ(var(--step-2-rz, 0deg)) translateZ(10px);
+  }
+  100% {
+    transform: perspective(240px) translateZ(4px);
+  }
+}
+
+@keyframes shake {
+  30% {
+    transform: perspective(240px) rotateX(var(--step-1-rx, 0deg)) rotateY(var(--step-1-ry, 0deg)) rotateZ(var(--step-1-rz, 0deg)) translateZ(10px);
+  }
+  60% {
+    transform: perspective(240px) rotateX(var(--step-2-rx, 0deg)) rotateY(var(--step-2-ry, 0deg)) rotateZ(var(--step-2-rz, 0deg)) translateZ(10px);
+  }
+  100% {
+    transform: perspective(240px) translateZ(4px);
+  }
+}
+@-webkit-keyframes tear {
+  0% {
+    opacity: 0;
+    transform: translateY(-2px) scale(0) translateZ(0);
+  }
+  50% {
+    transform: translateY(12px) scale(0.6, 1.2) translateZ(0);
+  }
+  20%, 80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(24px) translateX(4px) rotateZ(-30deg) scale(0.7, 1.1) translateZ(0);
+  }
+}
+@keyframes tear {
+  0% {
+    opacity: 0;
+    transform: translateY(-2px) scale(0) translateZ(0);
+  }
+  50% {
+    transform: translateY(12px) scale(0.6, 1.2) translateZ(0);
+  }
+  20%, 80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(24px) translateX(4px) rotateZ(-30deg) scale(0.7, 1.1) translateZ(0);
+  }
+}
+@-webkit-keyframes toggle {
+  50% {
+    transform: translateY(var(--middle-y, 0)) scale(var(--middle-s-x, var(--middle-s, 1)), var(--middle-s-y, var(--middle-s, 1))) rotate(var(--middle-r, 0deg));
+  }
+}
+@keyframes toggle {
+  50% {
+    transform: translateY(var(--middle-y, 0)) scale(var(--middle-s-x, var(--middle-s, 1)), var(--middle-s-y, var(--middle-s, 1))) rotate(var(--middle-r, 0deg));
+  }
+}
+@-webkit-keyframes angry {
+  40% {
+    background: var(--active);
+  }
+  45% {
+    box-shadow: inset 3px -3px 4px var(--active-shadow), inset 0 8px 10px var(--active-shadow-angry);
+  }
+}
+@keyframes angry {
+  40% {
+    background: var(--active);
+  }
+  45% {
+    box-shadow: inset 3px -3px 4px var(--active-shadow), inset 0 8px 10px var(--active-shadow-angry);
+  }
+}
+
+
+

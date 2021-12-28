@@ -1,0 +1,434 @@
+// collapse toggle
+::ng-deep .container-fluid{
+  padding-left: 0px;
+  padding-right: 0px;
+
+}
+
+
+::ng-deep .p-tag {
+ 
+  font-size: 0.7rem;
+  font-weight: 700;
+ 
+}
+
+::ng-deep .collapse {
+  transition: max-height .55s, opacity .35s ease-in-out;
+  max-height: 0;
+  opacity: 0;
+  display: block !important;
+
+  &.show {
+    max-height: 100rem;
+    opacity: 1;
+  }
+}
+
+::ng-deep .accordion {
+  .card {
+    margin-bottom: 10px !important;
+    border-bottom: 1px solid rgba(0, 0, 0, .04) !important;
+
+    .card-header {
+      // padding-top: 0;
+      padding: 5px;
+
+      button {
+        padding: 1.2rem;
+        width: 100%;
+
+        span {
+          float: left;
+          font-size: 1.2rem;
+        }
+      }
+    }
+
+    .card-body {
+      padding: 1rem;
+    }
+  }
+}
+::ng-deep  .accordion-shadow .card.open {
+    border-radius: 0.571rem;
+    margin: 10px 0;
+    border: 0;
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.1) !important;
+}
+h1 .btn-group { display: inline-block; }
+.merchantmenu {
+  position: relative;
+  background: #3F3C53;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  box-shadow: 0px 0px 15px 1px #4185BC;
+  margin: 0;
+}
+.merchantmenu:after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 2px;
+  height: 2px;
+  margin-left: -1px;
+  margin-top: -1px;
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px white, 0 11px 0 2px white, 0 -11px 0 2px white;
+}
+.dropdown-toggle::after {
+  display:none;
+}
+
+::ng-deep .card .card-header{
+  background-color: #fff;
+  border-bottom: none;
+  padding: 10px;
+  border-bottom: 1px solid #f6f7fb;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.mycard :hover{
+//  cursor: grab;
+}
+
+::ng-deep .card-header.card-header-border h5 {
+
+  padding-top: 0px !important;
+
+}
+
+.align-items-end {
+  align-items: center !important;
+}
+
+
+.card .card-header h5 {
+  font-size: 18px;
+  margin-bottom: 0;
+  text-transform: capitalize;
+  font-weight: 600;
+}
+
+.subheading {
+  font-weight: bold;
+}
+
+.subheading2 {
+  text-align-last: center;
+  text-decoration: underline;
+}
+
+
+.btn-primary-gradien {
+  background-image: none;
+  background-color: #454547 ;
+  border: none;
+  color: #fff;
+  background-size: auto 200%;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: rgba(12, 13, 16, 0.9) !important;
+  border-color: rgba(12, 13, 16, 0.9) !important;
+}
+
+.btn-primary-gradien:focus, .btn-primary-gradien:active, .btn-primary-gradien.active {
+  transition: 1.5s;
+  background-color:#4BB4B0 ;
+  background-position: right center;
+  background-image: none !important;
+}
+
+.card {
+  margin-bottom: 30px;
+  border: 0px;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+  border-radius: 8px;
+  box-shadow: 1px 5px 24px 0 rgba(0, 0, 0, 0.15);
+}
+
+.custom-control-input:checked ~ .custom-control-label::before {
+    color: #fff;
+    border-color: #011627;
+    background-color: #011627;
+}
+
+
+// ADded
+
+:host ::ng-deep {
+  .p-paginator {
+      .p-paginator-current {
+          margin-left: auto;
+      }
+  }
+  
+  .p-progressbar {
+      height: .5rem;
+      background-color: #D8DADC;
+  
+      .p-progressbar-value {
+          background-color: #607D8B;
+      }
+  }
+  
+  .table-header {
+      display: flex;
+      justify-content: space-between;
+  }
+  
+  .p-calendar .p-datepicker {
+      min-width: 25rem;
+  
+      td {
+          font-weight: 400;
+      }
+  }
+
+
+  
+  .p-datatable.p-datatable-customers {
+      .p-datatable-header {
+          padding: 1rem;
+          text-align: left;
+          font-size: 1.5rem;
+          background: linear-gradient( 45deg, rgba(206, 231, 185, 1) 0%, rgba(159, 213, 200, 1) 100%);
+      }
+  
+      .p-paginator {
+          padding: 1rem;
+      }
+  
+      .p-datatable-thead > tr > th {
+          text-align: left;
+      }
+  
+      .p-datatable-tbody > tr > td {
+          cursor: auto;
+      }
+  
+      .p-dropdown-label:not(.p-placeholder) {
+          text-transform: uppercase;
+      }
+  }
+  
+  /* Responsive */
+  .p-datatable-customers .p-datatable-tbody > tr > td .p-column-title {
+      display: none;
+  }
+}
+
+::ng-deep .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider{
+background: #5eb112;
+}
+
+::ng-deep .p-inputswitch.p-inputswitch-checked:not(.p-disabled):hover .p-inputswitch-slider {
+  background: #5eb112;
+}
+
+
+::ng-deep .p-splitbutton .p-splitbutton-defaultbutton {
+display: none !important;
+}
+
+
+.searchbutton{
+  color: #000000 !important;
+    background: #e9ecef !important;
+    border: 1px solid #e9ecef !important;
+    font-weight: bolder;
+}
+
+.create{
+  background-color: orangered !important;
+  border: 1px solid orangered !important;
+  width: 75%;
+  place-content: center;
+}
+
+.headercolor-left{
+  color: black;
+}
+
+::ng-deep span.p-button-label {
+  flex: none !important;
+}
+
+.headercolor-right{
+  text-align-last: right;
+  display: flex;
+}
+
+:host ::ng-deep {
+  .sidebarheight{
+    height: 25% !important;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  :host ::ng-deep {
+      .p-datatable {
+          &.p-datatable-customers {
+              .p-datatable-thead > tr > th,
+              .p-datatable-tfoot > tr > td {
+                  display: none !important;
+              }
+
+              .headercolor-right{
+                text-align-last: left;
+                display: flex;
+              }
+  
+              .p-datatable-tbody > tr {
+                  border-bottom: 1px solid var(--layer-2);
+                  background: #EEEEEE;
+                  padding: 2% !important;
+  
+                  > td {
+                      text-align: left;
+                      display: block;
+                      // border: 0 none !important;
+                      width: 100% !important;
+                      float: left;
+                      clear: left;
+                      // border: 0 none;
+                      background-clip: content-box;
+                      background-color: white;
+                      
+  
+                      .p-column-title {
+                          padding: .4rem;
+                          min-width: 30%;
+                          display: inline-block;
+                          margin: -.4rem 1rem -.4rem -.4rem;
+                          text-transform: uppercase;
+                          font-size: 0.8rem;
+                          // font-weight: bold;
+                      }
+  
+                      .p-progressbar {
+                          margin-top: .5rem;
+                      }
+                  }
+              }
+          }
+      }
+      .p-datatable-header{
+        position: sticky;
+        top: 60px;
+        z-index: 100;
+      }
+      
+  }
+
+  
+
+}
+
+
+
+.alignoptionscol1{
+  text-align-last: left !important;
+}
+
+.rowvaluealign {
+  text-align-last: center !important;
+  float: center !important;
+}
+
+.rowvaluealigncol1{
+  text-align-last: left !important;
+  float: left !important;
+}
+
+.alignoptions {
+  text-align: center !important;
+}
+
+
+@media (max-width: 960px){
+  .actflex{
+    display: flex !important;
+  }
+
+  .alignoptions {
+    text-align-last: left;
+    display: flex !important;
+    float: right !important;
+    align-items: center !important;
+  }
+
+  .rowvaluealign {
+    text-align-last: right  !important;
+    float: right  !important;
+    max-width: 70%  !important;
+    width: 100%  !important;
+    font-size: 0.8em !important;
+  }
+
+  .rowvaluealigncol1{
+    text-align-last: right  !important;
+    float: right  !important;
+    font-size: 0.8em !important;
+  }
+
+  .create{
+    background-color: orangered !important;
+    border: 1px solid orangered !important;
+    width: auto !important;
+    // place-content: center;
+  }
+
+  .smllscrpad{
+    margin-top: 3% !important;
+  }
+
+  .padd-zero-top-bottom{
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+  }
+
+  .padd-zero-top{
+    padding-top: 0px !important;
+  }
+
+  .padd-zero-bottom{
+    padding-bottom: 0px !important;
+  }
+
+  .pad-right-3{
+    padding-right: 3% !important;
+  }
+
+  .pad-bottom-3{
+    padding-bottom: 3% !important;
+  }
+
+  .pad-top-3{
+    padding-top: 3% !important;
+  }
+
+  .pad-top-1half{
+    padding-top: 1.5% !important;
+  }
+
+  .pad-left-3{
+    padding-left: 3% !important;
+  }
+
+  .pad-top-10{
+    padding-top: 10% !important;
+  }
+
+  .sidebarheight{
+    height: 30% !important;
+  }
+  
+}

@@ -1,0 +1,136 @@
+<p-toast key="myKey1" position="top-right" [baseZIndex]="999999" ></p-toast>
+
+<p-card>
+<div class="row" style="margin-bottom: 2%;" >
+  <p-skeleton class="col-lg-6 col-12" *ngIf="!this.showfirst" height="2rem" styleClass="p-mb-2"></p-skeleton>
+  <p-skeleton class="col-lg-6 col-12" *ngIf="!this.showfirst" height="2rem" styleClass="p-mb-2"></p-skeleton>
+  <p-skeleton class="col-lg-6 col-12" *ngIf="!this.showfirst" height="2rem" styleClass="p-mb-2"></p-skeleton>
+  <div class="col-lg-12 col-12" *hasRole="[Role.SuperUser, Role.Admin,Role.Shop]">
+  <div  *ngIf="this.showfirst">
+    <div class="col-lg-12 col-12" style="margin-bottom: 2%;max-width: 38%;" *hasRole="[Role.SuperUser]">
+      <div class="row">
+        <div class="col-12">
+        <span class="fieldttitle">Merchant</span><br>
+      </div>
+      <div class="col-12">
+          <p-autoComplete
+            placeholder = "Merchant Name"
+            styleClass='searchdrpdwn p-inputtext-sm'
+            [(ngModel)]="selectedMerchants"
+            [suggestions]="merchantsData"
+            (completeMethod)="filterMerchant($event)"
+            field="name"
+            [minLength]="3"
+            (onSelect) = "onSelectSearchedMerchant()"
+        ></p-autoComplete>
+
+      </div>
+          <!-- <p-dropdown styleClass='drpdown p-inputtext-sm' #selmerchant
+            (click)="onClickParentMerchant(selmerchant)" [options]="merchantsData"
+            (onChange)="getSubMerchantsByParents(selectedMerchants)" [(ngModel)]="selectedMerchants"
+            placeholder="Select Parent" optionLabel="name" optionValue="id" [filter]="true" filterBy="name">
+          </p-dropdown> -->
+        </div>
+    </div>
+    <div class="col-lg-12 col-12  mwidth30" style="margin-bottom: 2%;" *hasRole="[Role.SuperUser, Role.Admin]">
+      <span class="fieldttitle">Select Store</span><br>
+      <div class="fieldttitle">
+        <p-dropdown [disabled]="this.subMerchantsData.length === 0" styleClass='mymultiselect drpdown p-inputtext-sm' tooltipStyleClass='ttltip' #selsubmerchant
+          [maxSelectedLabels]="2" inputId="selmerchantinput" (click)="onClickSubMerchant(selsubmerchant)"
+          [options]="subMerchantsData" [(ngModel)]="selectedSubMerchants" defaultLabel="Select Stores"
+          optionLabel="name" display="chip">
+          <p-footer>
+            <button style="margin: 1%;" pButton type="button" label="Close"
+              style="background: white;color: black;" (click)="closemulti()"></button>
+            <button style="margin: 1%;" pButton style="float: right;background-color: #689F38;" type="button"
+              label="Select" (click)="closemulti();getTerminals()"></button>
+          </p-footer>
+        </p-dropdown>
+      </div>
+    </div>
+    <div class="col-lg-12 col-12  mwidth30" style="margin-bottom: 2%;">
+    <span class="fieldttitle " >Select Terminal</span><br>
+    <div class="fieldttitle">
+      <p-dropdown [disabled]="this.subMerchantsData.length === 0" styleClass='mymultiselect drpdown p-inputtext-sm' tooltipStyleClass='ttltip' #selterminals
+        [maxSelectedLabels]="2" inputId="selmerchantinput" (click)="onClickTerminals(selterminals)"
+        [options]="terminalsData" [(ngModel)]="selectedTerminals" defaultLabel="Select Terminals"
+        optionLabel="terminal_name" display="chip">
+        <p-footer>
+          <button style="margin: 1%;" pButton type="button" label="Close"
+            style="background: white;color: black;" (click)="closemulti()"></button>
+          <button style="margin: 1%;" pButton style="float: right;background-color: #689F38;" type="button"
+            label="Select" (click)="closemulti();getTransactions(undefined)"></button>
+        </p-footer>
+      </p-dropdown>
+      <!-- </div> -->
+    </div>
+  </div>
+  </div>
+</div>
+</div>
+<div class="col-12" style="margin-bottom: 2%;">
+      <span style="font-weight: bold;">Notifications</span>
+    </div>
+    <div style="margin-bottom: 4%;" class="col-6">
+      <div class="row">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-6">
+              <span style="font-size: smaller;">Successful Transaction Alert</span>
+            </div>
+            <div class="col-6">
+              <p-inputSwitch (onChange)="activateConfig('trans',$event)" [(ngModel)]="this.transactionConfig.active"></p-inputSwitch>
+              <p-button type="button" style="float: right;" class="bwidth mg-1"  label="Save" styleClass="p-button-success bwidth" (click)="saveConfig('trans')" ></p-button>
+            </div>
+
+
+        </div>
+        </div>
+        <div class="col-6">
+          <span style="font-size: smaller;">Add Phone Number</span>
+          <p-chips (onAdd)="cleanPhoneNumberList('trans')" allowDuplicate="false" styleClass="p-inputtext-sm notify-chips" [(ngModel)]="this.transactionConfig.phones">
+
+          </p-chips>
+        </div>
+        <div class="col-6">
+          <span style="font-size: smaller;" >Add Emails</span>
+          <p-chips (onAdd)="cleanEmailList('trans')" allowDuplicate="false" styleClass="p-inputtext-sm notify-chips" [(ngModel)]="this.transactionConfig.emails">
+          </p-chips>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="col-6">
+      <div class="row">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-6">
+              <span style="font-size: smaller;">Settlement Alert</span>
+            </div>
+            <div class="col-6">
+              <p-inputSwitch (onChange)="activateConfig('settle',$event)" [(ngModel)]="this.settlementConfig.active"></p-inputSwitch>
+              <p-button type="button" style="float: right;" class="bwidth mg-1"  label="Save" styleClass="p-button-success bwidth" (click)="saveConfig('settle')" ></p-button>
+            </div>
+
+
+        </div>
+        </div>
+        <div class="col-6">
+          <span style="font-size: smaller;">Add Phone Number</span>
+          <p-chips (onAdd)="cleanPhoneNumberList('settle')" allowDuplicate="false" styleClass="p-inputtext-sm notify-chips" [(ngModel)]="this.settlementConfig.phones">
+
+          </p-chips>
+        </div>
+        <div class="col-6">
+          <span style="font-size: smaller;" >Add Emails</span>
+          <p-chips (onAdd)="cleanEmailList('settle')" allowDuplicate="false" styleClass="p-inputtext-sm notify-chips" [(ngModel)]="this.settlementConfig.emails">
+          </p-chips>
+        </div>
+
+      </div>
+
+    </div>
+
+</p-card>

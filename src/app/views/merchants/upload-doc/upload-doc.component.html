@@ -1,0 +1,167 @@
+<div class="container-fluid">
+  <div class="row">
+     <div class="col-sm-12" style="padding-left: 0px !important;padding-right: 0px !important;" *ngIf="merchantsData">
+        <div class="card">
+          <div class="card-header bkground paddheaders">
+            <div class="pad-left-3 fieldttitle">
+              <h4 style="padding-top: 2%;"><b>Upload Documents and Logos</b></h4>
+            </div>
+              <div class="row fieldttitle">
+                <div class="col"  *hasRole="[Role.SuperUser]">
+                  <div class="pad-top-3 custwidth ">
+                    <span >Select Parent Merchant</span><br>
+                    <p-dropdown #selmerchant (click) = "getUploadDocInfo()" [options]="merchantsData"   (onChange)="getUploadDocInfo(undefined)"  [(ngModel)]="selectedMerchants" placeholder="Select Parent" optionLabel="name" optionValue="id" [filter]="true" filterBy="name" ></p-dropdown>
+                  </div>   
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="row pd-l-1 small" *ngIf="this.showtable">
+<p-card class="col-lg-4 col-sm-12"  [style]="{'width': '22rem', 'margin-bottom': '2em', 'text-align': '-webkit-left'}">
+  <ng-template pTemplate="header" >
+    <span class="pd2-l" *ngIf="filesdata.aadhaar !== 'none' " class="pd-l-1" style="color: green;"><i class="pi pi-check-circle"></i></span>
+    <span class="pd2-l" *ngIf="filesdata.aadhaar === 'none' " class="pd-l-1" style="color: red;"><i class="pi pi-times-circle"></i></span>
+    <span class="title">Owner Aadhaar Letter</span>
+</ng-template>
+  <div class="row">
+    <div class="col-12" *ngIf="filesdata.aadhaar === 'none' " >
+      <p>No Document Found</p>
+      <p-fileUpload name="myfile[]" mode="advanced"  customUpload="true" (uploadHandler)="uploadDoc($event);showSuccess('Upload starts');" chooseLabel="Choose file to upload" uploadLabel="Upload now" ></p-fileUpload>
+    </div>
+
+    <div class="col-12" *ngIf="filesdata.aadhaar !== 'none' " >
+      <div class="row" style="text-align: -webkit-center;">
+        <div class="col-12">
+          <i class="pi pi-image" style="font-size: 3rem"></i>
+        </div>
+        <div class="col-12">
+          {{extractfilename(filesdata.aadhaar)}} <br>
+          Aadhaar No.: {{filesdata.aadhaarno}} <br>
+          <button *ngIf="!showuploaderbool" class="p-button-sm" pButton  type="button" class="" label="Upload Again" (click)="showuploader()"></button>
+          <p-fileUpload *ngIf="showuploaderbool" name="myfile[]" mode="advanced"  customUpload="true" (uploadHandler)="uploadDoc($event);showSuccess('Upload starts');" chooseLabel="Choose file to upload" uploadLabel="Upload now" ></p-fileUpload>
+          <button *ngIf="showuploaderbool" class="p-button-sm" pButton  type="button" class="" label="Close" (click)="showuploader()"></button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+    
+</p-card>
+
+
+
+
+  
+
+
+
+</div>
+  
+
+<div class="row" *ngIf="false">
+  <div class="col-3 col-md-12 mx-auto">
+      <div class="card px-4 py-3 px-md-5 py-md-3">
+          <div class="row border-bottom py-3">
+              <div class="col-3 col-md-3">
+                  <img src="../../../assets/images/global-assets/images/bank_icon.svg" class="img-fluid">
+              </div>
+              <div class="col-9 col-md-9">
+                  <p class="text-uppercase text-secondary mb-0 mt-1">GST Letter</p>
+                  <p class="h6 font-weight-bold mb-0 mt-1">{{filesdata.gst}}</p>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-3 col-md-12 mx-auto">
+        <div class="card px-4 py-3 px-md-5 py-md-3">
+          <div class="row border-bottom py-3">
+              <div class="col-3 col-md-3">
+                  <img src="../../../assets/images/global-assets/images/bank_icon.svg" class="img-fluid">
+              </div>
+              <div class="col-9 col-md-9">
+                  <p class="text-uppercase text-secondary mb-0 mt-1">Owner Aadhaar Letter</p>
+                  <p class="h6 font-weight-bold mb-0 mt-1">{{filesdata.aadhaar}}</p>
+                  <p class="h6 font-weight-bold mb-0 mt-1">{{filesdata.aadhaarno}}</p>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-3 col-md-12 mx-auto">
+        <div class="card px-4 py-3 px-md-5 py-md-3">
+          <div class="row border-bottom py-3">
+              <div class="col-3 col-md-3">
+                  <img src="../../../assets/images/global-assets/images/bank_icon.svg" class="img-fluid">
+              </div>
+              <div class="col-9 col-md-9">
+                  <p class="text-uppercase text-secondary mb-0 mt-1">Incorporation/Tax Registration/ Partnership Deed</p>
+                  <p class="h6 font-weight-bold mb-0 mt-1">{{filesdata.bizcert}}</p>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-3 col-md-12 mx-auto">
+        <div class="card px-4 py-3 px-md-5 py-md-3">
+          <div class="row border-bottom py-3">
+              <div class="col-3 col-md-3">
+                  <img src="../../../assets/images/global-assets/images/bank_icon.svg" class="img-fluid">
+              </div>
+              <div class="col-9 col-md-9">
+                  <p class="text-uppercase text-secondary mb-0 mt-1">Business Pan</p>
+                  <p class="h6 font-weight-bold mb-0 mt-1">{{filesdata.bizpan}}</p>
+                  <p class="h6 font-weight-bold mb-0 mt-1">{{filesdata.bizpanno}}</p>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-3 col-md-12 mx-auto">
+        <div class="card px-4 py-3 px-md-5 py-md-3">
+          <div class="row border-bottom py-3">
+              <div class="col-3 col-md-3">
+                  <img src="../../../assets/images/global-assets/images/bank_icon.svg" class="img-fluid">
+              </div>
+              <div class="col-9 col-md-9">
+                  <p class="text-uppercase text-secondary mb-0 mt-1">ID Proof</p>
+                  <p class="h6 font-weight-bold mb-0 mt-1">{{filesdata.idproof}}</p>
+                  <p class="h6 font-weight-bold mb-0 mt-1">{{filesdata.idprooftype}}</p>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-3 col-md-12 mx-auto">
+        <div class="card px-4 py-3 px-md-5 py-md-3">
+          <div class="row border-bottom py-3">
+            <div class="col-3 col-md-3">
+                <img src="../../../assets/images/global-assets/images/bank_icon.svg" class="img-fluid">
+            </div>
+            <div class="col-9 col-md-9">
+                <p class="text-uppercase text-secondary mb-0 mt-1">Bank Account Proof(Cancelled Checque/Passbook front page)</p>
+                <p class="h6 font-weight-bold mb-0 mt-1">{{filesdata.bankacc}}</p>
+                <p class="h6 font-weight-bold mb-0 mt-1">{{filesdata.bankacctype}}</p>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-3 col-md-12 mx-auto">
+      <div class="card px-4 py-3 px-md-5 py-md-3">
+          <div class="row py-3">
+              <div class="col-3 col-md-3">
+                  <img src="../../../assets/images/global-assets/images/bank_icon.svg" class="img-fluid">
+              </div>
+              <div class="col-9 col-md-9">
+                  <p class="text-uppercase text-secondary mb-0 mt-1">Company Logo</p>
+                  <p class="h6 font-weight-bold mb-0 mt-1">{{filesdata.logo}}</p>
+              </div>
+          </div>
+        </div>
+      </div>
+</div>

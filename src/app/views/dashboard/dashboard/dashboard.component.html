@@ -1,0 +1,328 @@
+<div class="row">
+  <div class="col-9">
+    <span class="h4">
+      Welcome
+    </span>
+    <span *ngIf="showname && showgroupname" class="h4 mb-4">
+      {{textreducer(this.fullname) | titlecase}}
+    </span>
+    <span class="h4">
+      (Merchant level view)
+    </span>
+    <p *ngIf="showname && showgroupname" class="h4 mt-2">
+      {{textreducer(this.groupname) | titlecase}}
+    </p>
+  </div>
+  <div class="col-3 text-center">
+    <div class="mb-2 px-3 py-3" style="background: rgba(255, 222, 50, 0.15);
+  border: 1px solid #FFDE32;
+  box-sizing: border-box;
+  border-radius: 10px;">
+      <p>
+        A/c Manager: Vihari KSN <br />
+      </p>
+      <p>
+        Mobile No: 9492052140
+      </p>
+    </div>
+
+  </div>
+</div>
+<!-- <hr class="mt-2 mb-3" style="    width: 200% !important;position: relative;left: -5%;" /> -->
+<div class="row mb-3" *hasRole="[Role.SuperUser,Role.Admin]">
+  <div *ngIf="showskel1" class=" col-12">
+    <div class="col-12  " style="margin: 2%;">
+      <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+    </div>
+    <div class=" col-12  " style="margin: 2%;">
+      <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+    </div>
+  </div>
+  <div class="col-12" *ngIf="!showskel1">
+    <div class="row">
+      <div class=" col-6 px-3" *hasRole="[Role.SuperUser]">
+        <h6>Merchant</h6>
+        <p-dropdown *hasRole="[Role.SuperUser]" [filter]="true" styleClass='drpdown p-inputtext-sm'
+          (onChange)="getSubMerchantsByParents()" [options]="merchantsData" [(ngModel)]="selectedMerchants"
+          placeholder="Search Merchant" optionLabel="name" optionValue="id" class="dashboard-merchantDropDown">
+        </p-dropdown>
+        <!-- <p-autocomplete
+          *hasRole="[Role.SuperUser]"
+          placeholder="Search Merchant"
+          [(ngModel)]="selectedMerchants"
+          [suggestions]="merchantsData"
+          (completeMethod)="filterMerchant($event)"
+          field="name"
+          [minLength]="3"
+          (onSelect) = "onSelectSearchedMerchant()"
+          >
+          </p-autocomplete> -->
+
+      </div>
+      <div class="col-6">
+        <h6>Store</h6>
+        <p-multiSelect styleClass='mymultiselect p-inputtext-sm' (onPanelHide)="applyButton()"
+          tooltipStyleClass='ttltip' #selsubmerchant [maxSelectedLabels]="2" inputId="selmerchantinput"
+          [options]="subMerchantsData" [(ngModel)]="selectedSubMerchants" class="dashboard-storeMultiSelect"
+          defaultLabel="Search Store" optionLabel="name" display="chip">
+          <!-- <p-footer >
+          <button style="margin: 1%;" pButton type="button" label="Close" style="background: white;color: black;" (click)="closemulti()"></button>
+          <button style="margin: 1%;" pButton style="float: right;background-color: #689F38;" type="button" label="Select" (click)="closemulti();applyButton()"></button>
+        </p-footer> -->
+        </p-multiSelect>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="row mb-3">
+  <div class="col">
+    <div class="dashboard-summary-cards">
+      <div class="card-body dashboard-summary-card-body border-0">
+        <div class="media d-flex">
+          <div class="align-self-center mr-2">
+            <img src="assets/icons/dashboardbargraph.svg" class="float-left" alt="" />
+          </div>
+          <div class="media-body text-left">
+            <h3 class="dashboarddatametricsheading">{{todaySale | inr}}</h3>
+            <span class="dashboarddatametricstitle">Today’s Sale</span>
+            <span class="dashboarddatamerictitle1 mr-1" *ngIf="(todaySale >= yesterdaySale)">
+              <img style="width: 15px;" src="assets/icons/icon-trending-up.svg" />
+              Last day
+            </span>
+            <span class="dashboarddatamerictitle1 mr-1" *ngIf="(todaySale < yesterdaySale)">
+              <img style="width: 15px;" src="assets/icons/icon-trending-up.svg" />
+              Last day
+            </span>
+            <span class="dashboarddatamerictitle1">
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer border-0 pt-2 dashboard-summary-card-footer">
+        <div class="row">
+            <h3 class="mr-1 dashboardcardfooterheading1">
+              {{yesterdaySale | inrlakh}}
+            </h3>
+            <h3 class="font-light dashboardcardfooterheading2">
+              Yesterday’s sale
+            </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="dashboard-summary-cards">
+      <div class="card-body dashboard-summary-card-body dashboard-summary-card-body border-0">
+        <div class="media d-flex">
+          <div class="align-self-center mr-2">
+            <img src="assets/icons/dashboardsettle.svg" class="float-left" alt="" />
+          </div>
+          <div class="media-body text-left">
+            <h3 class="dashboarddatametricsheading">{{todaySale | inr}}</h3>
+            <span class="dashboarddatametricstitle">To Settle</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer text-center border-0 pt-2 dashboard-summary-card-footer">
+        <div class="row text-center">
+          <h3 class="mr-1 m-0 dashboardcardfooterheading1">
+            {{yesterdayVisits | inrlakh }}
+          </h3>
+          <h3 class=" mb-0 font-light dashboardcardfooterheading2">
+            Last settled
+          </h3>
+        </div>
+        <div class="row d-inline-flex  settleddatecardfooter">
+            on 03.12.2021, 3:40pm
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="dashboard-summary-cards">
+      <div class="card-body dashboard-summary-card-body dashboard-summary-card-body border-0">
+        <div class="media d-flex">
+          <div class="align-self-center mr-2">
+            <img src="assets/icons/dashboardsales.svg" class="float-left" alt="" />
+          </div>
+          <div class="media-body text-left">
+            <h3 class="dashboarddatametricsheading">{{currentMonthSales | inr}}</h3>
+            <span class="dashboarddatametricstitle">{{currentMonth}} Sales</span>
+            <span class=" dashboarddatamerictitle1"  *ngIf="(currentMonthSales >= previousMonthSales)">
+              <img style="width: 15px;" src="assets/icons/icon-trending-up.svg" />
+              Last Month
+            </span>
+            <span class=" dashboarddatamerictitle1" *ngIf="(currentMonthSales < previousMonthSales)">
+              <img style="width: 15px;" src="assets/icons/icon-trending-up.svg" />
+              Last Month
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer border-0 pt-2 dashboard-summary-card-footer">
+        <div class="row">
+            <h3 class="mr-1 dashboardcardfooterheading1">
+              {{previousMonthSales | inr}}
+            </h3>
+            <h4 class="font-light dashboardcardfooterheading2">
+              {{previousMonth}}
+            </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="dashboard-summary-cards">
+      <div class="card-body dashboard-summary-card-body border-0">
+        <div class="media d-flex">
+          <div class="align-self-center mr-2">
+            <img src="assets/icons/dashboardvisitstoday.svg" class="float-left" alt="" />
+          </div>
+          <div class="media-body text-left">
+            <h3 class="dashboarddatametricsheading">{{todayVisits}}</h3>
+            <span class="dashboarddatametricstitle">Visits Today</span>
+            <span class="dashboarddatamerictitle1 mr-1" *ngIf="(todayVisits >= yesterdayVisits)">
+              <img style="width: 15px;" src="assets/icons/icon-trending-up.svg" />
+              Customers
+            </span>
+            <span class="dashboarddatamerictitle1 mr-1"  *ngIf="(todayVisits <  yesterdayVisits)">
+              <img style="width: 15px;" src="assets/icons/icon-trending-up.svg" />
+              Customers
+            </span>
+            <span class="">
+              
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer border-0 pt-2 dashboard-summary-card-footer">
+        <div class="row">
+            <h3 class="mr-1 dashboardcardfooterheading1">
+              {{yesterdayVisits}}
+            </h3>
+            <h3 class="font-light dashboardcardfooterheading2">
+              Visits yesterday
+            </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mb-3 p-3">
+  <div class="col">
+    <div class="row">
+      <div class="col" *ngIf="showskel2">
+
+      </div>
+      <div class="col mr-3 dashboard-chartcard" *ngIf="!showskel2">
+        <h3 class="mt-2">
+          Total Customers
+        </h3>
+        <div echarts [options]="new_repeat_options" style="height: 325px;" class="demo-chart"></div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="row">
+      <div class="col" *ngIf="showskel2">
+
+      </div>
+      <div class="col mr-2 dashboard-chartcard" *ngIf="!showskel2">
+        <h3 class="mt-2">
+          Customer Feedback
+        </h3>
+        <div echarts [options]="customerFeedbackOptions" style="height: 250px;" class=""></div>
+        <div class="separator">Last 6 months </div>
+        <div class="row p-3">
+          <div class="col negativefeedback">
+            <div class="row">
+              Negative Feedback
+            </div>
+            <div class="row">
+              <img src="assets/icons/thumbsdown.svg"/>
+            </div>
+          </div>
+          <div class="full-height one"></div>
+          <div class="col neutralfeedback">
+            <div class="row">
+              Neutral
+            </div>
+            <div class="row">
+              <img src="assets/icons/average.svg"/>
+              
+            </div>
+          </div>
+          <div class="full-height two"></div>
+          <div class="col positivefeedback">
+            <div class="row">
+              Positive Feedback
+            </div>
+            <div class="row">
+              <img src="assets/icons/thumbsup.svg"/>
+              
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mb-3 p-3">
+  <div class="col">
+    <div class="row">
+      <div class="col" *ngIf="showskel2">
+
+      </div>
+      <div class="col mr-3 dashboard-chartcard" *ngIf="!showskel2">
+        <h3 class="mt-2">
+          Total Sales (Last 7 Days)
+        </h3>
+        <!-- <div echarts [options]="new_repeat_options" class="demo-chart"></div> -->
+        <div echarts [options]="chartOptionTotalSalesTodaySum" class="demo-chart"></div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="row">
+      <div class="col" *ngIf="showskel2">
+      </div>
+      <div class="col mr-2 dashboard-chartcard" *ngIf="!showskel2">
+        <h3>
+          Ticket Size (Last 7 days)
+        </h3>
+        <div echarts [options]="chartOptionTotalSalesTodayAverage" class="demo-chart"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mb-3 p-3">
+  <div class="col">
+    <div class="row">
+      <div class="col" *ngIf="showskel2">
+
+      </div>
+      <div class="col mr-3 dashboard-chartcard" *ngIf="!showskel2">
+        <h3 class="mt-2">
+          Total Sales (Last 12 months)
+        </h3>
+        <div echarts [options]="chartOptionTotalSalesMonthSum" class="demo-chart"></div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="row">
+      <div class="col" *ngIf="showskel2">
+
+      </div>
+      <div class="col mr-2 dashboard-chartcard" *ngIf="!showskel2">
+        <h3 class="mt-2">
+          Ticket Size (Last 12 Months)
+        </h3>
+        <div echarts [options]="chartOptionTotalSalesMonthAverage" class="demo-chart"></div>
+      </div>
+    </div>
+  </div>
+</div>

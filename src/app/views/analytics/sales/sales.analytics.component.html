@@ -1,0 +1,75 @@
+<div class="row mb-3" *hasRole="[Role.SuperUser,Role.Admin]">
+  <div *ngIf="showskel1" class=" col-12">
+    <div class="col-12  " style="margin: 2%;">
+      <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+    </div>
+    <div class=" col-12  " style="margin: 2%;">
+      <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+    </div>
+  </div>
+  <div class="col-12" *ngIf="!showskel1">
+    <div class="row">
+      <div class=" col-6 px-3" *hasRole="[Role.SuperUser]">
+        <h6>Merchant</h6>
+        <p-dropdown *hasRole="[Role.SuperUser]" [filter]="true" styleClass='drpdown p-inputtext-sm'
+            (onChange)="getSubMerchantsByParents()" [options]="merchantsData" [(ngModel)]="selectedMerchants"
+            placeholder="Search Merchant" optionLabel="name" optionValue="id" class="salesanalytics-merchantDropDown">
+          </p-dropdown>
+          <!-- <p-autocomplete
+          *hasRole="[Role.SuperUser]"
+          placeholder="Search Merchant"
+          [(ngModel)]="selectedMerchants"
+          [suggestions]="merchantsData"
+          (completeMethod)="filterMerchant($event)"
+          field="name"
+          [minLength]="3"
+          (onSelect) = "onSelectSearchedMerchant()"
+          >
+          </p-autocomplete> -->
+          
+      </div>
+      <div class="col-6">
+        <h6>Store</h6>
+        <p-multiSelect styleClass='mymultiselect p-inputtext-sm' (onPanelHide)="applyButton()"
+          tooltipStyleClass='ttltip' #selsubmerchant [maxSelectedLabels]="2" inputId="selmerchantinput"
+          [options]="subMerchantsData" [(ngModel)]="selectedSubMerchants" class="salesanalytics-storeMultiSelect" 
+          defaultLabel="Search Store" optionLabel="name" display="chip">
+        </p-multiSelect>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="row mb-3">
+  <div class="col">
+    <div class="col mr-2 salesanalytics-chartcard" >
+      <h3>
+        Hourly Sales
+      </h3>
+      <div class="row">
+        <div class="col-5">
+          <p-calendar
+          styleClass='p-inputtext-sm' [style]="{'width':'20% !important'}" (onSelect)="onChangeDateHourSalesFF()"
+            [selectOtherMonths]="true" [inputStyle]="{'width':'20% !important'}" [maxDate]="today"
+          [touchUI]="smallscreen" [readonlyInput]="true" [baseZIndex] = "99999"  [(ngModel)]="hoursalesDate1" dateFormat="yy-mm-dd" ></p-calendar>
+        </div>
+        <div class="col-1">
+          <span style="margin-left: 5%;margin-right: 5%;">
+            <img src="/assets/icons/datearrow.svg"/>
+          </span>
+        </div>
+        <div class="col-5">
+          <p-calendar
+          styleClass='p-inputtext-sm' [style]="{'width':'20% !important'}" (onSelect)="onChangeDateHourSalesFF()"
+            [selectOtherMonths]="true" [inputStyle]="{'width':'20% !important'}" [maxDate]="today"
+          [touchUI]="smallscreen" [readonlyInput]="true" [baseZIndex] = "99999"  [(ngModel)]="hoursalesDate2" dateFormat="yy-mm-dd" ></p-calendar>
+        </div>
+      </div>
+      <!-- <div echarts [options]="chartOptionTotalSalesMonthAverage" class="demo-chart"></div> -->
+    </div>
+  </div>
+  <div class="col">
+
+  </div>
+</div>

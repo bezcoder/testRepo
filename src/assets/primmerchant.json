@@ -1,0 +1,77 @@
+{
+    "data": [
+    {
+      "id": "a5a24b8e-6d05-4572-8f09-6f56fb5f70f2",
+      "name": "Beautiful People",
+      "image": "ionibowcher.png",
+      "regdate": "30-12-2021",
+      "bankadded": false,
+      "status" : false
+    
+    },
+    {
+      "id": "50cdd77b-046c-4452-9ef9-7014c6972f52",
+      "name": "Sooper Salon",
+      "image": "ionibowcher.png",
+      "regdate": "30-12-2021",
+      "bankadded": true,
+      "status" : true
+    },
+    {
+      "id": "313d2628-293e-472b-a07a-bf6ceeb9e028",
+      "name": "Beautiful People",
+      "image": "ionibowcher.png",
+      "regdate": "30-12-2021",
+      "bankadded": false,
+      "status" : true
+    },
+    {
+      "id": "b246c60f-5131-4739-861f-12dc2114017a",
+      "name": "Beautiful People",
+      "image": "ionibowcher.png",
+      "regdate": "30-12-2021",
+      "bankadded": true,
+      "status" : false
+    },
+    {
+      "id": "8a4ee6e6-c7e5-46c5-867b-2dce0d0b2ff0",
+      "name": "Beautiful People",
+      "image": "ionibowcher.png",
+      "regdate": "30-12-2021",
+      "bankadded": true,
+      "status" : true
+    },
+    {
+      "id": "803b7cca-c786-4daa-9a7f-fc9a0ffa1333",
+      "name": "Beautiful People",
+      "image": "ionibowcher.png",
+      "regdate": "30-12-2021",
+      "bankadded": true,
+      "status" : true
+    },
+    {
+      "id": "40f43252-3c0a-458c-8eee-7719981e7529",
+      "name": "Sooper Salon",
+      "image": "ionibowcher.png",
+      "regdate": "30-12-2021",
+      "bankadded": true,
+      "status" : true
+    },
+    {
+      "id": "7dcf83bd-b15e-42ab-b1a4-e0f3812b48b1",
+      "name": "Beautiful People",
+      "image": "ionibowcher.png",
+      "regdate": "30-12-2021",
+      "bankadded": true,
+      "status" : false
+    },
+    {
+      "id": "55d70025-e3ac-4b38-99f3-2becd409a5cf",
+      "name": "Beautiful People",
+      "image": "ionibowcher.png",
+      "regdate": "30-12-2021",
+      "bankadded": true,
+      "status" : false
+    }
+  ]
+}

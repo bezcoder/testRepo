@@ -1,0 +1,61 @@
+<!--<c-header [fixed]="true">-->
+<ng-container>
+  <img *ngIf="this.smallscreen" width="10%" style="margin: 1%;" [routerLink]="'dashboard'" src="assets/img/brand/logos-02.png" alt="Zithara Logo"/>
+  <c-toggler
+    class="d-md-none"
+    cSidebarToggle="sidebar"
+    inHeader="true"
+  ></c-toggler>
+  <div style="align-self: center;margin-top: 2%;margin-bottom: 2%;margin-left: 2%;">
+  <p-tag *ngIf="this.showrole"  styleClass="p-mr-2" [value]="this.showrole" [rounded]="true"></p-tag></div>
+  <!-- <c-toggler
+    class="d-sm-down-none mfs-3"
+    cSidebarToggle="sidebar"
+    id="sidebar-toggler"
+    inHeader="true"
+  ></c-toggler> -->
+  <!-- <c-header-brand  class="d-lg-none"> -->
+
+    <!-- <c-icon
+      width="46"
+      height="46"
+      alt="Zithara Logo"
+      use="assets/img/brand/logos-02.png"
+    ></c-icon> -->
+  <!-- </c-header-brand> -->
+  <!-- header links-->
+  <!-- <ul class="c-header-nav d-md-down-none">
+    <li class="c-header-nav-item px-3">
+      <a class="c-header-nav-link" [routerLink]="'/dashboard'">Dashboard</a>
+    </li>
+    <li class="c-header-nav-item px-3">
+      <a class="c-header-nav-link" href="#">Users</a>
+    </li>
+    <li class="c-header-nav-item px-3">
+      <a class="c-header-nav-link" href="#">Settings</a>
+    </li>
+  </ul> -->
+  <!--theme toggler-->
+  <span *ngIf="showname && showgroupname" class="ml-auto" 
+  style="align-self: center;margin-top: 2%;margin-bottom: 2%;"> 
+    {{textreducer(this.fullname) | titlecase}}, {{textreducer(this.groupname) | titlecase}}
+  </span>
+  <!-- <c-toggler title="Toggle Light/Dark Mode" class="ml-auto" id="theme-toggler">
+    <button [class]="'c-header-toggler'" type="button" (click)="toggleTheme()">
+      <c-icon name="cilMoon" size="lg" class="c-d-dark-none"></c-icon>
+      <c-icon name="cilSun" size="lg" class="c-d-default-none"></c-icon>
+    </button>
+  </c-toggler> -->
+  <!--aside toggler-->
+  <!-- <c-toggler cSidebarToggle="aside" id="aside-toggler">
+    <button class="c-header-toggler c-header-nav-link" type="button">
+      <c-icon name="cilApplicationsSettings" size="lg"></c-icon>
+    </button>
+  </c-toggler> -->
+  <!-- <c-subheader class="justify-content-between px-3">
+    <c-breadcrumb
+      class="border-0 m-0 px-0 px-md-3 c-subheader-nav"
+      cBreadcrumbRouter
+    ></c-breadcrumb>
+  </c-subheader> -->
+</ng-container>

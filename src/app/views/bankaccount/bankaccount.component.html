@@ -1,0 +1,194 @@
+<div class="container-fluid">
+ 
+  <div class="row">
+     <div class="col-sm-12" style="padding-left: 2px !important;padding-right: 2px !important;">
+        <div class="card">
+          <div class="card-header bkground paddheaders">
+            <div>
+              <h4 style="padding-top: 2%;padding-bottom: 1%;"><b>Bank Account</b></h4>
+            </div>
+              <div class="row">
+                <div class="col-8"  *hasRole="[Role.SuperUser]">
+                  <div class="fieldttitle">
+                    <span >Select Parent Merchant</span><br>
+                    <p-dropdown styleClass='drpdown p-inputtext-sm'   [options]="parentMerchantsData"  (onChange)="getBankAccountForMerc(selectedParentMerc)"  [(ngModel)]="selectedParentMerc" placeholder="Select Parent" optionLabel="name" optionValue="id" [filter]="true" filterBy="name" ></p-dropdown>
+                  </div>   
+              </div>
+              <!-- <div class="col-4" style="align-self: center !important;" *hasRole="[ Role.SuperUser ]">
+                    <button icon="pi pi-pencil" *ngIf="bankAccountLoaded &&!utilities.isEmptyObject(accountData)" class="p-button-sm" pButton  type="button" class="" label="Edit" (click)="showAddEditBankAccountForm('edit', accountData)"></button>
+              </div> -->
+         
+    
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- <div class="container-fluid" [class.sidebaron]="sidebaron"> -->
+ 
+  <div class="col-xl-8 xl-100 " *ngIf="!showBankAccountForm">
+    <!-- <div class="card" data-intro=""> -->
+      <!-- <div class="card-body text-center"> -->
+        <div class="user-card-image" *ngIf="bankAccountLoaded && utilities.isEmptyObject(accountData)">
+          <h4 class="task-label">
+            No Bank Account Added
+          </h4>
+          <span class="add-task-btn">
+            <button class="btn btn-primary" (click)="showAddEditBankAccountForm('add', '')">
+              <i class="icon-plus mr-1"></i>Add Bank Account
+            </button>
+          </span>
+        </div>
+     
+          <div class="row" *ngIf="bankAccountLoaded && !utilities.isEmptyObject(accountData)">
+            <div class="col-12 col-md-5 mx-auto">
+                <div class="card px-4 py-3 px-md-5 py-md-3">
+                    <div class="row border-bottom py-3">
+                        <div class="col-3 col-md-3">
+                            <img src="../../../assets/images/global-assets/images/bank_icon.svg" class="img-fluid">
+                        </div>
+                        <div class="col-9 col-md-9">
+                            <p class="text-uppercase text-secondary mb-0 mt-1">Beneficiary Name</p>
+                            <p class="h6 font-weight-bold mb-0 mt-1">{{accountData.beneficiaryName}}</p>
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom py-3">
+                        <div class="col-3 col-md-3">
+                            <img src="../../../assets/images/global-assets/images/bank_icon.svg" class="img-fluid">
+                        </div>
+                        <div class="col-9 col-md-9">
+                            <p class="text-uppercase text-secondary mb-0 mt-1">Beneficiary Account Number</p>
+                            <p class="h6 font-weight-bold mb-0 mt-1">{{accountData.beneficiaryAccountNumber}}</p>
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom py-3">
+                        <div class="col-3 col-md-3">
+                            <img src="../../../assets/images/global-assets/images/bank_icon.svg" class="img-fluid">
+                        </div>
+                        <div class="col-9 col-md-9">
+                            <p class="text-uppercase text-secondary mb-0 mt-1">Beneficiary IFSC</p>
+                            <p class="h6 font-weight-bold mb-0 mt-1">{{accountData.beneficiaryIfscCode}}</p>
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom py-3">
+                        <div class="col-3 col-md-3">
+                            <img src="../../../assets/images/global-assets/images/bank_icon.svg" class="img-fluid">
+                        </div>
+                        <div class="col-9 col-md-9">
+                            <p class="text-uppercase text-secondary mb-0 mt-1">Beneficiary Mobile No.</p>
+                            <p class="h6 font-weight-bold mb-0 mt-1">{{accountData.beneficiaryMobile}}</p>
+                        </div>
+                    </div>
+
+                    <div class="row border-bottom py-3">
+                        <div class="col-3 col-md-3">
+                            <img src="../../../assets/images/global-assets/images/bank_icon.svg" class="img-fluid">
+                        </div>
+                        <div class="col-9 col-md-9">
+                            <p class="text-uppercase text-secondary mb-0 mt-1">Beneficiary Email ID</p>
+                            <p class="h6 font-weight-bold mb-0 mt-1">{{accountData.beneficiaryEmail}}</p>
+                        </div>
+                    </div>
+
+                    <div class="row py-3">
+                        <div class="col-3 col-md-3">
+                            <img src="../../../assets/images/global-assets/images/bank_icon.svg" class="img-fluid">
+                        </div>
+                        <div class="col-9 col-md-9">
+                            <p class="text-uppercase text-secondary mb-0 mt-1">Beneficiary VPA</p>
+                            <p class="h6 font-weight-bold mb-0 mt-1">{{accountData.vpa}}</p>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        </div>
+    <!-- </div> -->
+  <!-- </div> -->
+  <!-- <div class="card"> -->
+    <!-- <div class="card-body"> -->
+      <div class="row"  *ngIf="showBankAccountForm">
+        <div class="authentication-box contact-profile-form">
+          <div class="card mt-4">
+            <div class="card-header">
+              <h4>{{mode | titlecase }} Bank Details</h4>
+            </div>
+              <div class="card-body">
+                <form class="theme-form" [formGroup]="addBankAccount">
+                  <div class="form-group">
+                      <label class="col-form-label pt-0">Beneficiary Name</label>
+                      <input class="form-control" formControlName="beneficiaryName" type="text" required="">
+                      <ng-container *ngFor="let validation of validationMessages.beneficiaryName">
+                        <div class="text text-danger mt-1" *ngIf="addBankAccount.get('beneficiaryName').hasError(validation.type) && (addBankAccount.get('beneficiaryName').dirty || addBankAccount.get('beneficiaryName').touched)">
+                          {{ validation.message }}
+                        </div>
+                      </ng-container>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-form-label pt-0">Beneficiary Account Number</label>
+                    <input class="form-control" formControlName="beneficiaryAccountNumber" (keypress)="utilities.isNumberKey($event)" type="text" required="">
+                    <ng-container *ngFor="let validation of validationMessages.beneficiaryAccountNumber">
+                      <div class="text text-danger mt-1" *ngIf="addBankAccount.get('beneficiaryAccountNumber').hasError(validation.type) && (addBankAccount.get('beneficiaryAccountNumber').dirty || addBankAccount.get('beneficiaryAccountNumber').touched)">
+                        {{ validation.message }}
+                      </div>
+                    </ng-container>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-form-label pt-0">Beneficiary IFSC</label>
+                    <input class="form-control" style="text-transform:uppercase" formControlName="beneficiaryIfscCode" type="text" required="">
+                    <ng-container *ngFor="let validation of validationMessages.beneficiaryIfscCode">
+                      <div class="text text-danger mt-1" *ngIf="addBankAccount.get('beneficiaryIfscCode').hasError(validation.type) && (addBankAccount.get('beneficiaryIfscCode').dirty || addBankAccount.get('beneficiaryIfscCode').touched)">
+                        {{ validation.message }}
+                      </div>
+                    </ng-container>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-form-label pt-0">Beneficiary Mobile</label>
+                    <input class="form-control" formControlName="beneficiaryMobile" (keypress)="utilities.checkMobileNumberLength($event);utilities.isNumberKey($event)" type="text" required="">
+                    <ng-container *ngFor="let validation of validationMessages.beneficiaryMobile">
+                      <div class="text text-danger mt-1" *ngIf="addBankAccount.get('beneficiaryMobile').hasError(validation.type) && (addBankAccount.get('beneficiaryMobile').dirty || addBankAccount.get('beneficiaryMobile').touched)">
+                        {{ validation.message }}
+                      </div>
+                    </ng-container>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-form-label pt-0">Beneficiary Email</label>
+                    <input class="form-control" formControlName="beneficiaryEmail" type="text" required="">
+                    <ng-container *ngFor="let validation of validationMessages.beneficiaryEmail">
+                      <div class="text text-danger mt-1" *ngIf="addBankAccount.get('beneficiaryEmail').hasError(validation.type) && (addBankAccount.get('beneficiaryEmail').dirty || addBankAccount.get('beneficiaryEmail').touched)">
+                        {{ validation.message }}
+                      </div>
+                    </ng-container>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-form-label pt-0">VPA</label>
+                    <input class="form-control" formControlName="vpa" type="text" required="">
+                    <!-- <ng-container *ngFor="let validation of validationMessages.vpa">
+                      <div class="text text-danger mt-1" *ngIf="addBankAccount.get('vpa').hasError(validation.type) && (addBankAccount.get('vpa').dirty || addBankAccount.get('vpa').touched)">
+                        {{ validation.message }}
+                      </div>
+                    </ng-container> -->
+                  </div>
+                  <div class="form-group form-row mt-3 mb-0">
+                      <button class="btn btn-primary mr-2" [disabled]="!addBankAccount.valid"
+                          (click)="addBankAccountMerchant(addBankAccount.value)" type="button"> Submit
+                      </button>
+                      <button class="btn btn-primary mr-2" (click)="resetAndCancel()" type="button">
+                        Cancel
+                      </button>
+                  </div>
+                </form>
+              </div>
+          </div>
+        </div>
+      </div>
+    <!-- </div> -->
+  <!-- </div> -->
+<!-- </div> -->
