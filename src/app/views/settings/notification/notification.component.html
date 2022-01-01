@@ -1,0 +1,70 @@
+<p-toast key="myKey1" position="top-right" [baseZIndex]="999999" ></p-toast>
+
+<p-card>
+<div class="col-12" style="margin-bottom: 2%;">
+      <span style="font-weight: bold;">Notifications</span>
+    </div>
+    <div style="margin-bottom: 4%;" class="col-6">
+      <div class="row">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-6">
+              <span style="font-size: smaller;font-weight: bold;">Successful Transaction Alert</span>
+            </div>
+            <div class="col-6">
+              <p-inputSwitch (onChange)="activateConfig('trans',$event)" [(ngModel)]="this.transactionConfig.active"></p-inputSwitch>
+              <div style="float: right;">
+              <p-button type="button"  class="bwidth mg-1"  label="Save" styleClass="p-button-success bwidth" (click)="saveConfig('trans')" ></p-button>
+            </div>
+          </div>
+        </div>
+        </div>
+        <div class="col-6">
+          <span style="font-size: smaller;">Add Phone Number</span>
+          <p-chips (onAdd)="cleanPhoneNumberList('trans')" allowDuplicate="false" styleClass="p-inputtext-sm notify-chips" [(ngModel)]="this.transactionConfig.phones">
+          </p-chips>
+        </div>
+        <div class="col-6">
+          <span style="font-size: smaller;" >Add Emails</span><br>
+          <p-chips (onAdd)="cleanEmailList('trans')" allowDuplicate="false" styleClass="p-inputtext-sm notify-chips" [(ngModel)]="this.transactionConfig.emails">
+          </p-chips>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="col-6">
+      <div class="row">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-6">
+              <span style="font-size: smaller;font-weight: bold;">Settlement Alert</span>
+            </div>
+            <div class="col-6">
+              <p-inputSwitch (onChange)="activateConfig('settle',$event)" [(ngModel)]="this.settlementConfig.active"></p-inputSwitch>
+              <div style="float: right;">
+              <p-button type="button" class="bwidth mg-1"  label="Save" styleClass="p-button-success bwidth" (click)="saveConfig('settle')" ></p-button>
+            </div>
+          </div>
+
+
+        </div>
+        </div>
+        <div class="col-6">
+          <span style="font-size: smaller;">Add Phone Number</span>
+          <p-chips (onAdd)="cleanPhoneNumberList('settle')" allowDuplicate="false" styleClass="p-inputtext-sm notify-chips" [(ngModel)]="this.settlementConfig.phones">
+
+          </p-chips>
+        </div>
+        <div class="col-6">
+          <span style="font-size: smaller;" >Add Emails</span><br>
+          <p-chips (onAdd)="cleanEmailList('settle')" allowDuplicate="false" styleClass="p-inputtext-sm notify-chips" [(ngModel)]="this.settlementConfig.emails">
+          </p-chips>
+        </div>
+
+      </div>
+
+    </div>
+
+</p-card>

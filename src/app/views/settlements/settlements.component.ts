@@ -60,6 +60,7 @@ export class SettlementsComponent implements OnInit {
   openDialog: boolean;
   fromDate: Date = new Date();
   toDate: Date = new Date();
+  totalSettlements: any;
   // @ViewChild('selsubmerchant') selsubmerchant;
 
   constructor(private formbuilder: FormBuilder,
@@ -253,10 +254,9 @@ export class SettlementsComponent implements OnInit {
     // tslint:disable-next-line: no-shadowed-variable
     .subscribe(data => {
       console.log(data);
-
-
-      this.settlementsData = data.content;
-      this.settlementsDataCount = data.total;
+      this.settlementsData = data.pages.content;
+      this.totalSettlements = data.grand_total;
+      this.settlementsDataCount = data.pages.total;
       console.log(this.settlementsData);
       this.loading = false
       this.showfirst = true

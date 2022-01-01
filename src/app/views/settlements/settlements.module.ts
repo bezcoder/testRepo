@@ -13,8 +13,9 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
 import {DialogModule} from 'primeng/dialog';
 import { MySharedModule } from '../../shared/shared.module';
-import { CardModule } from '@coreui/angular';
+import { ToastModule } from '@coreui/angular';
 import { SkeletonModule } from 'primeng/skeleton';
+import { CardModule } from 'primeng/card';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { SkeletonModule } from 'primeng/skeleton';
     MySharedModule,
     SidebarModule,
     ListboxModule,
+    ToastModule,
     TableModule,
     ButtonModule,
     CalendarModule,

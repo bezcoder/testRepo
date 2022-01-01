@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
 import { IconSetService } from '@coreui/icons-angular';
-// import { brandSet, flagSet, freeSet } from '@coreui/icons';
+import { brandSet, flagSet, freeSet } from '@coreui/icons';
 import { cilMoon, cilSun, cilApplicationsSettings, cilX } from '@coreui/icons';
 import { ZithapiService } from './shared/services/zithapi.service';
 

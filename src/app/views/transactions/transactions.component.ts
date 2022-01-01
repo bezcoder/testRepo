@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, ViewChildren, QueryList, ElementRef, HostListener, ViewChild, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ZithapiService } from '../../shared/services/zithapi.service';
 import { Observable } from 'rxjs';
 import { LazyLoadEvent, MessageService, PrimeNGConfig } from 'primeng/api';
@@ -10,6 +10,7 @@ import { jsPDF } from "jspdf";
 import autoTable from 'jspdf-autotable'
 import { Role } from '../../model/roles';
 import { RoleService } from '../../services/role.service';
+import { CountdownComponent, CountdownEvent } from 'ngx-countdown';
 
 
 @Component({
@@ -20,6 +21,12 @@ import { RoleService } from '../../services/role.service';
 })
 export class TransactionsComponent implements OnInit,OnDestroy {
   form: FormGroup;
+  otpMessage: string;
+  inputOTP: string;
+  @ViewChild('cd',{static:false}) private countdown:CountdownComponent
+  notify: string;
+  disableResend: boolean = true;
+
   // merchantListSettings: IDropdownSettings = {};
   // subMerchantListSettings: IDropdownSettings = {};
   public subMerchantsData: any;
@@ -48,7 +55,7 @@ export class TransactionsComponent implements OnInit,OnDestroy {
   today = new Date()
   initstart = new Date()
   displayOTP = false;
-  inputOTP
+  // inputOTP
 
   transaction_img  = {
     "bob" : "../../../assets/img/upi_logo/bob.png",
@@ -95,7 +102,6 @@ export class TransactionsComponent implements OnInit,OnDestroy {
   pdftransactionsData: any;
   xlalltransactionsData: any;
   refundcount: any;
-  otpMessage: any;
   lastLazyLoadEvent: LazyLoadEvent;
   searchterm : string;
   selectedTerminals: any;
@@ -116,9 +122,14 @@ export class TransactionsComponent implements OnInit,OnDestroy {
   eventlisten: void;
   fromDate: Date = new Date();
   toDate: Date = new Date();
+  displayRefundDialog: boolean;
+  showRefunddialogdata: boolean;
+  transactionid: string;
+  merchantIdForOtp: any;
 
   constructor(private formbuilder: FormBuilder, private router: Router,
     private toastr: MessageService,
+    private route: ActivatedRoute,
     private zithApiService: ZithapiService,
     private roleService: RoleService,
     private primengConfig: PrimeNGConfig,
@@ -146,11 +157,50 @@ hideDialog(){
   this.dialogdata = {}
   this.showdialogdata = false
 }
+showDialogRefund(id) {
+  console.log(id);
+  // this.merchantIdForOtp = id;
+  this.initiateRefund(id)
+  this.displayRefundDialog = true;
+}
+
+hideDialogRefund(){
+this.dialogdata = {}
+this.showRefunddialogdata = false
+}
+checkCountdown(e: CountdownEvent) {
+  if(e.action === 'done'){
+    this.otpMessage = "OTP expired"
+    this.disableResend = false
+  }
+}
+resend(){
+  this.countdown.restart()
+  this.initiateRefund(this.transactionid)
+}
+
+validate(){
+  console.log(this.inputOTP.toString().length)
+  if(this.inputOTP.toString().toString().length !== 6){
+    this.showError("Incorrect OTP")
+    return
+  }
+
+  this.zithApiService.validateRefundOTP(this.transactionid,this.inputOTP).subscribe((data:string) => {
+    if(data.toLowerCase().includes('refund initiated')){
+      this.router.navigate(['refunds']);
+      this.showSuccess(data)
+
+    } else {
+      this.showError(data)
+    }
+  })
+}
 
   ngOnInit(): void {
 
     this.initMerchant()
-    // this.initstart.setDate(this.initstart.getDate() - 1)
+    // this.initstart.setDate(this.insitstart.getDate() - 1)
     // this.source$.subscribe();
     this.form = this.formbuilder.group({
       eventName: new FormControl('transactionsdatepicker'),
@@ -793,8 +843,22 @@ countRefunds(trans){
 
 }
 
-initiateRefund(transaction:string){
-  this.router.navigate(['transactions/initiate-refund'],{ queryParams: {id: transaction} });
+initiateRefund(transactionid:string){
+  this.zithApiService.initiateRefundOTP(transactionid).subscribe(
+    data => {
+      if(data.toString().toLowerCase().includes("otp sent")){
+        this.showSuccess(data);
+        this.otpMessage = data
+        this.countdown.begin()
+        this.disableResend = true
+      } else {
+        this.showError(data);
+      }
+  },
+  error => {
+
+  })
+
 }
 
 getTerminals(){

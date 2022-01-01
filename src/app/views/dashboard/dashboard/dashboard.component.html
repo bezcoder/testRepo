@@ -1,20 +1,27 @@
-<div class="row">
+<div class="row mb-4 border-bottom-dash-header">
   <div class="col-9">
-    <span class="h4">
+    <span class="h6 headingwelcome mainh">
       Welcome
     </span>
-    <span *ngIf="showname && showgroupname" class="h4 mb-4">
+    <span *ngIf="showname && showgroupname" class="h6 headingwelcome mainh mb-3">
       {{textreducer(this.fullname) | titlecase}}
     </span>
-    <span class="h4">
+    <span class="h6 headingwelcome mb-3" *hasRole="[Role.SuperUser,Role.Admin]">
       (Merchant level view)
     </span>
-    <p *ngIf="showname && showgroupname" class="h4 mt-2">
+    <!-- <span class="h4" *hasRole="[Role.SuperUser,Role.Admin]">
+      (Store level view)
+    </span> -->
+    <!-- <span class="h4">
+      (Merchant level view)
+    </span> -->
+    <p *ngIf="showname && showgroupname" class="h4 headingmerchantnamedash mt-3 mb-4">
       {{textreducer(this.groupname) | titlecase}}
     </p>
   </div>
   <div class="col-3 text-center">
-    <div class="mb-2 px-3 py-3" style="background: rgba(255, 222, 50, 0.15);
+    <!--*********** To be used in future -->
+    <!-- <div class="mb-2 px-3 py-3" style="background: rgba(255, 222, 50, 0.15);
   border: 1px solid #FFDE32;
   box-sizing: border-box;
   border-radius: 10px;">
@@ -24,8 +31,8 @@
       <p>
         Mobile No: 9492052140
       </p>
-    </div>
-
+    </div> -->
+    <!--*********** To be used in future -->
   </div>
 </div>
 <!-- <hr class="mt-2 mb-3" style="    width: 200% !important;position: relative;left: -5%;" /> -->
@@ -42,34 +49,37 @@
     <div class="row">
       <div class=" col-6 px-3" *hasRole="[Role.SuperUser]">
         <h6>Merchant</h6>
-        <p-dropdown *hasRole="[Role.SuperUser]" [filter]="true" styleClass='drpdown p-inputtext-sm'
+        <!-- <p-dropdown *hasRole="[Role.SuperUser]" [filter]="true" styleClass='drpdown p-inputtext-sm'
           (onChange)="getSubMerchantsByParents()" [options]="merchantsData" [(ngModel)]="selectedMerchants"
           placeholder="Search Merchant" optionLabel="name" optionValue="id" class="dashboard-merchantDropDown">
-        </p-dropdown>
-        <!-- <p-autocomplete
-          *hasRole="[Role.SuperUser]"
-          placeholder="Search Merchant"
-          [(ngModel)]="selectedMerchants"
-          [suggestions]="merchantsData"
-          (completeMethod)="filterMerchant($event)"
-          field="name"
-          [minLength]="3"
-          (onSelect) = "onSelectSearchedMerchant()"
-          >
-          </p-autocomplete> -->
-
+        </p-dropdown> -->
+        <div class="p-inputgroup" *ngIf="merchantsData">
+          <span class="p-inputgroup-addon border-right-0 bg-white"> <i class="pi pi-search"></i> </span>
+           <p-dropdown *hasRole="[Role.SuperUser]" [filter]="true" styleClass='drpdown p-inputtext-sm border-left-none'
+           (onChange)="getSubMerchantsByParents()" [options]="merchantsData" [(ngModel)]="selectedMerchants"
+           placeholder="Search Merchant" optionLabel="name" optionValue="id" class="dashboard-merchantDropDown"></p-dropdown>
+          <!-- <span class="p-inputgroup-addon border-right-0 bg-white"> <i class="pi pi-search"></i> </span>
+          <p-autoComplete placeholder="Search Merchant" styleClass='searchdrpdwn input-border-radius w-100 border-left-none'
+            [(ngModel)]="selectedMerchants" [suggestions]="merchantsData" [showEmptyMessage]="true"
+            emptyMessage="No Merchants Found" (completeMethod)="filterMerchant($event)" [forceSelection]="true"
+            field="name" [minLength]="3" (onSelect)="getSubMerchantsByParents()" class="dashboard-merchantDropDown"></p-autoComplete> -->
+        </div>
       </div>
       <div class="col-6">
         <h6>Store</h6>
-        <p-multiSelect styleClass='mymultiselect p-inputtext-sm' (onPanelHide)="applyButton()"
+        <div class="p-inputgroup">
+          <span class="p-inputgroup-addon border-right-0 bg-white"> <i class="pi pi-search"></i> </span>
+          <p-autoComplete placeholder="Search Store" [multiple]="true" styleClass='searchdrpdwn input-border-radius w-100 border-left-none'
+            [(ngModel)]="selectedSubMerchants" [suggestions]="subMerchantsData" [showEmptyMessage]="true"
+            emptyMessage="No Merchants Found"  [forceSelection]="true"
+            field="name" [minLength]="3" (onSelect)="applyButton()" class="dashboard-merchantDropDown"></p-autoComplete>
+        </div>
+        <!-- (completeMethod)="filterSubMerchant($event)" -->
+        <!-- <p-multiSelect styleClass='mymultiselect p-inputtext-sm' (onPanelHide)="applyButton()"
           tooltipStyleClass='ttltip' #selsubmerchant [maxSelectedLabels]="2" inputId="selmerchantinput"
           [options]="subMerchantsData" [(ngModel)]="selectedSubMerchants" class="dashboard-storeMultiSelect"
           defaultLabel="Search Store" optionLabel="name" display="chip">
-          <!-- <p-footer >
-          <button style="margin: 1%;" pButton type="button" label="Close" style="background: white;color: black;" (click)="closemulti()"></button>
-          <button style="margin: 1%;" pButton style="float: right;background-color: #689F38;" type="button" label="Select" (click)="closemulti();applyButton()"></button>
-        </p-footer> -->
-        </p-multiSelect>
+        </p-multiSelect> -->
       </div>
     </div>
 
@@ -78,7 +88,15 @@
 
 <div class="row mb-3">
   <div class="col">
-    <div class="dashboard-summary-cards">
+    <div *ngIf="showskel1" class=" col-12">
+      <div class="col-12  " style="margin: 2%;">
+        <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+      </div>
+      <div class=" col-12  " style="margin: 2%;">
+        <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+      </div>
+    </div>
+    <div class="dashboard-summary-cards"  *ngIf="!showskel1">
       <div class="card-body dashboard-summary-card-body border-0">
         <div class="media d-flex">
           <div class="align-self-center mr-2">
@@ -87,12 +105,21 @@
           <div class="media-body text-left">
             <h3 class="dashboarddatametricsheading">{{todaySale | inr}}</h3>
             <span class="dashboarddatametricstitle">Today’s Sale</span>
-            <span class="dashboarddatamerictitle1 mr-1" *ngIf="(todaySale >= yesterdaySale)">
+            <span class="dashboarddatamerictitle1 mr-1" *ngIf="(todaySale > yesterdaySale)">
               <img style="width: 15px;" src="assets/icons/icon-trending-up.svg" />
+              <span class="px-1" style="color: #4BDE97;">{{(((todaySale - yesterdaySale)/todaySale)*100)| number:'1.0-0'}}%</span>
+              Last day
+            </span>
+            <span class="dashboarddatamerictitle1 mr-1" *ngIf="(todaySale == yesterdaySale)">
+              <img style="width: 15px;" src="assets/icons/icon-trending-up.svg" />
+              <span class="px-1" style="color: #4BDE97;">
+              0%
+              </span>
               Last day
             </span>
             <span class="dashboarddatamerictitle1 mr-1" *ngIf="(todaySale < yesterdaySale)">
               <img style="width: 15px;" src="assets/icons/icon-trending-up.svg" />
+              <span class="px-1" style="color: #4BDE97;">{{((-(todaySale - yesterdaySale)/todaySale)*100)| number:'1.0-0'}}%</span>
               Last day
             </span>
             <span class="dashboarddatamerictitle1">
@@ -102,18 +129,26 @@
       </div>
       <div class="card-footer border-0 pt-2 dashboard-summary-card-footer">
         <div class="row">
-            <h3 class="mr-1 dashboardcardfooterheading1">
-              {{yesterdaySale | inrlakh}}
-            </h3>
-            <h3 class="font-light dashboardcardfooterheading2">
-              Yesterday’s sale
-            </h3>
+          <h3 class="mr-1 dashboardcardfooterheading1">
+            {{yesterdaySale | inrlakh}}
+          </h3>
+          <h3 class="font-light dashboardcardfooterheading2">
+            Yesterday’s sale
+          </h3>
         </div>
       </div>
     </div>
   </div>
   <div class="col">
-    <div class="dashboard-summary-cards">
+    <div *ngIf="showskel1" class=" col-12">
+      <div class="col-12  " style="margin: 2%;">
+        <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+      </div>
+      <div class=" col-12  " style="margin: 2%;">
+        <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+      </div>
+    </div>
+    <div class="dashboard-summary-cards" *ngIf="!showskel1">
       <div class="card-body dashboard-summary-card-body dashboard-summary-card-body border-0">
         <div class="media d-flex">
           <div class="align-self-center mr-2">
@@ -135,13 +170,21 @@
           </h3>
         </div>
         <div class="row d-inline-flex  settleddatecardfooter">
-            on 03.12.2021, 3:40pm
+          on 03.12.2021, 3:40pm
         </div>
       </div>
     </div>
   </div>
   <div class="col">
-    <div class="dashboard-summary-cards">
+    <div *ngIf="showskel1" class=" col-12">
+      <div class="col-12  " style="margin: 2%;">
+        <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+      </div>
+      <div class=" col-12  " style="margin: 2%;">
+        <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+      </div>
+    </div>
+    <div class="dashboard-summary-cards" *ngIf="!showskel1">
       <div class="card-body dashboard-summary-card-body dashboard-summary-card-body border-0">
         <div class="media d-flex">
           <div class="align-self-center mr-2">
@@ -150,12 +193,21 @@
           <div class="media-body text-left">
             <h3 class="dashboarddatametricsheading">{{currentMonthSales | inr}}</h3>
             <span class="dashboarddatametricstitle">{{currentMonth}} Sales</span>
-            <span class=" dashboarddatamerictitle1"  *ngIf="(currentMonthSales >= previousMonthSales)">
+            <span class=" dashboarddatamerictitle1" *ngIf="(currentMonthSales > previousMonthSales)">
               <img style="width: 15px;" src="assets/icons/icon-trending-up.svg" />
+              <span class="px-1" style="color: #4BDE97;">{{(((currentMonthSales - previousMonthSales)/previousMonthSales)*100)| number:'1.0-0'}}%</span>
+              Last Month
+            </span>
+            <span class="dashboarddatamerictitle1 mr-1" *ngIf="(currentMonthSales == previousMonthSales)">
+              <img style="width: 15px;" src="assets/icons/icon-trending-up.svg" />
+              <span class="px-1" style="color: #4BDE97;">
+              0%
+              </span>
               Last Month
             </span>
             <span class=" dashboarddatamerictitle1" *ngIf="(currentMonthSales < previousMonthSales)">
               <img style="width: 15px;" src="assets/icons/icon-trending-up.svg" />
+              <span class="px-1" style="color: #4BDE97;">{{((-(currentMonthSales - previousMonthSales)/previousMonthSales)*100)| number:'1.0-0'}}%</span>
               Last Month
             </span>
           </div>
@@ -163,18 +215,26 @@
       </div>
       <div class="card-footer border-0 pt-2 dashboard-summary-card-footer">
         <div class="row">
-            <h3 class="mr-1 dashboardcardfooterheading1">
-              {{previousMonthSales | inr}}
-            </h3>
-            <h4 class="font-light dashboardcardfooterheading2">
-              {{previousMonth}}
-            </h4>
+          <h3 class="mr-1 dashboardcardfooterheading1">
+            {{previousMonthSales | inr}}
+          </h3>
+          <h4 class="font-light dashboardcardfooterheading2">
+            {{previousMonth}}
+          </h4>
         </div>
       </div>
     </div>
   </div>
   <div class="col">
-    <div class="dashboard-summary-cards">
+    <div *ngIf="showskel1" class=" col-12">
+      <div class="col-12  " style="margin: 2%;">
+        <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+      </div>
+      <div class=" col-12  " style="margin: 2%;">
+        <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+      </div>
+    </div>
+    <div class="dashboard-summary-cards" *ngIf="!showskel1">
       <div class="card-body dashboard-summary-card-body border-0">
         <div class="media d-flex">
           <div class="align-self-center mr-2">
@@ -183,28 +243,37 @@
           <div class="media-body text-left">
             <h3 class="dashboarddatametricsheading">{{todayVisits}}</h3>
             <span class="dashboarddatametricstitle">Visits Today</span>
-            <span class="dashboarddatamerictitle1 mr-1" *ngIf="(todayVisits >= yesterdayVisits)">
+            <span class="dashboarddatamerictitle1 mr-1" *ngIf="(todayVisits > yesterdayVisits)">
               <img style="width: 15px;" src="assets/icons/icon-trending-up.svg" />
+              <span class="px-1" style="color: #4BDE97;">{{todayVisits - yesterdayVisits}}</span>
               Customers
             </span>
-            <span class="dashboarddatamerictitle1 mr-1"  *ngIf="(todayVisits <  yesterdayVisits)">
+            <span class="dashboarddatamerictitle1 mr-1" *ngIf="(todayVisits == yesterdayVisits)">
               <img style="width: 15px;" src="assets/icons/icon-trending-up.svg" />
+              <span class="px-1" style="color: #4BDE97;">
+              0
+              </span>
+              Customers
+            </span>
+            <span class="dashboarddatamerictitle1 mr-1" *ngIf="(todayVisits <  yesterdayVisits)">
+              <img style="width: 15px;" src="assets/icons/icon-trending-up.svg" />
+              <span class="px-1" style="color: #4BDE97;">{{-(todayVisits - yesterdayVisits)}}</span>
               Customers
             </span>
             <span class="">
-              
+
             </span>
           </div>
         </div>
       </div>
       <div class="card-footer border-0 pt-2 dashboard-summary-card-footer">
         <div class="row">
-            <h3 class="mr-1 dashboardcardfooterheading1">
-              {{yesterdayVisits}}
-            </h3>
-            <h3 class="font-light dashboardcardfooterheading2">
-              Visits yesterday
-            </h3>
+          <h3 class="mr-1 dashboardcardfooterheading1">
+            {{yesterdayVisits}}
+          </h3>
+          <h3 class="font-light dashboardcardfooterheading2">
+            Visits yesterday
+          </h3>
         </div>
       </div>
     </div>
@@ -214,12 +283,14 @@
   <div class="col">
     <div class="row">
       <div class="col" *ngIf="showskel2">
-
+        <div class="custom-skeleton p-p-4">
+          <p-skeleton width="100%" height="150px"></p-skeleton>
+        </div>
       </div>
       <div class="col mr-3 dashboard-chartcard" *ngIf="!showskel2">
-        <h3 class="mt-2">
+        <!-- <h3 class="mt-2">
           Total Customers
-        </h3>
+        </h3> -->
         <div echarts [options]="new_repeat_options" style="height: 325px;" class="demo-chart"></div>
       </div>
     </div>
@@ -227,21 +298,49 @@
   <div class="col">
     <div class="row">
       <div class="col" *ngIf="showskel2">
-
+        <div class="custom-skeleton p-p-4">
+          <p-skeleton width="100%" height="150px"></p-skeleton>
+        </div>
       </div>
       <div class="col mr-2 dashboard-chartcard" *ngIf="!showskel2">
-        <h3 class="mt-2">
+        <h3 class="mt-4">
           Customer Feedback
         </h3>
-        <div echarts [options]="customerFeedbackOptions" style="height: 250px;" class=""></div>
+        <div echarts [options]="customerFeedbackOptions" style="height: 300px;" class=""></div>
         <div class="separator">Last 6 months </div>
-        <div class="row p-3">
+        <div class="idb-block-footer p-0">
+          <ul class="footer-border border-0">
+            <li class="w-33 pt-0">
+              <h5 class="font-sm text-center">Negative Feedback</h5>
+
+              <span class="font-lg">
+                <img src="assets/icons/thumbsdown.svg" />
+                {{negativeFeddback}}
+              </span>
+            </li>
+            <li class="w-33 pt-0">
+              <h5 class="font-sm text-center">Neutral</h5>
+              <span class="font-lg">
+                <img src="assets/icons/average.svg" />
+                {{neutralFeddback}}
+              </span>
+            </li>
+            <li class="w-33  pt-0">
+              <h5 class="font-sm text-center">Positive Feedback</h5>
+              <span class="font-lg">
+                <img src="assets/icons/thumbsup.svg" />
+                {{positiveFeddback}}
+              </span>
+            </li>
+          </ul>
+        </div>
+        <!-- <div class="row p-3">
           <div class="col negativefeedback">
             <div class="row">
               Negative Feedback
             </div>
             <div class="row">
-              <img src="assets/icons/thumbsdown.svg"/>
+              <img src="assets/icons/thumbsdown.svg" />
             </div>
           </div>
           <div class="full-height one"></div>
@@ -250,8 +349,8 @@
               Neutral
             </div>
             <div class="row">
-              <img src="assets/icons/average.svg"/>
-              
+              <img src="assets/icons/average.svg" />
+
             </div>
           </div>
           <div class="full-height two"></div>
@@ -260,12 +359,12 @@
               Positive Feedback
             </div>
             <div class="row">
-              <img src="assets/icons/thumbsup.svg"/>
-              
+              <img src="assets/icons/thumbsup.svg" />
+
             </div>
           </div>
 
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -274,26 +373,31 @@
   <div class="col">
     <div class="row">
       <div class="col" *ngIf="showskel2">
-
+        <div class="custom-skeleton p-p-4">
+          <p-skeleton width="100%" height="150px"></p-skeleton>
+        </div>
       </div>
       <div class="col mr-3 dashboard-chartcard" *ngIf="!showskel2">
-        <h3 class="mt-2">
+        <h3 class="mt-4">
           Total Sales (Last 7 Days)
         </h3>
         <!-- <div echarts [options]="new_repeat_options" class="demo-chart"></div> -->
-        <div echarts [options]="chartOptionTotalSalesTodaySum" class="demo-chart"></div>
+        <div echarts [options]="chartOptionTotalSalesTodaySum" style="height: 300px;" class="demo-chart"></div>
       </div>
     </div>
   </div>
   <div class="col">
     <div class="row">
       <div class="col" *ngIf="showskel2">
+        <div class="custom-skeleton p-p-4">
+          <p-skeleton width="100%" height="150px"></p-skeleton>
+        </div>
       </div>
       <div class="col mr-2 dashboard-chartcard" *ngIf="!showskel2">
-        <h3>
+        <h3 class="mt-4">
           Ticket Size (Last 7 days)
         </h3>
-        <div echarts [options]="chartOptionTotalSalesTodayAverage" class="demo-chart"></div>
+        <div echarts [options]="chartOptionTotalSalesTodayAverage" style="height: 300px;" class="demo-chart"></div>
       </div>
     </div>
   </div>
@@ -302,26 +406,30 @@
   <div class="col">
     <div class="row">
       <div class="col" *ngIf="showskel2">
-
+        <div class="custom-skeleton p-p-4">
+          <p-skeleton width="100%" height="150px"></p-skeleton>
+        </div>
       </div>
       <div class="col mr-3 dashboard-chartcard" *ngIf="!showskel2">
-        <h3 class="mt-2">
+        <h3 class="mt-4">
           Total Sales (Last 12 months)
         </h3>
-        <div echarts [options]="chartOptionTotalSalesMonthSum" class="demo-chart"></div>
+        <div echarts [options]="chartOptionTotalSalesMonthSum" style="height: 300px;" class="demo-chart"></div>
       </div>
     </div>
   </div>
   <div class="col">
     <div class="row">
       <div class="col" *ngIf="showskel2">
-
+        <div class="custom-skeleton p-p-4">
+          <p-skeleton width="100%" height="150px"></p-skeleton>
+        </div>
       </div>
       <div class="col mr-2 dashboard-chartcard" *ngIf="!showskel2">
-        <h3 class="mt-2">
+        <h3 class="mt-4">
           Ticket Size (Last 12 Months)
         </h3>
-        <div echarts [options]="chartOptionTotalSalesMonthAverage" class="demo-chart"></div>
+        <div echarts [options]="chartOptionTotalSalesMonthAverage" style="height: 300px;" class="demo-chart"></div>
       </div>
     </div>
   </div>

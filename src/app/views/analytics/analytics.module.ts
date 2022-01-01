@@ -16,6 +16,7 @@ import { CustomerAnalyticsComponent } from './customers/customer.analytics.compo
 import {CalendarModule} from 'primeng/calendar';
 import {SliderModule} from 'primeng/slider';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
     GridModule,
     // NgbModule,
     // ChartistModule,
+    AutoCompleteModule,
     ChartsModule,
     AnalyticsRoutingModule,
     // NgxChartsModule,

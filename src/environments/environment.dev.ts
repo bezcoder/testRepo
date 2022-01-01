@@ -4,7 +4,7 @@ export const environment = {
   // serverBaseUrl: 'https://testing.merchant.zithara.in/',
   // serverBaseUrl: 'http://localhost:8150',
   serverBaseUrl: 'http://localhost:8150',
-  // serverBaseUrl: 'http://138.201.127.9:8150',
+  // serverBaseUrl: 'http://138.201.127.9:81/50',
   authApiPath: 'authapp',
   merchantApiPath: 'merchantapp',
   transactionApiPath: 'zitrans',

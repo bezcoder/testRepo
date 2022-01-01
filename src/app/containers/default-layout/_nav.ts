@@ -8,19 +8,19 @@ export const navItems: MyINavData[] = [
   {
     name: 'Dashboard',
     url: '/dashboard',
-    icon: 'cil-speedometer',
+    icon: 'dashboard-icon-nav',
     roles : ['superuser','endadmin']
   },
   {
     name: 'Sales Analytics',
     url: '/analytics/sales',
-    icon: 'cil-speedometer',
+    icon: 'salesanalytics-icon-nav',
     roles : ['superuser','endadmin']
   },
   {
     name: 'Customer Analytics',
     url: '/analytics/customer',
-    icon: 'cil-speedometer',
+    icon: 'customeranalytics-icon-nav',
     roles : ['superuser','endadmin']
   },
   // {
@@ -48,7 +48,7 @@ export const navItems: MyINavData[] = [
   {
     name: 'Transactions',
     url: '/transactions',
-    icon: 'cil-speedometer',
+    icon: 'transactions-icon-nav',
     roles : ['superuser','endadmin','enduser','store']
     // badge: {
     //   variant: 'info',
@@ -58,7 +58,7 @@ export const navItems: MyINavData[] = [
   {
     name: 'Refunds',
     url: '/refunds',
-    icon: 'cil-speedometer',
+    icon: 'refund-icon-nav',
     roles : ['superuser','endadmin','enduser','store']
     // badge: {
     //   variant: 'info',
@@ -68,7 +68,7 @@ export const navItems: MyINavData[] = [
   {
     name: 'Settlements',
     url: '/settlements',
-    icon: 'cil-speedometer',
+    icon: 'settlements-icon-nav',
     roles : ['superuser','endadmin']
     // badge: {,
     //   variant: 'info',
@@ -78,7 +78,7 @@ export const navItems: MyINavData[] = [
   {
     name: 'Feedback',
     url: '/feedback',
-    icon: 'cil-speedometer',
+    icon: 'feedback-icon-nav',
     roles : ['superuser','endadmin']
     // badge: {,
     //   variant: 'info',
@@ -88,7 +88,7 @@ export const navItems: MyINavData[] = [
   {
     name: 'Merchants',
     url: '/zitharamerchants',
-    icon: 'cil-speedometer',
+    icon: 'merchants-icon-nav',
     roles : ['superuser','endadmin']
     // badge: {
     //   variant: 'info',
@@ -98,31 +98,27 @@ export const navItems: MyINavData[] = [
   {
     name: 'QR Code',
     url: '/qrcode',
-    icon: 'cil-speedometer',
+    icon: 'qrcode-icon-nav',
     roles : ['superuser','endadmin','enduser','store']
     // badge: {
     //   variant: 'info',
     //   text: 'NEW'
     // }
   },
-  {
-    name: 'Notification',
-    url: '/notification',
-    icon: 'cil-speedometer',
-    roles : ['superuser','endadmin','enduser','store']
-    // badge: {
-    //   variant: 'info',
-    //   text: 'NEW'
-    // }
-  },
+  // {
+  //   name: 'Notification',
+  //   url: '/notification',
+  //   icon: 'cil-speedometer',
+  //   roles : ['superuser','endadmin','enduser','store']
+  //   // badge: {
+  //   //   variant: 'info',
+  //   //   text: 'NEW'
+  //   // }
+  // },
   {
     name: 'Settings',
     url: '/settings',
-    icon: 'cil-speedometer',
+    icon: 'settings-icon-nav',
     roles : ['superuser','endadmin']
-    // badge: {
-    //   variant: 'info',
-    //   text: 'NEW'
-    // }
   }
 ];

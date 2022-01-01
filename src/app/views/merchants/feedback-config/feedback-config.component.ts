@@ -7,6 +7,7 @@ import { ZithapiService } from '../../../shared/services/zithapi.service';
 import { MessageService, ConfirmationService, PrimeNGConfig } from 'primeng/api';
 import { validationMessages } from '../../../model/validation_messages.model';
 import { FeedbackConfigAddRequest } from '../../../model/feedback/config';
+import { Role } from '../../../model/roles';
 
 type PasswordFields = 'password' ;
 type PasswordsFormErrors = { [u in PasswordFields]: string };
@@ -61,7 +62,11 @@ export class FeedbackConfigComponent implements OnInit {
   dw_areasObj : ThemeConfig[] = [];
   ni_areasObj : ThemeConfig[] = [];
   changeClass : string
-  chosenMenuOption:string = 'dw'
+  active : boolean = false;
+  activefeed : false;
+  public Role = Role;
+
+
   selectedOptionid = 1
   menuOptions = [{
     id : 'dw',
@@ -71,8 +76,11 @@ export class FeedbackConfigComponent implements OnInit {
     id : 'ni',
     name : 'Needs Improvement'
   }]
+
+  chosenMenuOption = this.menuOptions[0]
   maxrating: number;
   minrating: number;
+  myselectstlye: string = 'center-select red-background';
 
   constructor(private fb: FormBuilder, private router: Router,
               private route: ActivatedRoute,
@@ -157,6 +165,7 @@ showSuccess(message) {
 }
 
 
+
 // --------------------------------------------------------------
 getConfiguration(){
 
@@ -167,13 +176,16 @@ getConfiguration(){
   this.zithApiService.getFeedbackConfig(this.selectedSubMerchant,this.selectedOption['min'],this.selectedOption['max'])
   .subscribe(data => {
 
+    this.activefeed = data.body.active
+    this.active =  data.body.active
+
     this.configOptionsDW = []
     this.configOptionsNI = []
 
     this.dw_areasObj = []
     this.ni_areasObj = []
 
-
+try{
     Array.from(data.body.options.dwAreas).forEach( o => {
       var m : ThemeConfig = {
         id : o.toString(),
@@ -205,6 +217,10 @@ getConfiguration(){
       }
       this.ni_areasObj.push(m)
     })
+
+  } catch (error){
+
+  }
 
       // var chosen = Array.from(data.body.data.dwAreas)
       // this.dw_areasObj = this.configOptionsDW.filter( o => chosen.includes(o.id) )
@@ -309,8 +325,9 @@ applytoAllStore(){
 }
 
 changeMenuOption(event:Event){
+  console.log(this.chosenMenuOption)
 
-if(event['value'] ==='dw') {
+if(this.chosenMenuOption['id'] ==='dw') {
   this.changeClass = 'chiptextdw'
 
 } else {
@@ -321,7 +338,13 @@ if(event['value'] ==='dw') {
 
 changeRating(event:Event){
   console.log(event)
-
+  if(event['value'] === 1){
+    this.myselectstlye = 'center-select red-background'
+  } else if(event['value'] ===2){
+    this.myselectstlye = 'center-select orange-background'
+  } else {
+    this.myselectstlye = 'center-select green-background'
+  }
 
   this.getConfiguration()
 }
@@ -340,6 +363,26 @@ restrictThemesNI(){
     this.configOptionsNI.push(...extra)
     this.ni_areasObj = this.ni_areasObj.slice(0,5)
   }
+}
+
+activateDeactive(event:Event){
+
+  this.zithApiService.activateFeedback(this.selectedSubMerchant,event['checked']).subscribe({
+    next: data => {
+      this.showSuccess(data.body)
+      if(event['checked']){
+        this.getConfiguration()
+      } else {
+        this.active = event['checked']
+      }
+
+
+    },
+    error:error => {
+      this.showError(error.error)
+    }
+  })
+
 }
 
 }

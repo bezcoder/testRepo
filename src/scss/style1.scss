@@ -6,6 +6,18 @@
   border-radius: 8px;
 }
 
+.border-left-none .p-inputtext{
+  border-left: none;
+  border-top-left-radius: none !important;
+  border-bottom-left-radius: none !important;
+}
+
+.border-left-none .p-multiselect{
+  border-left: none;
+  border-top-left-radius: none !important;
+  border-bottom-left-radius: none !important;
+}
+
 .f-color{
   color: #2E446E;
   font-weight: bolder;
@@ -15,7 +27,82 @@
   width: 100%;
 }
 
+.border-right-0{
+  border-right: none;
+}
+
+.border-right-0 .p-inputtext{
+  border-right: none;
+}
+
+.border-right-0 .p-multiselect{
+  border-right: none;
+}
+
 .mymultiselect.p-multiselect-chip .p-multiselect-token{
   background: rgba(46, 68, 110, 0.19) !important;
   color: #2E446E !important;
 }
+
+.mytag.p-tag{
+  width: 100%;
+}
+
+.header-small.p-card .p-card-title{
+  font-size: medium !important;
+  font-weight: bold !important;
+}
+
+.green-background .p-button.p-highlight{
+  background: green !important;
+  border-color: green !important;
+  border-radius: 8px !important;
+  border-bottom-left-radius: 0px !important;
+  border-top-left-radius: 0px !important;
+}
+
+.orange-background .p-button.p-highlight{
+  background: orange !important;
+  border-color: orange !important;
+
+}
+
+.red-background .p-button.p-highlight{
+  background: darkred !important;
+  border-color: darkred !important;
+  border-radius: 8px !important;
+  border-bottom-right-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+}
+
+.box-card-header{
+  font-weight: 500;
+  color:#FFDE32;
+  font-size: x-large;
+  text-align: left;
+  margin-left: 5%;
+}
+
+.box-card-footer{
+  font-size:x-small;
+  text-align: right;
+}
+
+.box-card-content{
+  font-size:large;
+  text-align: left;
+  margin-left: 5%;
+}
+
+.card-img-overlay{
+
+}
+
+.grad-box{
+  background-image: url('/assets/img/bg-card4.svg') !important;
+  // background: linear-gradient(150.62deg, #2E446E 23.29%, #3FE7C9 120.77%) !important;
+  border-radius: 8px !important;
+  box-shadow: 2px 2px 2px 2px rgba(0,0,0,.14),2px 2px 2px 2px rgba(0,0,0,0.14),2px 2px 2px 2px rgba(0,0,0,.12) !important;
+}
+
+

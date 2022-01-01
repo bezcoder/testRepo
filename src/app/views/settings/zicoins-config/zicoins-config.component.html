@@ -1,0 +1,70 @@
+<p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+<div class="container-fluid" [class.sidebaron]="sidebaron">
+
+
+  <div class="row" style="width: 100%;justify-content: center;" >
+      <div class="card">
+        <div class="card-header">
+          <div class="row paddheaders">
+            <div class="col-12">
+          <span style="font-size: x-small;color: darkgray;">Configure Zicoins</span>
+        </div>
+        <div class="col-12">
+          <span style="font-size: large;"><b>{{this.childName!==''? this.childName : this.parentName }}</b></span>
+        </div>
+        <div class="col-12">
+          <span style="font-size: x-small;color: darkgray;">{{this.parentName | titlecase}}</span>
+        </div>
+        </div>
+        </div>
+        <div class="card-body" style="padding-top: 0px;">
+          <p-toolbar styleClass="p-mb-4">
+            <ng-template pTemplate="left">
+                <button style="width: 100% !important;" pButton pRipple label="Apply to all other store" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="applytoAllStore()"></button>
+            </ng-template>
+        </p-toolbar>
+
+        <p-table #dt [autoLayout] ="true" [value]="dataarr" [rows]="10"  styleClass="p-datatable-customers p-datatable-striped"
+        [rowHover]="true" dataKey="id">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                <h5 class="p-m-0">Manage Zicoin Configuration</h5>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <!-- <th ></th>
+                <th></th> -->
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-elem let-i="rowIndex">
+            <tr>
+
+                <td>
+                    <label style="font-size: smaller;color: gray;">Amount greater than</label> <br>
+                    <span *ngIf="this.showedit !== elem || elem.id ===0">{{(elem.id) | inr}}</span>
+                    <p-inputNumber [disabled] = "elem.id===0" *ngIf="this.showedit === elem && elem.id!==0" class="p-inputtext-sm" [(ngModel)]="elem.id" [showButtons]="true" [min]="this.dataarr[i-1]!==undefined ? this.dataarr[i-1]['id']+1 : 0" buttonLayout="horizontal" spinnerMode="horizontal"
+                    decrementButtonClass="p-button-danger" incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus" mode="currency" currency="INR"></p-inputNumber>
+                  </td>
+                  <td>
+                    <label style="font-size: smaller;color: gray;">Percentage Zicoins</label> <br>
+                    <span *ngIf="this.showedit !== elem">{{(elem.value) +'%'}}</span>
+                    <p-inputNumber *ngIf="this.showedit === elem" class="p-inputtext-sm" [(ngModel)]="elem.value" suffix="%"   [showButtons]="true" buttonLayout="horizontal" spinnerMode="horizontal"
+                    decrementButtonClass="p-button-danger" incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"></p-inputNumber>
+                  </td>
+                <td>
+                  <button *ngIf="this.dataarr.length === i+1" pButton pRipple icon="pi pi-plus" class="p-button-rounded p-button-primary p-mr-2" (click)="addConfig()"></button>
+                    <button *ngIf="this.showedit === elem" pButton pRipple icon="pi pi-check" class="p-button-rounded p-button-success p-mr-2" (click)="confirmConfig(elem)"></button>
+                    <button *ngIf="this.showedit !== elem" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editConfig(elem)"></button>
+                    <button *ngIf="elem.id!==0" pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteConfig(elem)"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+        </div>
+      </div>
+
+  </div>
+
+</div>

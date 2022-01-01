@@ -125,6 +125,7 @@ public daySalesPieChartData:any = [
   }]
   closemultibool: boolean;
   ecChartInstance: any;
+  salesByFeedbackOptions: EChartsOption;
 
 
   constructor(private zithApiService: ZithapiService,
@@ -157,9 +158,10 @@ public daySalesPieChartData:any = [
   date: { year: number, month: number };
 
   today: any = new Date();
-  hoursalesDate1:Date = new Date();// = formatDate(new Date(), 'yyyy-MM-dd', 'en');
-  hoursalesDate2:Date = new Date(new Date().setDate(new Date().getDate()-1)) ; // = formatDate(new Date(new Date().setDate(new Date().getDate()-1)), 'yyyy-MM-dd', 'en');
-
+  hoursalesDate1:Date = new Date(new Date().setDate(new Date().getDate()-1));// = formatDate(new Date(), 'yyyy-MM-dd', 'en');
+  hoursalesDate2:Date = new Date() ; // = formatDate(new Date(new Date().setDate(new Date().getDate()-1)), 'yyyy-MM-dd', 'en');
+  footFallDate1:Date = new Date(new Date().setDate(new Date().getDate()-1));
+  footFallDate2:Date = new Date() ; // = formatDate(new Date(new Date().setDate(new Date().getDate()-1)), 'yyyy-MM-dd', 'en');
   monthsalesDate1:Date = new Date();// = formatDate(new Date(), 'yyyy-MM-dd', 'en');
   monthsalesDate2:Date = new Date(new Date().setDate(new Date().getDate()-1)) ; // = formatDate(new Date(new Date().setDate(new Date().getDate()-1)), 'yyyy-MM-dd', 'en');
 
@@ -202,7 +204,6 @@ kLFormatter(num:any) {
   } else {
     return num
   }
-
 }
 
 myFormatDate(date) {
@@ -247,19 +248,21 @@ setChartOptions(chartname:string, options:Array<any>){
             },
             show : !(this.hourSalesData.yaxis1.length === 0 && this.hourSalesData.yaxis2.length === 0)
           },
-          toolbox: {
-            feature: {
-              dataView: { show: true, readOnly: false },
-              magicType: { show: true, type: ['line', 'line'] },
-              restore: { show: true },
-              saveAsImage: { show: true },
-            },
-            show : !(this.hourSalesData.yaxis1.length === 0 && this.hourSalesData.yaxis2.length === 0)
-          },
+          // toolbox: {
+          //   feature: {
+          //     dataView: { show: true, readOnly: false },
+          //     magicType: { show: true, type: ['line', 'line'] },
+          //     restore: { show: true },
+          //     saveAsImage: { show: true },
+          //   },
+          //   show : !(this.hourSalesData.yaxis1.length === 0 && this.hourSalesData.yaxis2.length === 0)
+          // },
           legend: {
             data: [options[0], options[1]],
             top : 'bottom',
-            show : !(this.hourSalesData.yaxis1.length === 0 && this.hourSalesData.yaxis2.length === 0)
+
+            // show : !(this.hourSalesData.yaxis1.length === 0 && this.hourSalesData.yaxis2.length === 0)
+            show:false
           },
           title : {
             text : "No Data Available for these Dates",
@@ -304,15 +307,16 @@ setChartOptions(chartname:string, options:Array<any>){
               show : !(this.hourSalesData.yaxis1.length === 0 && this.hourSalesData.yaxis2.length === 0)
             },
           ],
+          color:['#FF8600','#3BBEB2'],
           series: [
             {
               name: options[0],
-              type: 'line',
+              type: 'bar',
               data: this.hourSalesData.yaxis1
             },
             {
               name: options[1],
-              type: 'line',
+              type: 'bar',
               data: this.hourSalesData.yaxis2
             },
           ]
@@ -332,6 +336,7 @@ setChartOptions(chartname:string, options:Array<any>){
             },
             show : !(this.hourFFData.yaxis1.length === 0 && this.hourFFData.yaxis2.length === 0)
           },
+          color:['#FF8600','#3BBEB2'],
           title : {
             text : "No Data Available for these Dates",
             top : "center",
@@ -341,15 +346,15 @@ setChartOptions(chartname:string, options:Array<any>){
             },
             show : (this.hourFFData.yaxis1.length === 0 && this.hourFFData.yaxis2.length === 0)
           },
-          toolbox: {
-            feature: {
-              dataView: { show: true, readOnly: false },
-              magicType: { show: true, type: ['line', 'line'] },
-              restore: { show: true },
-              saveAsImage: { show: true }
-            },
-            show : !(this.hourFFData.yaxis1.length === 0 && this.hourFFData.yaxis2.length === 0)
-          },
+          // toolbox: {
+          //   feature: {
+          //     dataView: { show: true, readOnly: false },
+          //     magicType: { show: true, type: ['line', 'line'] },
+          //     restore: { show: true },
+          //     saveAsImage: { show: true }
+          //   },
+          //   show : !(this.hourFFData.yaxis1.length === 0 && this.hourFFData.yaxis2.length === 0)
+          // },
           legend: {
             data: [options[0], options[1]],
             top : 'bottom',
@@ -372,7 +377,7 @@ setChartOptions(chartname:string, options:Array<any>){
           yAxis: [
             {
               type: 'value',
-              name: 'Footfall',
+              // name: 'Footfall',
               axisLabel: {
                 color: "rgba(0, 0, 0, 1)",
                 // fontWeight: "bolder",
@@ -426,15 +431,16 @@ setChartOptions(chartname:string, options:Array<any>){
           },
           show : (this.monthSalesData.yaxis1.length === 0 && this.monthSalesData.yaxis2.length === 0)
         },
-        toolbox: {
-          feature: {
-            dataView: { show: true, readOnly: false },
-            magicType: { show: true, type: ['line', 'line'] },
-            restore: { show: true },
-            saveAsImage: { show: true }
-          },
-          show : !(this.monthSalesData.yaxis1.length === 0 && this.monthSalesData.yaxis2.length === 0)
-        },
+        color:['#FF8600','#3BBEB2'],
+        // toolbox: {
+        //   feature: {
+        //     dataView: { show: true, readOnly: false },
+        //     magicType: { show: true, type: ['line', 'line'] },
+        //     restore: { show: true },
+        //     saveAsImage: { show: true }
+        //   },
+        //   show : !(this.monthSalesData.yaxis1.length === 0 && this.monthSalesData.yaxis2.length === 0)
+        // },
         legend: {
           data: [options[0], options[1]],
           top : 'bottom',
@@ -477,12 +483,12 @@ setChartOptions(chartname:string, options:Array<any>){
         series: [
           {
             name: options[0],
-            type: 'line',
+            type: 'bar',
             data: this.monthSalesData.yaxis1
           },
           {
             name: options[1],
-            type: 'line',
+            type: 'bar',
             data: this.monthSalesData.yaxis2
           },
         ]
@@ -502,15 +508,16 @@ setChartOptions(chartname:string, options:Array<any>){
               },
               show : !(this.monthFFData.yaxis1.length === 0 && this.monthFFData.yaxis2.length === 0)
             },
-            toolbox: {
-              feature: {
-                dataView: { show: true, readOnly: false },
-                magicType: { show: true, type: ['line', 'line'] },
-                restore: { show: true },
-                saveAsImage: { show: true }
-              },
-              show : !(this.monthFFData.yaxis1.length === 0 && this.monthFFData.yaxis2.length === 0)
-            },
+            // toolbox: {
+            //   feature: {
+            //     dataView: { show: true, readOnly: false },
+            //     magicType: { show: true, type: ['line', 'line'] },
+            //     restore: { show: true },
+            //     saveAsImage: { show: true }
+            //   },
+            //   show : !(this.monthFFData.yaxis1.length === 0 && this.monthFFData.yaxis2.length === 0)
+            // },
+            color:['#FF8600','#3BBEB2'],
             legend: {
               data: [options[0], options[1]],
               top : 'bottom',
@@ -586,6 +593,7 @@ setChartOptions(chartname:string, options:Array<any>){
             show : this.ffData.length!==0
           }
         },
+        color:['#FEAF00','#2E446E','#9FCC00','#1EA614','#FF825A'],
         title : {
           text : "No Data Available for these Dates",
           top : "center",
@@ -606,6 +614,8 @@ setChartOptions(chartname:string, options:Array<any>){
         },
         series: [
           {
+            radius: '55%',
+            // center: ['50%', '50%'],
             type: 'pie',
             label: {
               show : this.ffData.length!==0,
@@ -622,11 +632,101 @@ setChartOptions(chartname:string, options:Array<any>){
               length2 : 0.02
             },
             data: this.ffData,
-            roseType: 'area'
+            roseType: 'radius'
           }
         ]
       };
+      break;
+    
+    case 'salesByFeedback':
+      console.log(options);
+      let sByFeed = Object.keys(options);
+      let sByFeed1 = Object.values(options);
 
+      console.log(sByFeed);
+      console.log(sByFeed1);
+      this.salesByFeedbackOptions = {
+        legend: {},
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            label: {
+              backgroundColor: '#283b56'
+            }
+          }
+        },
+        xAxis: [
+          {
+            type: 'category',
+            boundaryGap: true,
+            data: sByFeed1[0]
+          },
+          {
+            type: 'category',
+            boundaryGap: true,
+            data: sByFeed1[1]
+          },
+        ],
+        yAxis: [
+          
+        //   {
+        //     type: 'value',
+        //     scale: true,
+        //     // max: 10000,
+        //     // min: 0,
+        //     axisLabel: {
+        //       color: "rgba(0, 0, 0, 1)",
+        //       // fontWeight: "bolder",
+        //       formatter : function name(num:number) {
+        //         // if(Math.abs(num) > 999 && Math.abs(num) <= 99999 ){
+        //         //   return '₹' + (Math.abs(num) > 999 ? Math.sign(num)* Number((Math.abs(num)/10000).toFixed(1)) + 'k' : (Math.sign(num)*Math.abs(num)).toString())
+        //         // } else if(Math.abs(num) > 99999){
+        //         //   return '₹' + (Math.abs(num) > 99999 ? Math.sign(num)*Number((Math.abs(num)/100000).toFixed(1)) + 'L' : (Math.sign(num)*Math.abs(num)).toString())
+        //         // } else {
+        //         //   return '₹' + num.toString()
+        //         // }
+        //         let res = [];
+        //         let len = 10;
+        //         while (len--) {
+        //           res.push(10 - len - 1);
+        //         }
+        //         return res.toString();
+
+        //     }
+        //   }
+        // },
+        {
+          type: 'value',
+          scale: true,
+          // name: 'Price',
+          max: 10000,
+          min: 0,
+          boundaryGap: [0.1, 0.1]
+        },  
+        {
+            type: 'value',
+            scale: true,
+            // name: 'Price',
+            max: 100,
+            min: 0,
+            boundaryGap: [0.1, 0.1]
+          }
+        ],
+        series: [
+          {
+            type: 'bar',
+            xAxisIndex: 1,
+            yAxisIndex: 1,
+            data: sByFeed1
+          }
+        ],
+        color:['#FF8600','#3BBEB2'],
+        
+      };
+
+      break;
+      
 
 
   }
@@ -718,7 +818,15 @@ setChartOptions(chartname:string, options:Array<any>){
     });
    }
 
-
+   filterMerchant(event) {
+    this.zithApiService.searchPrimaryMerchants(event.query)
+    .subscribe(data => {
+      this.merchantsData = data.body.data;
+    }, error => {
+  
+    });
+  
+  }
   getAllSubMerchants(): void {
     this.zithApiService.getSubMerchants()
     // tslint:disable-next-line: no-shadowed-variable
@@ -762,7 +870,7 @@ setChartOptions(chartname:string, options:Array<any>){
     .subscribe(data => {
       this.merchantsData = data.body.data;
       if(Array.from(data.body.data).length > 0){
-        this.selectedMerchants = data.body.data[0].id ;
+        this.selectedMerchants = data.body.data[0].id;
       }
 
       this.showskel1 = false
@@ -777,6 +885,7 @@ setChartOptions(chartname:string, options:Array<any>){
   }
 
   getSubMerchantsByParents(): void{
+    console.log(this.selectedMerchants);
     this.zithApiService.getSubmerchantsByParentId(this.selectedMerchants)
     // tslint:disable-next-line: no-shadowed-variable
     .subscribe(data => {
@@ -797,7 +906,20 @@ setChartOptions(chartname:string, options:Array<any>){
     this.onChangeDateHourSalesFF()
     this.onChangeDateMonthSalesFF()
     this.onChangeWeekDayFFDay()
+    this.getSalesByFeedback();
 
+  }
+  getSalesByFeedback(){
+    console.log(this.selectedSubMerchants.map(o => o['id'] ));
+    this.zithApiService.getAVGTranByFeedbacks(this.selectedSubMerchants.map(o => o['id'] ))
+    // tslint:disable-next-line: no-shadowed-variable
+    .subscribe(data => {
+      console.log(data);
+      this.showskel1 = false;
+      this.setChartOptions('salesByFeedback',data.data)
+    }, error => {
+
+    });
   }
 
 
@@ -861,8 +983,8 @@ setChartOptions(chartname:string, options:Array<any>){
 
   getHourFF(submerchantids){
 
-    this.zithApiService.getHourFFAnalytics(submerchantids,this.myFormatDate(this.hoursalesDate1),
-    this.myFormatDate(this.hoursalesDate2)).subscribe({
+    this.zithApiService.getHourFFAnalytics(submerchantids,this.myFormatDate(this.footFallDate1),
+    this.myFormatDate(this.footFallDate2)).subscribe({
       next: (data : Array<myChartInterface>) => {
 
         console.log(data)

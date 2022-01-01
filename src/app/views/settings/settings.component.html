@@ -1,0 +1,96 @@
+<p-toast key="myKey1" position="top-right" [baseZIndex]="999999" ></p-toast>
+
+<p-card>
+<div class="row" style="margin-bottom: 2%;" >
+  <p-skeleton class="col-lg-6 col-12" *ngIf="!this.showfirst" height="2rem" styleClass="p-mb-2"></p-skeleton>
+  <p-skeleton class="col-lg-6 col-12" *ngIf="!this.showfirst" height="2rem" styleClass="p-mb-2"></p-skeleton>
+  <p-skeleton class="col-lg-6 col-12" *ngIf="!this.showfirst" height="2rem" styleClass="p-mb-2"></p-skeleton>
+  <div class="col-lg-12 col-12" *hasRole="[Role.SuperUser, Role.Admin,Role.Shop]">
+  <div  *ngIf="this.showfirst">
+    <div class="col-lg-12 col-12" style="margin-bottom: 2%;max-width: 300px;" *hasRole="[Role.SuperUser]">
+      <div class="row">
+        <div class="col-12">
+        <span class="fieldttitle">Merchant</span><br>
+      </div>
+      <div class="col-12">
+        <div class="p-inputgroup">
+            <span class="p-inputgroup-addon border-right-0 bg-white "> <i class="pi pi-search"></i> </span>
+            <p-autoComplete
+              placeholder = "Merchant Name"
+              styleClass='searchdrpdwn w-100'
+              [(ngModel)]="selectedMerchants"
+              [suggestions]="merchantsData"
+              (completeMethod)="filterMerchant($event)"
+              field="name"
+              [minLength]="3"
+              (onSelect) = "onSelectSearchedMerchant()"
+          ></p-autoComplete>
+        </div>
+      </div>
+          <!-- <p-dropdown styleClass='drpdown p-inputtext-sm' #selmerchant
+            (click)="onClickParentMerchant(selmerchant)" [options]="merchantsData"
+            (onChange)="getSubMerchantsByParents(selectedMerchants)" [(ngModel)]="selectedMerchants"
+            placeholder="Select Parent" optionLabel="name" optionValue="id" [filter]="true" filterBy="name">
+          </p-dropdown> -->
+        </div>
+    </div>
+    <div class="col-lg-12 col-12  mwidth30" style="margin-bottom: 2%;width: 300px;" *hasRole="[Role.SuperUser, Role.Admin]">
+      <span class="fieldttitle">Select Store</span><br>
+      <div class="fieldttitle">
+        <p-dropdown [disabled]="this.subMerchantsData.length === 0" styleClass='mymultiselect drpdown' tooltipStyleClass='ttltip' #selsubmerchant
+          [maxSelectedLabels]="2" inputId="selmerchantinput"  (onChange)="changeStore()"
+          [options]="subMerchantsData" [(ngModel)]="selectedSubMerchants" defaultLabel="Select Stores"
+          optionLabel="name" display="chip">
+          <!-- <p-footer>
+            <button style="margin: 1%;" pButton type="button" label="Close"
+              style="background: white;color: black;" (click)="closemulti()"></button>
+            <button style="margin: 1%;" pButton style="float: right;background-color: #689F38;" type="button"
+              label="Select" (click)="closemulti();getTerminals()"></button>
+          </p-footer> -->
+        </p-dropdown>
+      </div>
+    </div>
+    <div class="col-lg-12 col-12  mwidth30" *ngIf="this.chosenLabel  === 'Configure Notifications'" style="margin-bottom: 2%;width: 300px;">
+    <span class="fieldttitle " >Select Terminal</span><br>
+    <div class="fieldttitle">
+      <p-dropdown [disabled]="this.subMerchantsData.length === 0" styleClass='mymultiselect drpdown' tooltipStyleClass='ttltip' #selterminals
+        [maxSelectedLabels]="2" inputId="selmerchantinput"
+        [options]="terminalsData" [(ngModel)]="selectedTerminals" defaultLabel="Select Terminals"
+        optionLabel="terminal_name" display="chip">
+        <p-footer>
+          <button style="margin: 1%;" pButton type="button" label="Close"
+            style="background: white;color: black;" (click)="closemulti()"></button>
+          <button style="margin: 1%;" pButton style="float: right;background-color: #689F38;" type="button"
+            label="Select" (click)="closemulti();getTransactions(undefined)"></button>
+        </p-footer>
+      </p-dropdown>
+      <!-- </div> -->
+    </div>
+  </div>
+  </div>
+</div>
+</div>
+
+</p-card>
+
+<p-tabMenu #tab [model]="items" [activeItem]="chosenTab" (click)="activateMenu(tab)" ></p-tabMenu>
+
+<app-notification #notification *ngIf="this.chosenLabel  === 'Configure Notifications'"
+[selectedSubMerchants] = "this.selectedSubMerchants"
+[selectedMerchants] = "this.selectedMerchants"
+[selectedTerminals] = "this.selectedTerminals"
+>
+</app-notification>
+
+<app-zicoins-config-settings #ziconfig *ngIf="this.chosenLabel  === 'Configure ZiCoins'"
+[parentName] = "this.selectedMerchants.name"
+[childName] = "this.selectedSubMerchants.name"
+[selectedSubMerchants] = "this.selectedSubMerchants.id"
+> </app-zicoins-config-settings>
+
+<app-feedback-config-settings #feedconfig *ngIf="this.chosenLabel  === 'Configure Feedback'"
+[parentName] = "this.selectedMerchants.name"
+[childName] = "this.selectedSubMerchants.name"
+[selectedSubMerchant] = "this.selectedSubMerchants.id"
+> </app-feedback-config-settings>
+

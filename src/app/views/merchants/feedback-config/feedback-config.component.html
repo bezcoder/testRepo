@@ -1,7 +1,11 @@
 <p-confirmDialog [style]="{width: '50vw'}" [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
 <p-toast position="top-right" [baseZIndex]="99999" [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}"></p-toast>
 
-<p-card styleClass="card-50">
+<div *hasRole="[Role.SuperUser]" style="margin-top: 5%;">
+  <label for="ipactive">Activate/Deactivate Feedback Service</label> <br>
+  <p-inputSwitch id="ipactive" [ngModel]="activefeed"  (onChange)="activateDeactive($event)"></p-inputSwitch>
+</div>
+<p-card *ngIf="active" styleClass="card-50">
   <div class="row">
     <div class="col-12">
       <span style="font-size: x-small;color: darkgray;">Configure Feedback</span>
@@ -18,25 +22,30 @@
 
     <div class="col-12" style="margin-bottom: 1%;" > <b style="font-size: small;">Step 1. Choose Question Type</b> </div>
 
-    <div class="col-12" style="margin-bottom: 2%;text-align: center;" >
+    <div class="col-12" style="margin-bottom: 2%;" >
       <div>
-      <p-selectButton [options]="menuOptions" (onChange)="changeMenuOption($event)" [(ngModel)]="chosenMenuOption"  optionLabel="name" optionValue="id">
+        <div *ngFor="let category of menuOptions" class="p-field-checkbox" style="display: flex;">
+          <p-radioButton [inputId]="category.id" name="category" [value]="category" (onClick) = "changeMenuOption($event)" [(ngModel)]="chosenMenuOption" [disabled]="category.id === 'R'"></p-radioButton>
+          <label style="margin-left: 2%;margin-right: 5%;width: 100%;" [for]="category.id">{{category.name}}</label>
+          <div class="col-12" style="margin-bottom: 1%;" *ngIf="category.id==='dw'" > <i style="font-size: x-small;"> (Question on Feedback Form: What do you think is working well?)</i> </div>
+          <div class="col-12" style="margin-bottom: 1%;" *ngIf="category.id==='ni'" > <i style="font-size: x-small;"> (Question on Feedback Form: What do you think needs to improve?)</i> </div>
+
+      </div>
+       <!-- <p-selectButton [options]="menuOptions" (onChange)="changeMenuOption($event)" [(ngModel)]="chosenMenuOption"  optionLabel="name" optionValue="id">
         <ng-template let-item >
             <h6>{{item.name}}</h6>
         </ng-template>
-    </p-selectButton>
+    </p-selectButton> -->
   </div>
 
 
 
     </div>
 
-    <div class="col-12" style="margin-bottom: 1%;" *ngIf="chosenMenuOption==='dw'" > <i style="font-size: x-small;"> Question: What do you think is working well?</i> </div>
-    <div class="col-12" style="margin-bottom: 1%;" *ngIf="chosenMenuOption==='ni'" > <i style="font-size: x-small;"> Question: What do you think needs to improve?</i> </div>
 
-    <div class="col-12" style="margin-bottom: 1%;" > <b style="font-size: small;">Step 2. Choose Rating between 1 and 5</b> </div>
+    <div class="col-12" style="margin-bottom: 1%;" > <b style="font-size: small;">Step 2. Choose Rating Group</b> </div>
 
-    <p-selectButton styleClass="center-select" [options]="optionArray" (onChange)="changeRating($event)" [(ngModel)] = "selectedOptionid"  optionLabel="name" optionValue="id">
+    <p-selectButton [styleClass]="myselectstlye" [options]="optionArray" (onChange)="changeRating($event)" [(ngModel)] = "selectedOptionid"  optionLabel="name" optionValue="id">
       <ng-template let-item >
         <ul class="merchantRatingStatusPanel mt-2">
           {{item.name}} &nbsp;
@@ -115,7 +124,7 @@
 
 
 
-<p-pickList *ngIf="chosenMenuOption === 'dw'" styleClass="my-picklist-dw" [showSourceControls]="false" [showTargetControls]="false" [source]="configOptionsDW" [target]="dw_areasObj" sourceHeader="Available Options (Choose upto 5 options from these)" targetHeader="Selected Options (This will be shown in the feedback link)" [dragdrop]="true"
+<p-pickList *ngIf="chosenMenuOption.id === 'dw'" styleClass="my-picklist-dw" [showSourceControls]="false" [showTargetControls]="false" [source]="configOptionsDW" [target]="dw_areasObj" sourceHeader="Available Options (Choose upto 5 options from these)" targetHeader="Selected Options (This will be shown in the feedback link)" [dragdrop]="true"
     [responsive]="true" [sourceStyle]="{'height':'15rem','font-size':'small'}" [targetStyle]="{'height':'15rem','font-size':'small'}" filterBy="name"
     sourceFilterPlaceholder="Search by name" targetFilterPlaceholder="Search by name" (onMoveToTarget) = "restrictThemesDW()" (onMoveAllToSource) = "restrictThemesDW()" (onMoveAllToTarget) = "restrictThemesDW()" (onMoveToSource) = "restrictThemesDW()" >
     <ng-template let-product pTemplate="item">
@@ -127,7 +136,7 @@
     </ng-template>
 </p-pickList>
 
-<p-pickList *ngIf="chosenMenuOption === 'ni'" styleClass="my-picklist-dw" [showSourceControls]="false" [showTargetControls]="false" [source]="configOptionsNI" [target]="ni_areasObj" sourceHeader="Available Options (Choose upto 5 options from these)" targetHeader="Selected Options (This will be shown in the feedback link)" [dragdrop]="true"
+<p-pickList *ngIf="chosenMenuOption.id === 'ni'" styleClass="my-picklist-dw" [showSourceControls]="false" [showTargetControls]="false" [source]="configOptionsNI" [target]="ni_areasObj" sourceHeader="Available Options (Choose upto 5 options from these)" targetHeader="Selected Options (This will be shown in the feedback link)" [dragdrop]="true"
     [responsive]="true" [sourceStyle]="{'height':'15rem','font-size':'small'}" [targetStyle]="{'height':'15rem','font-size':'small'}" filterBy="name"
     sourceFilterPlaceholder="Search by name" targetFilterPlaceholder="Search by name" (onMoveToTarget) = "restrictThemesNI()" (onMoveAllToSource) = "restrictThemesNI()" (onMoveAllToTarget) = "restrictThemesNI()" (onMoveToSource) = "restrictThemesNI()">
     <ng-template let-product pTemplate="item">

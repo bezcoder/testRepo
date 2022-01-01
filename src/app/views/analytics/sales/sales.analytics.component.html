@@ -1,4 +1,4 @@
-<div class="row mb-3" *hasRole="[Role.SuperUser,Role.Admin]">
+<div class="row mb-5" *hasRole="[Role.SuperUser,Role.Admin]">
   <div *ngIf="showskel1" class=" col-12">
     <div class="col-12  " style="margin: 2%;">
       <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
@@ -11,30 +11,41 @@
     <div class="row">
       <div class=" col-6 px-3" *hasRole="[Role.SuperUser]">
         <h6>Merchant</h6>
-        <p-dropdown *hasRole="[Role.SuperUser]" [filter]="true" styleClass='drpdown p-inputtext-sm'
+
+        <!-- <div class="p-inputgroup" *hasRole="[Role.SuperUser]"> -->
+        <!-- <span class="p-inputgroup-addon border-right-0 bg-white"> <i class="pi pi-search"></i> </span> -->
+        <!-- <p-dropdown  [filter]="true" styleClass='drpdown p-inputtext-sm'
+            (onChange)="getSubMerchantsByParents()" [options]="merchantsData" [(ngModel)]="selectedMerchants"
+            placeholder="Search Merchant" optionLabel="name" optionValue="id" class="salesanalytics-merchantDropDown">
+          </p-dropdown>  -->
+        <div class="p-inputgroup">
+          <span class="p-inputgroup-addon border-right-0 bg-white"> <i class="pi pi-search"></i> </span>
+          <p-dropdown [filter]="true" styleClass='drpdown p-inputtext-sm border-left-none'
             (onChange)="getSubMerchantsByParents()" [options]="merchantsData" [(ngModel)]="selectedMerchants"
             placeholder="Search Merchant" optionLabel="name" optionValue="id" class="salesanalytics-merchantDropDown">
           </p-dropdown>
-          <!-- <p-autocomplete
-          *hasRole="[Role.SuperUser]"
-          placeholder="Search Merchant"
-          [(ngModel)]="selectedMerchants"
-          [suggestions]="merchantsData"
-          (completeMethod)="filterMerchant($event)"
-          field="name"
-          [minLength]="3"
-          (onSelect) = "onSelectSearchedMerchant()"
-          >
-          </p-autocomplete> -->
-          
+          <!-- <p-autoComplete placeholder="Search Merchant" styleClass='searchdrpdwn input-border-radius w-100 border-left-none'
+              [(ngModel)]="selectedMerchants" [suggestions]="merchantsData" [showEmptyMessage]="true"
+              emptyMessage="No Merchants Found" (completeMethod)="filterMerchant($event)" [forceSelection]="true"
+              field="name" [minLength]="3" (onSelect)="getSubMerchantsByParents()" class="salesanalytics-merchantDropDown"></p-autoComplete> -->
+        </div>
+
       </div>
       <div class="col-6">
         <h6>Store</h6>
-        <p-multiSelect styleClass='mymultiselect p-inputtext-sm' (onPanelHide)="applyButton()"
-          tooltipStyleClass='ttltip' #selsubmerchant [maxSelectedLabels]="2" inputId="selmerchantinput"
-          [options]="subMerchantsData" [(ngModel)]="selectedSubMerchants" class="salesanalytics-storeMultiSelect" 
-          defaultLabel="Search Store" optionLabel="name" display="chip">
-        </p-multiSelect>
+        <div class="p-inputgroup">
+          <span class="p-inputgroup-addon border-right-0 bg-white"> <i class="pi pi-search"></i> </span>
+          <!-- <p-autoComplete placeholder="Search Store" [multiple]="true" styleClass='searchdrpdwn input-border-radius w-100 border-left-none'
+            [(ngModel)]="selectedSubMerchants" [suggestions]="subMerchantsData" [showEmptyMessage]="true"
+            emptyMessage="No Merchants Found"  [forceSelection]="true"
+            field="name" [minLength]="3" (onSelect)="applyButton()" class="salesanalytics-merchantDropDown"></p-autoComplete> -->
+
+          <p-multiSelect styleClass='mymultiselect p-inputtext-sm' (onPanelHide)="applyButton()"
+            tooltipStyleClass='ttltip' #selsubmerchant [maxSelectedLabels]="2" inputId="selmerchantinput"
+            [options]="subMerchantsData" [(ngModel)]="selectedSubMerchants" class="salesanalytics-storeMultiSelect"
+            defaultLabel="Search Store" optionLabel="name" display="chip">
+          </p-multiSelect>
+        </div>
       </div>
     </div>
 
@@ -43,33 +54,227 @@
 
 <div class="row mb-3">
   <div class="col">
-    <div class="col mr-2 salesanalytics-chartcard" >
-      <h3>
+    <div *ngIf="showskel1" class=" col-12">
+      <div class="col-12  " style="margin: 2%;">
+        <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+      </div>
+      <div class=" col-12  " style="margin: 2%;">
+        <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+      </div>
+    </div>
+    <div class="col mr-2 salesanalytics-chartcard" *ngIf="!showskel1">
+      <h3 class="py-3">
         Hourly Sales
       </h3>
-      <div class="row">
+      <div class="row mb-1">
         <div class="col-5">
-          <p-calendar
-          styleClass='p-inputtext-sm' [style]="{'width':'20% !important'}" (onSelect)="onChangeDateHourSalesFF()"
-            [selectOtherMonths]="true" [inputStyle]="{'width':'20% !important'}" [maxDate]="today"
-          [touchUI]="smallscreen" [readonlyInput]="true" [baseZIndex] = "99999"  [(ngModel)]="hoursalesDate1" dateFormat="yy-mm-dd" ></p-calendar>
+          <div *ngIf="showskel1" class=" col-12">
+            <div class="col-12  " style="margin: 2%;">
+              <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+            </div>
+            <div class=" col-12  " style="margin: 2%;">
+              <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+            </div>
+          </div>
+          <p-calendar class="fromDateSalesAnalytics" *ngIf="!showskel1" styleClass='p-inputtext-sm'
+            [style]="{'width':'20% !important'}" (onSelect)="onChangeDateHourSalesFF()" [selectOtherMonths]="true"
+            [inputStyle]="{'width':'20% !important'}" [maxDate]="today" [touchUI]="smallscreen" [readonlyInput]="true"
+            [baseZIndex]="99999" [(ngModel)]="hoursalesDate1" dateFormat="yy-mm-dd"></p-calendar>
         </div>
-        <div class="col-1">
-          <span style="margin-left: 5%;margin-right: 5%;">
-            <img src="/assets/icons/datearrow.svg"/>
+        <div class="col-1 text-center">
+          <div *ngIf="showskel1" class=" col-12">
+            <div class="col-12  " style="margin: 2%;">
+              <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+            </div>
+            <div class=" col-12  " style="margin: 2%;">
+              <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+            </div>
+          </div>
+          <span style="margin-left: 5%;margin-right: 5%;" *ngIf="!showskel1">
+            <img src="/assets/icons/datearrow.svg" />
           </span>
         </div>
         <div class="col-5">
-          <p-calendar
-          styleClass='p-inputtext-sm' [style]="{'width':'20% !important'}" (onSelect)="onChangeDateHourSalesFF()"
-            [selectOtherMonths]="true" [inputStyle]="{'width':'20% !important'}" [maxDate]="today"
-          [touchUI]="smallscreen" [readonlyInput]="true" [baseZIndex] = "99999"  [(ngModel)]="hoursalesDate2" dateFormat="yy-mm-dd" ></p-calendar>
+          <div *ngIf="showskel1" class=" col-12">
+            <div class="col-12  " style="margin: 2%;">
+              <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+            </div>
+            <div class=" col-12  " style="margin: 2%;">
+              <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+            </div>
+          </div>
+          <p-calendar class="toDateSalesAnalytics" *ngIf="!showskel1" styleClass='p-inputtext-sm'
+            [style]="{'width':'100% !important'}" (onSelect)="onChangeDateHourSalesFF()" [selectOtherMonths]="true"
+            [inputStyle]="{'width':'100% !important'}" [maxDate]="today" [touchUI]="smallscreen" [readonlyInput]="true"
+            [baseZIndex]="99999" [(ngModel)]="hoursalesDate2" dateFormat="yy-mm-dd"></p-calendar>
         </div>
       </div>
-      <!-- <div echarts [options]="chartOptionTotalSalesMonthAverage" class="demo-chart"></div> -->
+      <div echarts style="height: 325px;" *ngIf="!showskel1" [options]="hourlySalesAnalyticsOption" class="demo-chart">
+      </div>
     </div>
   </div>
   <div class="col">
+    <div *ngIf="showskel1" class=" col-12">
+      <div class="col-12  " style="margin: 2%;">
+        <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+      </div>
+      <div class=" col-12  " style="margin: 2%;">
+        <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+      </div>
+    </div>
+    <div class="col mr-2 salesanalytics-chartcard" *ngIf="!showskel1">
+      <h3 class="py-3">
+        Hourly Footfall
+      </h3>
+      <div class="row mb-1">
+        <div class="col-5">
+          <p-calendar class="fromDateSalesAnalytics" styleClass='p-inputtext-sm' [style]="{'width':'20% !important'}"
+            (onSelect)="onChangeDateHourSalesFF()" [selectOtherMonths]="true" [inputStyle]="{'width':'20% !important'}"
+            [maxDate]="today" [touchUI]="smallscreen" [readonlyInput]="true" [baseZIndex]="99999"
+            [(ngModel)]="footFallDate1" dateFormat="yy-mm-dd"></p-calendar>
+        </div>
+        <div class="col-1 text-center">
+          <img src="/assets/icons/datearrow.svg" />
+        </div>
+        <div class="col-5">
+          <p-calendar class="toDateSalesAnalytics" styleClass='p-inputtext-sm' [style]="{'width':'20% !important'}"
+            (onSelect)="onChangeDateHourSalesFF()" [selectOtherMonths]="true" [inputStyle]="{'width':'20% !important'}"
+            [maxDate]="today" [touchUI]="smallscreen" [readonlyInput]="true" [baseZIndex]="99999"
+            [(ngModel)]="footFallDate2" dateFormat="yy-mm-dd"></p-calendar>
+        </div>
+      </div>
+      <div echarts style="height: 325px;" [options]="hourlyFFAnalyticsOption" class="demo-chart"></div>
+    </div>
+  </div>
+</div>
+<div class="row mb-3">
+  <div class="col">
+    <div *ngIf="showskel1" class=" col-12">
+      <div class="col-12  " style="margin: 2%;">
+        <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+      </div>
+      <div class=" col-12  " style="margin: 2%;">
+        <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+      </div>
+    </div>
+    <div class="col mr-2 salesanalytics-chartcard" *ngIf="!showskel1">
+      <h3 class="py-3">
+        Monthly Sales
+      </h3>
+      <div class="row mb-1">
+        <div class="col-5">
+          <p-calendar class="fromDateSalesAnalytics" view="month" dateFormat="mm/yy" [yearNavigator]="true"
+            yearRange="2000:2090" inputId="monthpicker" styleClass='p-inputtext-sm' [style]="{'width':'20% !important'}"
+            (onSelect)="onChangeDateMonthSalesFF()" [selectOtherMonths]="true" [inputStyle]="{'width':'20% !important'}"
+            [maxDate]="today" [touchUI]="smallscreen" [readonlyInput]="true" [baseZIndex]="99999"
+            [(ngModel)]="monthsalesDate1"></p-calendar>
+        </div>
+        <div class="col-1 text-center">
+          <img src="/assets/icons/datearrow.svg" />
+        </div>
+        <div class="col-5">
+          <p-calendar class="toDateSalesAnalytics" view="month" dateFormat="mm/yy" [yearNavigator]="true"
+            yearRange="2000:2090" inputId="monthpicker" styleClass='p-inputtext-sm' [style]="{'width':'20% !important'}"
+            (onSelect)="onChangeDateMonthSalesFF()" [selectOtherMonths]="true" [inputStyle]="{'width':'20% !important'}"
+            [maxDate]="today" [touchUI]="smallscreen" [readonlyInput]="true" [baseZIndex]="99999"
+            [(ngModel)]="monthsalesDate2"></p-calendar>
+        </div>
+      </div>
+      <div echarts style="height: 325px;" [options]="monthlySalesAnalyticsOption" class="demo-chart"></div>
+    </div>
+  </div>
+  <div class="col">
+    <div *ngIf="showskel1" class=" col-12">
+      <div class="col-12  " style="margin: 2%;">
+        <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+      </div>
+      <div class=" col-12  " style="margin: 2%;">
+        <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+      </div>
+    </div>
+    <div class="col mr-2 salesanalytics-chartcard" *ngIf="!showskel1">
+      <h3 class="py-3">
+        Monthly FootFall
+      </h3>
+      <div class="row mb-1">
+        <div class="col-5">
+          <p-calendar class="fromDateSalesAnalytics" view="month" dateFormat="mm/yy" [yearNavigator]="true"
+            yearRange="2000:2090" inputId="monthpicker" styleClass='p-inputtext-sm' [style]="{'width':'20% !important'}"
+            (onSelect)="onChangeDateMonthSalesFF()" [selectOtherMonths]="true" [inputStyle]="{'width':'20% !important'}"
+            [maxDate]="today" [touchUI]="smallscreen" [readonlyInput]="true" [baseZIndex]="99999"
+            [(ngModel)]="monthsalesDate1"></p-calendar>
+        </div>
+        <div class="col-1 text-center">
+          <img src="/assets/icons/datearrow.svg" />
+        </div>
+        <div class="col-5">
+          <p-calendar class="toDateSalesAnalytics" view="month" dateFormat="mm/yy" [yearNavigator]="true"
+            yearRange="2000:2090" inputId="monthpicker" styleClass='p-inputtext-sm' [style]="{'width':'20% !important'}"
+            (onSelect)="onChangeDateMonthSalesFF()" [selectOtherMonths]="true" [inputStyle]="{'width':'20% !important'}"
+            [maxDate]="today" [touchUI]="smallscreen" [readonlyInput]="true" [baseZIndex]="99999"
+            [(ngModel)]="monthsalesDate2"></p-calendar>
+        </div>
+      </div>
+      <div echarts style="height: 325px;" [options]="monthlyFFAnalyticsOption" class="demo-chart">
+      </div>
+    </div>
+  </div>
+</div>
 
+<div class="row mb-3">
+  <div class="col-6">
+    <div *ngIf="showskel1" class=" col-12">
+      <div class="col-12  " style="margin: 2%;">
+        <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+      </div>
+      <div class=" col-12  " style="margin: 2%;">
+        <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+      </div>
+    </div>
+    <div class="col mr-2 salesanalytics-chartcard" *ngIf="!showskel1">
+      <h3 class="py-3">
+        FootFall In A Day
+      </h3>
+      <div class="row mb-1">
+        <div class="col-3">
+          <p-calendar class="fromDateSalesAnalyticsFootfall" styleClass='p-inputtext-sm'
+            [style]="{'width':'20% !important'}" (onSelect)="onChangeWeekDayFFDay()" [selectOtherMonths]="true"
+            [inputStyle]="{'width':'20% !important'}" [maxDate]="today" [touchUI]="smallscreen" [readonlyInput]="true"
+            [baseZIndex]="99999" [(ngModel)]="fromDateFFDay"></p-calendar>
+        </div>
+        <div class="col-2 text-center">
+          <img src="/assets/icons/datearrow.svg" />
+        </div>
+        <div class="col-3">
+          <p-calendar class="toDateSalesAnalyticsFootfall" styleClass='p-inputtext-sm'
+            [style]="{'width':'20% !important'}" (onSelect)="onChangeWeekDayFFDay()" [selectOtherMonths]="true"
+            [inputStyle]="{'width':'20% !important'}" [maxDate]="today" [touchUI]="smallscreen" [readonlyInput]="true"
+            [baseZIndex]="99999" [(ngModel)]="toDateFFDay"></p-calendar>
+        </div>
+        <div class="col-4">
+          <p-dropdown styleClass='p-inputtext-sm' [style]="{'width':'20% !important'}" [options]="weekDayFFDayOptions"
+            [(ngModel)]="weekDayFFDay" placeholder="Select a Weekday" (onChange)="onChangeWeekDayFFDay()"
+            optionLabel="name" optionValue="value"></p-dropdown>
+        </div>
+      </div>
+      <div [initOpts]="{renderer: 'svg'}" (chartInit)="ffdaychartInit($event)" echarts style="height: 325px;"
+        *ngIf="!showskel1" [options]="weekdayFFdayChartOption"></div>
+    </div>
+  </div>
+  <div class="col">
+    <div *ngIf="showskel1" class=" col-12">
+      <div class="col-12  " style="margin: 2%;">
+        <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+      </div>
+      <div class=" col-12  " style="margin: 2%;">
+        <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
+      </div>
+    </div>
+    <div class="col mr-2 salesanalytics-chartcard" >
+      <h3 class="py-3">
+        Sales by Feedback
+      </h3>
+        <div echarts style="height: 360px;"  [options] = "salesByFeedbackOptions" class="demo-chart"></div>
+    </div>
   </div>
 </div>

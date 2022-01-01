@@ -110,6 +110,10 @@ export const API_CONFIG = {
     GETFEEDBACKCONFIGOPTIONS : '/get-fb-config-options',
     ADDFEEDBACKCONFIG : '/add-fb-config',
     GETFEEDBACKS: '/getFeedbackLedger',
+    GETFEEDBACKDASHBOARD: '/dashboard/get-feedback-dashboard',
+    GETAVGTRANSACTIONBYFEEDBACK: '/dashboard/get-avg-trans-feedback-dashboard',
+    ACTIVATEFEEDBACK : '/activate-feedback'
+
 
 
 

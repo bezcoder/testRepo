@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -45,8 +45,8 @@ export class ZicoinConfig implements OnInit {
   };
 
   public errorMessage: any;
-  parentName: string;
-  childName: string;
+  @Input() parentName: string;
+  @Input() childName: string;
   productDialog: boolean;
 
     products: Product[];
@@ -60,7 +60,7 @@ export class ZicoinConfig implements OnInit {
     statuses: any[];
 
     // --------------------------------------------------------
-  selectedSubMerchants: string;
+  @Input() selectedSubMerchants: string;
   config: any;
   dataarr: { id: number; value: number; }[];
   showedit: any;
@@ -82,9 +82,20 @@ export class ZicoinConfig implements OnInit {
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
-    this.parentName = this.route.snapshot.paramMap.get('parent');
-    this.childName = this.route.snapshot.paramMap.get('child');
-    this.selectedSubMerchants = this.route.snapshot.paramMap.get('merchantUserId');
+    console.log(this.parentName,this.childName,this.selectedSubMerchants)
+    if(this.parentName === undefined || this.parentName === null){
+      this.parentName = this.route.snapshot.paramMap.get('parent');
+    }
+
+    if(this.childName === undefined || this.childName === null){
+      this.childName = this.route.snapshot.paramMap.get('child');
+    }
+
+    if(this.selectedSubMerchants === undefined || this.selectedSubMerchants === null){
+      this.selectedSubMerchants = this.route.snapshot.paramMap.get('merchantUserId');
+    }
+
+
 
     this.getConfiguration()
   }
@@ -182,8 +193,8 @@ createId(): string {
 }
 
 // --------------------------------------------------------------
-getConfiguration(){
-  console.log(this.selectedSubMerchants)
+getConfiguration(val?){
+  // console.log(this.selectedSubMerchants)
   this.zithApiService.getSubMerchantConf(this.selectedSubMerchants)
   // tslint:disable-next-line: no-shadowed-variable
   .subscribe(data => {

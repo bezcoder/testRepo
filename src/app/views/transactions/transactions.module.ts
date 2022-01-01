@@ -28,9 +28,9 @@ import { CountdownModule } from 'ngx-countdown';
 import { MySharedModule } from '../../shared/shared.module';
 import {SelectButtonModule} from 'primeng/selectbutton';
 import { NgxHowlerService } from 'ngx-howler'
-import { CardModule } from '@coreui/angular';
 import { MessageService } from 'primeng/api';
 import { SkeletonModule } from 'primeng/skeleton';
+import { CardModule } from 'primeng/card';
 
 
 @NgModule({

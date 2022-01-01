@@ -19,14 +19,14 @@
       <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
     </div>
   </div>
-    <p-table *ngIf="this.showtable" #dt [autoLayout] ="true" [value]="primmerchants" [lazy]="true" (onLazyLoad)="loadPrimMerchants($event)" [(selection)]="selectedCustomers" dataKey="id" styleClass="p-datatable-customers" [rowHover]="true"
+    <p-table *ngIf="this.showtable" #dt [autoLayout] ="true" [value]="primmerchants" [lazy]="true" (onLazyLoad)="loadPrimMerchants($event)" [(selection)]="selectedCustomers" dataKey="id" styleClass="p-datatable-customers p-datatable-striped" [rowHover]="true"
             [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
             [paginator]="true" [totalRecords]="collectionSize" [resizableColumns]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             [filterDelay]="0" [globalFilterFields]="['name','country.name','representative.name','status']">
             <ng-template pTemplate="caption">
                 <div class="table-header row" style="margin-top: 1%;margin-bottom: 1%;" >
                   <div class="col-lg-6 col-sm-12 order-0 headercolor-left">
-                    Merchant Stores
+                    Merchants
                   </div>
 
                     <div class="col-lg-3 col-sm-4 order-2 order-md-1 headercolor-right smllscrpad">
@@ -43,15 +43,15 @@
                 <!-- <tr>
                     <th>
                         <input pInputText type="text" (input)="dt.filter($event.target.value, 'name', 'contains')" placeholder="Search by Name" class="p-column-filter">
-                    </th>
+                    </th>style="background: rgba(46, 68, 110, 0.12);"
                 </tr> -->
-                <tr >
+                <tr  >
                   <!-- <th style="width: 10%"></th> -->
-                  <th style="width: 10%;text-align-last: left;" >Primary Merchant Name</th>
-                  <th style="width: 10%;text-align-last: center;" >Status</th>
-                  <th style="width: 10%;text-align-last: center;" >Information</th>
-                  <th style="width: 10%;text-align-last: center;" >Registered Date</th>
-                  <th style="width: 10%;text-align-last: center;">Actions</th>
+                  <th style="width: 10%;text-align-last: left;background: rgba(46, 68, 110, 0.12);" >Merchant Name</th>
+                  <th style="width: 10%;text-align-last: center;background: rgba(46, 68, 110, 0.12);" >Status</th>
+                  <th style="width: 10%;text-align-last: center;background: rgba(46, 68, 110, 0.12);" >Information</th>
+                  <th style="width: 10%;text-align-last: center;background: rgba(46, 68, 110, 0.12);" >Registered Date</th>
+                  <th style="width: 10%;text-align-last: center;background: rgba(46, 68, 110, 0.12);">Actions</th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-primmerchants>
@@ -94,12 +94,21 @@
                     </td> -->
                     <td class="alignoptions padd-zero-top-bottom" >
 
-                        <span class="pad-left-3 p-column-title pad-bottom-3">Information</span>
-                        <p-tag  class="rowvaluealign pad-right-3 pad-bottom-3 pad-top-3" *ngIf="primmerchants.bankadded" styleClass="p-mr-2" severity="success" value="Bank Added" [rounded]="false"></p-tag>
-                        <p-tag  class="rowvaluealign pad-right-3 pad-bottom-3 pad-top-3" *ngIf="!primmerchants.bankadded" styleClass="p-mr-2" severity="danger" value="Bank Not Added" [rounded]="false"></p-tag>
-
-                        <p-tag  class="rowvaluealign pad-right-3 pad-bottom-3 pad-top-3" *ngIf="primmerchants.docadded" styleClass="p-mr-2" severity="success" value="Doc Added" [rounded]="false"></p-tag>
-                        <p-tag  class="rowvaluealign pad-right-3 pad-bottom-3 pad-top-3" *ngIf="!primmerchants.docadded" styleClass="p-mr-2" severity="danger" value="Doc Not Added" [rounded]="false"></p-tag>
+                        <span class="pad-left-3 p-column-title pad-bottom-3 ">Information</span>
+                        <div class="row">
+                          <div class="col-12">
+                        <p-tag  class="rowvaluealign pad-right-3 pad-bottom-3 pad-top-3"  *ngIf="primmerchants.bankadded" styleClass="p-mr-2 mytag" severity="success" value="Bank Added" [rounded]="false"></p-tag>
+                      </div>
+                      <div class="col-12">
+                        <p-tag  class="rowvaluealign pad-right-3 pad-bottom-3 pad-top-3" *ngIf="!primmerchants.bankadded" styleClass="p-mr-2 mytag" severity="danger" value="Bank Not Added" [rounded]="false"></p-tag>
+                      </div>
+                      <div class="col-12">
+                        <p-tag  class="rowvaluealign pad-right-3 pad-bottom-3 pad-top-3" *ngIf="primmerchants.docadded" styleClass="p-mr-2 mytag" severity="success" value="Doc Added" [rounded]="false"></p-tag>
+                      </div>
+                      <div class="col-12">
+                        <p-tag  class="rowvaluealign pad-right-3 pad-bottom-3 pad-top-3" *ngIf="!primmerchants.docadded" styleClass="p-mr-2 mytag" severity="danger" value="Doc Not Added" [rounded]="false"></p-tag>
+                      </div>
+                      </div>
                         <!-- <span [class]="'customer-badge status-' + 'proposal'">{{primmerchants.bankadded}}</span> -->
                         <!-- <span *ngIf="primmerchants.bankadded" class="image-text" style="color: green;"><b>Yes</b></span> -->
                         <!-- <span *ngIf="!primmerchants.bankadded" class="image-text" style="color: crimson;" ><b>No</b></span> -->
@@ -109,7 +118,7 @@
 
                         <span class="pad-left-3 p-column-title pad-bottom-3 pad-top-3">Registered Date</span>
 
-                       <span  class="rowvaluealign pad-right-3 pad-bottom-3 pad-top-3" > {{primmerchants.regdate}} </span>
+                       <span  class="rowvaluealign pad-right-3 pad-bottom-3 pad-top-3" style="font-size: small;font-weight: bold;" > {{primmerchants.regdate}} </span>
 
                     </td>
 

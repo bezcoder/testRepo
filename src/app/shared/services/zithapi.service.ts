@@ -96,6 +96,10 @@ export class ZithapiService {
   private addFeedConfigURL = API_CONFIG.MERCHANT_BASE_URL + API_CONFIG.ADDFEEDBACKCONFIG;
   private getFeedConfigOptionsURL = API_CONFIG.MERCHANT_BASE_URL + API_CONFIG.GETFEEDBACKCONFIGOPTIONS;
   private feedbackURL = API_CONFIG.MERCHANT_BASE_URL + API_CONFIG.GETFEEDBACKS;
+  private activateFeedbackURL = API_CONFIG.MERCHANT_BASE_URL + API_CONFIG.ACTIVATEFEEDBACK;
+  private feedbackDashboardURL = API_CONFIG.MERCHANT_BASE_URL + API_CONFIG.GETFEEDBACKDASHBOARD;
+  private avgTransactionByFeedBackURL = API_CONFIG.MERCHANT_BASE_URL + API_CONFIG.GETAVGTRANSACTIONBYFEEDBACK;
+
 
   getStreamMessagesURL = API_CONFIG.MERCHANT_BASE_URL + API_CONFIG.STREAMMESSAGE;
   getNotificationsConfigURL = API_CONFIG.MERCHANT_BASE_URL + API_CONFIG.GETNOTIFICATIONS;
@@ -468,7 +472,11 @@ export class ZithapiService {
                                 '&page=' + page, data, {
     });
   }
-
+  getFeedbacksDashboard(startDate:string, endDate:string, data:any): Observable <any> {
+    return this.http.post<any>(this.feedbackDashboardURL + '?datehigh=' +endDate+
+                                '&datelow=' +startDate, data, {
+    });
+  }
 
   getNotificationsConfig(storeid:string): Observable <any> {
     return this.http.get<any>(this.getNotificationsConfigURL+ '?storeid=' +storeid);
@@ -479,7 +487,12 @@ export class ZithapiService {
     });
   }
 
-
-
+  activateFeedback(storeid:string, active:boolean): Observable <any> {
+    return this.http.get<any>(this.activateFeedbackURL+ '?storeid=' +storeid + '&active=' + active);
+  }
+  getAVGTranByFeedbacks(data:any): Observable <any> {
+    return this.http.post<any>(this.avgTransactionByFeedBackURL , data, {
+    });
+  }
 
 }

@@ -8,33 +8,33 @@
     max-height: 0;
     opacity: 0;
     display: block !important;
-  
+
     &.show {
       max-height: 100rem;
       opacity: 1;
     }
   }
-  
+
   ::ng-deep .accordion {
     .card {
       margin-bottom: 10px !important;
       border-bottom: 1px solid rgba(0, 0, 0, .04) !important;
-  
+
       .card-header {
         // padding-top: 0;
         padding: 5px;
-  
+
         button {
           padding: 1.2rem;
           width: 100%;
-  
+
           span {
             float: left;
             font-size: 1.2rem;
           }
         }
       }
-  
+
       .card-body {
         padding: 1rem;
       }
@@ -72,7 +72,7 @@
   .dropdown-toggle::after {
     display:none;
   }
-  
+
   ::ng-deep .card .card-header{
     background-color: #fff;
     border-bottom: none;
@@ -81,39 +81,39 @@
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
   }
-  
+
   .mycard :hover{
   //  cursor: grab;
   }
-  
+
   ::ng-deep .card-header.card-header-border h5 {
-  
+
     padding-top: 0px !important;
-  
+
   }
-  
+
   .align-items-end {
     align-items: center !important;
   }
-  
-  
+
+
   .card .card-header h5 {
     font-size: 18px;
     margin-bottom: 0;
     text-transform: capitalize;
     font-weight: 600;
   }
-  
+
   .subheading {
     font-weight: bold;
   }
-  
+
   .subheading2 {
     text-align-last: center;
     text-decoration: underline;
   }
-  
-  
+
+
   .btn-primary-gradien {
     background-image: none;
     background-color: #454547 ;
@@ -122,19 +122,19 @@
     background-size: auto 200%;
     transition: all 0.3s ease;
   }
-  
+
   .btn-primary {
     background-color: rgba(12, 13, 16, 0.9) !important;
     border-color: rgba(12, 13, 16, 0.9) !important;
   }
-  
+
   .btn-primary-gradien:focus, .btn-primary-gradien:active, .btn-primary-gradien.active {
     transition: 1.5s;
     background-color:#4BB4B0 ;
     background-position: right center;
     background-image: none !important;
   }
-  
+
   .card {
     margin-bottom: 30px;
     border: 0px;
@@ -143,72 +143,72 @@
     border-radius: 8px;
     box-shadow: 1px 5px 24px 0 rgba(0, 0, 0, 0.15);
   }
-  
+
   .custom-control-input:checked ~ .custom-control-label::before {
       color: #fff;
       border-color: #011627;
       background-color: #011627;
   }
-  
-  
+
+
   // ADded
-  
+
 :host ::ng-deep {
   .p-paginator {
       .p-paginator-current {
           margin-left: auto;
       }
   }
-  
+
   .p-progressbar {
       height: .5rem;
       background-color: #D8DADC;
-  
+
       .p-progressbar-value {
           background-color: #607D8B;
       }
   }
-  
+
   .table-header {
       display: flex;
       justify-content: space-between;
   }
-  
+
   .p-calendar .p-datepicker {
       min-width: 25rem;
-  
+
       td {
           font-weight: 400;
       }
   }
 
 
-  
+
   .p-datatable.p-datatable-customers {
       .p-datatable-header {
           padding: 1rem;
           text-align: left;
           font-size: 1.5rem;
-          background: linear-gradient( 45deg, rgba(206, 231, 185, 1) 0%, rgba(159, 213, 200, 1) 100%);
+          background: linear-gradient(90.25deg, #2E446E 0%, #357F8F 104.31%);
       }
-  
+
       .p-paginator {
           padding: 1rem;
       }
-  
+
       .p-datatable-thead > tr > th {
           text-align: left;
       }
-  
+
       .p-datatable-tbody > tr > td {
           cursor: auto;
       }
-  
+
       .p-dropdown-label:not(.p-placeholder) {
           text-transform: uppercase;
       }
   }
-  
+
   /* Responsive */
   .p-datatable-customers .p-datatable-tbody > tr > td .p-column-title {
       display: none;
@@ -216,11 +216,11 @@
 }
 
 ::ng-deep .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider{
-background: #5eb112;
+background: #1EA614;
 }
 
 ::ng-deep .p-inputswitch.p-inputswitch-checked:not(.p-disabled):hover .p-inputswitch-slider {
-  background: #5eb112;
+  background: #1EA614;
 }
 
 
@@ -244,7 +244,8 @@ display: none !important;
 }
 
 .headercolor-left{
-  color: black;
+  color: #FFDE32;
+  font-size:large;
 }
 
 ::ng-deep span.p-button-label {
@@ -269,12 +270,12 @@ display: none !important;
                 text-align-last: left;
                 display: flex;
               }
-  
+
               .p-datatable-tbody > tr {
                   border-bottom: 1px solid var(--layer-2);
                   background: #EEEEEE;
                   padding: 2% !important;
-  
+
                   > td {
                       text-align: left;
                       display: block;
@@ -285,8 +286,8 @@ display: none !important;
                       // border: 0 none;
                       background-clip: content-box;
                       background-color: white;
-                      
-  
+
+
                       .p-column-title {
                           padding: .4rem;
                           min-width: 30%;
@@ -296,7 +297,7 @@ display: none !important;
                           font-size: 0.8rem;
                           // font-weight: bold;
                       }
-  
+
                       .p-progressbar {
                           margin-top: .5rem;
                       }
@@ -312,7 +313,7 @@ display: none !important;
   }
 
   .gap{
-  
+
   }
 
 }
@@ -430,5 +431,5 @@ display: none !important;
   .pad-top-10{
     padding-top: 10% !important;
   }
-  
-}    
+
+}

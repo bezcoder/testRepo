@@ -957,8 +957,8 @@ p-dropdown.ng-dirty.ng-invalid > .p-dropdown {
 .p-inputgroup input:first-child,
 .p-inputgroup > .p-inputwrapper:first-child > .p-component,
 .p-inputgroup > .p-inputwrapper:first-child > .p-component > .p-inputtext {
-  border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
 }
 
 .p-inputgroup .p-float-label:first-child input {
@@ -973,6 +973,9 @@ p-dropdown.ng-dirty.ng-invalid > .p-dropdown {
 .p-inputgroup > .p-inputwrapper:last-child > .p-component > .p-inputtext {
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-left: none;
 }
 
 .p-inputgroup .p-float-label:last-child input {
@@ -1237,10 +1240,11 @@ p-listbox.ng-dirty.ng-invalid > .p-listbox {
 .p-multiselect.p-multiselect-chip .p-multiselect-token {
   padding: 0.25rem 0.5rem;
   margin-right: 0.5rem;
-  background: #E3F2FD;
-  color: #495057;
+  background: rgba(46, 68, 110, 0.19) !important;
+  color: #2E446E !important;
   border-radius: 3px;
   font-size: 0.65rem;
+  padding: 8px;
 }
 .p-multiselect.p-multiselect-chip .p-multiselect-token .p-multiselect-token-icon {
   margin-left: 0.5rem;
@@ -1494,6 +1498,7 @@ p-radiobutton.ng-dirty.ng-invalid > .p-radiobutton > .p-radiobutton-box {
   transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
   font-size: 0.575rem;
   padding: 0.3375rem 0.575rem;
+  border-radius: 8px;
 }
 .p-selectbutton .p-button .p-button-icon-left,
 .p-selectbutton .p-button .p-button-icon-right {
@@ -1851,9 +1856,10 @@ p-treeselect.ng-invalid.ng-dirty > .p-treeselect {
 }
 
 .p-button.p-button-secondary, .p-buttonset.p-button-secondary > .p-button, .p-splitbutton.p-button-secondary > .p-button {
-  color: #ffffff;
-  background: #607D8B;
+  color: #FFFFFF;
+  background: #2E446E;
   border: 1px solid #607D8B;
+  border-radius: 5px;
 }
 .p-button.p-button-secondary:enabled:hover, .p-buttonset.p-button-secondary > .p-button:enabled:hover, .p-splitbutton.p-button-secondary > .p-button:enabled:hover {
   background: #56717d;
@@ -3146,9 +3152,9 @@ p-treeselect.ng-invalid.ng-dirty > .p-treeselect {
   margin-bottom: 0.5rem;
 }
 .p-picklist .p-picklist-header {
-  background: #f8f9fa;
-  color: #495057;
-  border: 1px solid #dee2e6;
+  background: #E5E7EB;
+  color: #2E446E;
+  border: 1px solid #E5E7EB;
   padding: 1rem;
   border-bottom: 0 none;
   border-top-right-radius: 3px;

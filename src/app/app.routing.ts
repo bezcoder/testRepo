@@ -62,9 +62,9 @@ export const routes: Routes = [
         loadChildren: () => import('./views/feedback/feedback.module').then(m => m.FeedbackModule)
       },
       {
-        path: 'notification',
+        path: 'settings',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./views/notification/notification.module').then(m => m.NotificationModule)
+        loadChildren: () => import('./views/settings/settings.module').then(m => m.SettingsModule)
       }
     ]
   },

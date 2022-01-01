@@ -1,324 +1,218 @@
-<p-sidebar *ngIf="this.smallscreen" [blockScroll]="true" [(visible)]="visibleSidebar4" position="bottom" [baseZIndex]="10000">
-  <h4 style="font-weight:normal">{{sidebarheader}}</h4>
-  <div class="row">
-    <div class="col-12 centerdt">
-  <p-listbox [listStyle]="{'max-height':'176px'}"  [options]="merchantsData" [(ngModel)]="selectedMerchants" optionLabel="name" [filter]="true" filterBy="name" optionValue="id" ></p-listbox>
-</div>
-  <div class="col-12" style="margin-top: 3%;text-align: center;">
-    <div class="row">
-      <div class="col-6">
-  <p-button type="button" class="bwidth"  (click)="visibleSidebar4 = false" label="Cancel" styleClass="p-button-secondary bwidth"></p-button>
-</div>
-  <!-- <div style="float: right;"> -->
-    <div class="col-6">
-  <p-button type="button" class="bwidth"  (click)="getSettlements(undefined);visibleSidebar4 = false" label="Select" styleClass="p-button-success bwidth"></p-button>
-</div>
-</div>
-<!-- </div> -->
-</div>
-</div>
-</p-sidebar>
-
-
-
-<p-sidebar *ngIf="this.smallscreen" [blockScroll]="true" [(visible)]="visibleDateBar" position="bottom" [baseZIndex]="10000">
-  <h4 style="font-weight:normal">Select Date</h4>
-  <div class="row">
-  <div class="col-12 centerdt">
-  <p-calendar [maxDate]="today" [(ngModel)]="dateRangenew" [style]="{'width':'50%'}" [inline] = "true" class="inlcal" [readonlyInput]="true"  selectionMode="range"   placeholder="Select Date Range" ></p-calendar>
-</div>
-<div class="col-12" style="margin-top: 3%;text-align: center;">
-  <div class="row">
-    <div class="col-6">
-  <p-button type="button" class="bwidth"  (click)="visibleDateBar = false" label="Cancel" styleClass="p-button-secondary bwidth"></p-button>
-</div>
-  <!-- <div style="float: right;"> -->
-    <div class="col-6">
-  <p-button type="button" class="bwidth"  (click)="getSettlements(undefined);visibleDateBar = false" label="Select" styleClass="p-button-success bwidth"></p-button>
-<!-- </div> --></div>
-</div>
-</div>
-</div>
-</p-sidebar>
-
-
-<!-- <p-sidebar *ngIf="this.smallscreen" [blockScroll]="true" [(visible)]="visibleStore" position="bottom" [baseZIndex]="10000">
-  <h4 style="font-weight:normal">Select Store</h4>
-  <div class="row">
-    <div class="col-12 centerdt">
-  <p-listbox [checkbox]="true" [multiple]="true" [listStyle]="{'max-height':'176px'}"  [options]="subMerchantsData" [(ngModel)]="selectedSubMerchants" optionLabel="name" [filter]="true" filterBy="name"  ></p-listbox>
-</div> -->
-  <!-- <p-multiSelect #selsubmerchant [maxSelectedLabels]= "2" inputId="selmerchantinput" (click)="onClickSubMerchant(selsubmerchant)"  [options]="subMerchantsData" [(ngModel)]="selectedSubMerchants" defaultLabel="Select Stores" optionLabel="name" display="chip"></p-multiSelect> -->
-  <!-- <div class="col-12" style="margin-top: 3%;text-align: center;">
-    <div class="row">
-      <div class="col-6">
-  <p-button type="button" class="bwidth"  (click)="visibleStore = false" label="Cancel" styleClass="p-button-secondary bwidth"></p-button>
-</div> -->
-<!-- <div style="float: right;"> -->
-  <!-- <div class="col-6">
-  <p-button type="button"  class="bwidth" (click)="getSettlements(undefined);visibleStore = false" label="Select" styleClass="p-button-success bwidth"></p-button>
-</div>
-</div> -->
-<!-- </div> -->
-<!-- </div>
-</div>
-</p-sidebar> -->
-
-<c-card  class="card-bkground card" style="padding: 1%;">
-
-  <div class="row">
-    <div class="col-12">
-      <div class="col-sm-12 col-12" style="padding-left: 0px !important;padding-right: 0px !important;" *ngIf="settlementsData">
-        <div>
-          <h4 style="padding-top: 2%;"><b>Settlement History</b></h4>
-          <p-skeleton *ngIf="!this.showfirst" height="1rem" styleClass="p-mb-2"></p-skeleton>
-        </div>
-      </div>
-
-    </div>
-    <div class="col-lg-6 col-12" style="margin-bottom: 2%;" >
-      <p-skeleton class="col-lg-6 col-12" *ngIf="!this.showfirst" height="2rem" styleClass="p-mb-2"></p-skeleton>
-      <p-skeleton class="col-lg-6 col-12" *ngIf="!this.showfirst" height="2rem" styleClass="p-mb-2"></p-skeleton>
-      <p-skeleton class="col-lg-6 col-12" *ngIf="!this.showfirst" height="2rem" styleClass="p-mb-2"></p-skeleton>
-      <div *ngIf="this.showfirst">
-      <div class="col-lg-12 col-12" *hasRole="[Role.SuperUser, Role.Admin,Role.Shop]">
-        <div class="col-lg-12 col-12" style="margin-bottom: 2%;" *hasRole="[Role.SuperUser]">
-          <div>
-            <span class="fieldttitle">Merchant</span><br>
-            <div class="fieldttitle">
-              <p-dropdown styleClass='drpdown p-inputtext-sm' #selmerchant
-                (click)="onClickParentMerchant(selmerchant);getSettlements(undefined)" [options]="merchantsData"
-                 [(ngModel)]="selectedMerchants"
-                placeholder="Select Parent" optionLabel="name" optionValue="id" [filter]="true" filterBy="name">
-              </p-dropdown>
-            </div>
-          </div>
-        </div>
+<!-- <p-toast key="myKey1" [baseZIndex]="55555"></p-toast> -->
+<div class="row mb-3" *hasRole="[Role.SuperUser, Role.Admin,Role.Shop]">
+  <p-skeleton class="col-lg-6 col-12" *ngIf="!this.showfirst" height="2rem" styleClass="p-mb-2"></p-skeleton>
+  <p-skeleton class="col-lg-6 col-12" *ngIf="!this.showfirst" height="2rem" styleClass="p-mb-2"></p-skeleton>
+  <p-skeleton class="col-lg-6 col-12" *ngIf="!this.showfirst" height="2rem" styleClass="p-mb-2"></p-skeleton>
+  <!-- <div *ngIf="this.showfirst"> -->
+    <div class="col" *hasRole="[Role.SuperUser]">
+      <span class="fieldttitle">Merchant</span><br>
+      <div class="fieldttitle">
+        <p-dropdown styleClass='drpdown' #selmerchant
+          (click)="onClickParentMerchant(selmerchant);getSettlements(undefined)" [options]="merchantsData"
+          [(ngModel)]="selectedMerchants" placeholder="Select Parent" optionLabel="name" optionValue="id"
+          [filter]="true" filterBy="name">
+        </p-dropdown>
       </div>
     </div>
-    </div>
-
-    <div class="col-lg-6 col-12" *ngIf="this.showfirst" style="margin-bottom: 2%;">
-  <div class="row">
-    <p-skeleton class="col-lg-3 col-6"  *ngIf="!this.showfirst" height="2rem" styleClass="p-mb-2"></p-skeleton>
-    <p-skeleton class="col-lg-3 col-6" *ngIf="!this.showfirst" height="2rem" styleClass="p-mb-2"></p-skeleton>
-    <div class="col-lg-3 col-6" style="margin-bottom: 5%;"  >
-      <!-- <form [formGroup]="form"> -->
-        <span class="fieldttitle margin-left-16" >From (Date)</span><br>
-        <div class="fieldttitle" style="float: right;">
-          <p-calendar styleClass='p-inputtext-sm' [style]="{'width':'100% !important'}"
+    <div class="col">
+      <div class="row">
+        <div class="col">
+          <span class="fieldttitle">From </span><br>
+          <div class="fieldttitle" style="float: left;">
+            <div class="p-inputgroup">
+              <span class="p-inputgroup-addon border-right-0 bg-white "> <i class="pi pi-calendar"></i> </span>
+            <p-calendar [style]="{'width':'100% !important','height':'50px !important'}"
             [selectOtherMonths]="true" [inputStyle]="{'width':'100% !important'}" [maxDate]="today"
               [(ngModel)]="fromDate"  id="picker" [touchUI]="this.smallscreen"
             inputId="picky" [readonlyInput]="true" (onClose)="getSettlements(undefined)"
-            placeholder="From Date">
-            <!-- <p-footer>
-              <div class="row">
-                <div class="col-6" style="text-align: center;">
-                  <button pButton class="p-button-sm" type="button" label="Close"
-                    style="background: white;color: black;min-inline-size: -webkit-fill-available;"
-                    ></button>
-                </div>
-                <div class="col-6" style="text-align: center;">
-                  <button class="p-button-sm" pButton style="min-inline-size: -webkit-fill-available;"
-                    type="button" label="Select" (click)="getTransactions(undefined)"></button>
-                </div>
-              </div>
-            </p-footer> -->
-          </p-calendar>
+            placeholder="From Date"></p-calendar>
+          </div>
         </div>
-      <!-- </form> -->
-    </div>
-    <div class="col-lg-3 col-6">
-
-      <!-- <form [formGroup]="form"> -->
-        <span class="fieldttitle">To (Date)</span><br>
-        <div class="fieldttitle" style="float: left;">
-          <p-calendar styleClass='p-inputtext-sm' [style]="{'width':'100% !important'}"
+        </div>
+        <div class="col">
+          <span class="fieldttitle">To </span><br>
+          <!-- [showIcon]="true"  -->
+          <div class="" style="float: left;">
+            <div class="p-inputgroup">
+              <span class="p-inputgroup-addon border-right-0 bg-white "> <i class="pi pi-calendar"></i> </span>
+            <p-calendar [style]="{'width':'100% !important'}"
             [selectOtherMonths]="true" [inputStyle]="{'width':'100% !important'}" [maxDate]="today"
               [(ngModel)]="toDate"  id="picker" [touchUI]="this.smallscreen"
               inputId="picky" [readonlyInput]="true" (onClose)="getSettlements(undefined)"
-            placeholder="To Date">
-            <!-- <p-footer>
-              <div class="row">
-                <div class="col-6" style="text-align: center;">
-                  <button pButton class="p-button-sm" type="button" label="Close"
-                    style="background: white;color: black;min-inline-size: -webkit-fill-available;"
-                    ></button>
-                </div>
-                <div class="col-6" style="text-align: center;">
-                  <button class="p-button-sm" pButton style="min-inline-size: -webkit-fill-available;"
-                    type="button" label="Select" (click)="getTransactions(undefined)"></button>
-                </div>
-              </div>
-            </p-footer> -->
-          </p-calendar>
+            placeholder="To Date"></p-calendar>
+          </div>
+          </div>
         </div>
-      <!-- </form> -->
+      </div>
+
     </div>
-  </div>
-    </div>
-  </div>
-</c-card>
-
-<!-- <div class="container-fluid" style="margin-left: 3%;max-width: 95%;">
-
-  <div class="row">
-     <div class="col-sm-12" style="padding-left: 0px !important;padding-right: 0px !important;" *ngIf="settlementsData">
-        <div class="card">
-          <div class="card-header bkground paddheaders">
-            <div>
-              <h4 style="padding-top: 2%;"><b>Settlement History</b></h4>
-            </div>
-              <div class="row">
-                <div class="col"  *hasRole="[Role.SuperUser]">
-                  <div class="fieldttitle">
-                    <span >Select Parent Merchant</span><br>
-                    <p-dropdown #selmerchant (click) = "onClickParentMerchant(selmerchant)" [options]="merchantsData"   (onChange)="getSettlements(undefined)"  [(ngModel)]="selectedMerchants" placeholder="Select Parent" optionLabel="name" optionValue="id" [filter]="true" filterBy="name" ></p-dropdown>
-                  </div>
-              </div>
-                <div class="col-md-12 col-sm-12 mrgin"  >
-
-                    <form [formGroup]="form">
-                      <span class="fieldttitle">From & to Date</span><br>
-                      <div class="fieldttitle">
-                    <p-calendar #dtrange [maxDate]="today"  [rangeSeparator]="'to'" [(ngModel)]="dateRangenew"  [ngModelOptions]="{standalone: true}"  id="picker" (click)="onClickDateRange(dtrange)"   inputId="picky"   [readonlyInput]="true"  selectionMode="range"   placeholder="Select Date Range" >
-                      <p-footer>
-                        <button pButton type="button" label="Close" style="background: white;color: black;" (click)="closedt(dtrange)"></button>
-                        <button pButton style="float: right;" type="button" label="Select" (click)="closedt(dtrange);getSettlements(undefined)"></button>
-                      </p-footer>
-                    </p-calendar>
-                  </div>
-
-                    </form>
-                </div>
-
-
-                <!-- <div class="col-12 mrgin" >
-                    <div>
-                      <span style="font-size: large;"><b>Select Store</b></span><br>
-                      <p-multiSelect #selsubmerchant [maxSelectedLabels]= "2" inputId="selmerchantinput"  (click)="onClickSubMerchant(selsubmerchant)"  [options]="subMerchantsData" [(ngModel)]="selectedSubMerchants" defaultLabel="Select Stores" optionLabel="name" display="chip">
-                        <p-footer >
-                          <button style="margin: 1%;" pButton type="button" label="Close" style="background: white;color: black;" (click)="closemulti()"></button>
-                          <button style="margin: 1%;" pButton style="float: right;background-color: #689F38;" type="button" label="Select" (click)="closemulti();getSettlements(undefined)"></button>
-                        </p-footer>
-                      </p-multiSelect>
-                    </div>
-                </div> -->
-              <!-- </div> -->
-          <!-- </div> -->
-        <!-- </div> -->
-      <!-- </div> -->
-    <!-- </div> -->
   <!-- </div> -->
+</div>
+
+<div class="row mb-3 p-3">
+  <p-table *ngIf="showtable" style="width: 100%;" #dt [scrollable]="true" [autoLayout]="true" [value]="settlementsData"
+    [(selection)]="selectedMerchants" [lazy]="true" (onLazyLoad)="getSettlements($event)" dataKey="id"
+    styleClass="p-datatable-transactions" [rowHover]="true" [rows]="5" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading" [paginator]="true" [totalRecords]="settlementsDataCount"
+    [resizableColumns]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [filterDelay]="0" [globalFilterFields]="['name','country.name','representative.name','status']">
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex row">
+        <!-- <button type="button" [disabled] = "disableDownload" pButton pRipple icon="pi pi-file-o" (click)="dt.exportCSV()" class="p-mr-2" pTooltip="CSV" tooltipPosition="bottom"></button> -->
+        <!-- <div class="col-6 left-center-middle">
+          <button style="margin-left:10%;margin-right: 5%;" type="button" [disabled]="disableDownload" pButton pRipple
+            icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success p-mr-2 p-button-sm" pTooltip="XLS"
+            tooltipPosition="bottom" label="Excel"></button>
+          <button type="button" [disabled]="disableDownload" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()"
+            class="p-button-warning p-mr-2 p-button-sm" pTooltip="PDF" tooltipPosition="bottom" label="PDF"></button>
+        </div> -->
+
+
+        <div class="col-12" style="text-align: center;margin-top: 5%;">
+          <!-- <img class="card-img-top" src="/assets/img/bg-card.png" alt="Card image" style="width:400px"> -->
+          <p-card styleClass="grad-box" [style]="{width: '349px'}" >
+
+            <div class="row">
+              <div class="col-12 box-card-header">
+                <span >Settlements</span>
+              </div>
+              <div class="col-12 box-card-content">
+                <span style="font-weight: bold;font-size:x-large;color:white">{{this.totalSettlements|inr}}</span>
+              </div>
+              <div class="col-12 box-card-footer">
+                <span style="font-size:large;color:white;padding-left: 50px;">({{this.settlementsDataCount}}
+                  settlements)</span>
+              </div>
 
 
 
-  <p-table *ngIf="showtable" #dt [autoLayout] ="true" [value]="settlementsData" [(selection)]="selectedMerchants" [lazy]="true" (onLazyLoad)="getSettlements($event)"  dataKey="id" styleClass="p-datatable-transactions" [rowHover]="true"
-        [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [loading]="loading"
-        [paginator]="true" [totalRecords]="settlementsDataCount" [resizableColumns]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [filterDelay]="0" [globalFilterFields]="['name','country.name','representative.name','status']">
-        <!-- <ng-template pTemplate="caption"> -->
-            <!-- <div class="table-header">
-                Transactions
-         </div> -->
-          <!-- </ng-template> -->
-        <ng-template pTemplate="header">
-<!--
-            <tr>
-                <th>
-                    <input pInputText type="text" (input)="dt.filter($event.target.value, 'name', 'contains')" placeholder="Search by Name" class="p-column-filter">
-                </th>
+            <!-- <img width="50px" src="../../../assets/img/rupee-green.png" alt=""> -->
+          </div>
+          </p-card>
+          <!-- <button type="button" pButton pRipple icon="pi pi-filter" (click)="dt.exportCSV({selectionOnly:true})" class="p-button-info p-ml-auto" pTooltip="Selection Only" tooltipPosition="bottom"></button> -->
+        </div>
+        <div class="col-12 center-middle">
+          <button type="button" style="float: right;" pButton pRipple icon="pi pi-refresh"
+          (click)="getSettlements(undefined)" class="p-button-success p-mr-2 p-button-sm"
+          label="Refresh"></button>
+        </div>
+      </div>
+      <div class="table-header" style="background-color: white;">
 
-            </tr> -->
-            <tr style="font-size: small;">
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <!--
+      <tr>
+          <th>
+              <input pInputText type="text" (input)="dt.filter($event.target.value, 'name', 'contains')" placeholder="Search by Name" class="p-column-filter">
+          </th>
 
-              <th style="width: 15%;text-align-last: left;" >Store Name </th>
-              <th style="width: 15%;text-align-last: center;" >Settled To </th>
-              <th style="width: 15%;text-align-last: center;" > Bank UTR ID </th>
-              <th style="width: 15%;text-align-last: center;" >Date & Time </th>
-              <th style="width: 15%;text-align-last: center;" >Amount </th>
-              <th style="width: 15%;text-align-last: center;" >Status </th>
-              <th style="width: 10%;text-align-last: center;" > </th>
+      </tr> -->
+      <tr style="font-size: small;">
 
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-settlement>
-            <tr style="font-size: small;" >
+        <th style="width: 15%;text-align-last: left;">Store Name </th>
+        <th style="width: 15%;text-align-last: center;">Settled To </th>
+        <th style="width: 15%;text-align-last: center;"> Bank UTR ID </th>
+        <th style="width: 15%;text-align-last: center;">Date & Time </th>
+        <th style="width: 15%;text-align-last: center;">Amount </th>
+        <th style="width: 15%;text-align-last: center;">Status </th>
+        <th style="width: 10%;text-align-last: center;"> </th>
 
-                <td class=" center-lg padd-zero-bottom" style="padding-top: 0px;" >
-                    <span  class="p-column-title padd">Store Name</span>
-                    <div class="mar-right-1">
-                 <span class="rowvaluealigncol1  pad-top-3 pad-right-3 valuetext" >  {{stripName(settlement.merchant_name) | titlecase}} </span> <br>
-                </div> </td>
-                <td  class="alignoptions padd-zero-top-bottom">
-                  <span class="p-column-title padd">Settled To</span>
-                  <div class="mar-right-1">
-                  <span class="rowvaluealign pad-top-3 pad-right-3 valuetext"> {{stripName(settlement.settledto) }} </span>  <br>
-                </div></td>
-              <td  class="alignoptions padd-zero-top-bottom">
-                <span class="p-column-title  padd">Bank UTR ID</span>
-                <div class="mar-right-1">
-                <span class="rowvaluealign pad-top-3 pad-right-3 valuetext"> {{settlement.bankrefid | uppercase}}  </span> <br>
-              </div></td >
-          <td  class="alignoptions padd-zero-top-bottom">
-            <span class="p-column-title  padd">Date & Time</span>
-            <div class="mar-right-1">
-            <span class="rowvaluealign pad-top-3 pad-right-3 valuetext">  {{ (settlement.created_at) }} </span>  <br>
-          </div></td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-settlement>
+      <tr style="font-size: small;">
+
+        <td class=" center-lg padd-zero-bottom" style="padding-top: 0px;">
+          <span class="p-column-title padd">Store Name</span>
+          <div class="mar-right-1">
+            <span class="rowvaluealigncol1  pad-top-3 pad-right-3 valuetext"> {{stripName(settlement.merchant_name) |
+              titlecase}} </span> <br>
+          </div>
+        </td>
+        <td class="alignoptions padd-zero-top-bottom">
+          <span class="p-column-title padd">Settled To</span>
+          <div class="mar-right-1">
+            <span class="rowvaluealign pad-top-3 pad-right-3 valuetext"> {{stripName(settlement.settledto) }} </span>
+            <br>
+          </div>
+        </td>
+        <td class="alignoptions padd-zero-top-bottom">
+          <span class="p-column-title  padd">Bank UTR ID</span>
+          <div class="mar-right-1">
+            <span class="rowvaluealign pad-top-3 pad-right-3 valuetext"> {{settlement.bankrefid | uppercase}} </span>
+            <br>
+          </div>
+        </td>
+        <td class="alignoptions padd-zero-top-bottom">
+          <span class="p-column-title  padd">Date & Time</span>
+          <div class="mar-right-1">
+            <span class="rowvaluealign pad-top-3 pad-right-3 valuetext"> {{ (settlement.created_at) }} </span> <br>
+          </div>
+        </td>
         <td class="alignoptions padd-zero-top-bottom">
           <span class="p-column-title  padd">Amount</span>
           <div class="mar-right-1">
-          <span class="rowvaluealign pad-top-3 pad-right-3 valuetext">  {{ settlement.amount.toFixed(2) | inr }} </span> <br>
-        </div></td>
+            <span class="rowvaluealign pad-top-3 pad-right-3 valuetext"> {{ settlement.amount.toFixed(2) | inr }}
+            </span> <br>
+          </div>
+        </td>
 
 
-    <td class="alignoptions padd-zero-top-bottom">
-      <span class="p-column-title  pad-bottom-3 padd">Status</span>
-      <span *ngIf="settlement.status ==='success'" class="rowvaluealign pad-top-3 pad-bottom-3 pad-right-3 text-success">  Settled </span>
-      <span *ngIf="settlement.status.toString().includes('init')" class="rowvaluealign pad-top-3 pad-bottom-3 pad-right-3 text-warning">  {{settlement.status | titlecase}} </span>
-      <span *ngIf="settlement.status.toString().includes('fail')" class="rowvaluealign pad-top-3 pad-bottom-3 pad-right-3 text-danger">  {{settlement.status | titlecase}} </span>
+        <td class="alignoptions padd-zero-top-bottom">
+          <span class="p-column-title  pad-bottom-3 padd">Status</span>
+          <span *ngIf="settlement.status ==='success'"
+            class="rowvaluealign pad-top-3 pad-bottom-3 pad-right-3 text-success"> Settled </span>
+          <span *ngIf="settlement.status.toString().includes('init')"
+            class="rowvaluealign pad-top-3 pad-bottom-3 pad-right-3 text-warning"> {{settlement.status | titlecase}}
+          </span>
+          <span *ngIf="settlement.status.toString().includes('fail')"
+            class="rowvaluealign pad-top-3 pad-bottom-3 pad-right-3 text-danger"> {{settlement.status | titlecase}}
+          </span>
 
-  </td>
-  <td class="alignoptions padd-zero-top pad-bottom-3 pad-1 just-content-right" >
-    <span class="rowvaluealign pad-top-3 pad-bottom-3 pad-right-3 text-success">
-      <button pButton class="p-button-xsm" type="button"
-        style="max-width: 100% !important;background-color: rgb(0 0 0);border: none;" label="Details"
-        (click)="open(content, settlement)"></button>
-    </span>
+        </td>
+        <td class="alignoptions padd-zero-top pad-bottom-3 pad-1 just-content-right">
+          <span class="rowvaluealign pad-top-3 pad-bottom-3 pad-right-3 text-success">
+            <button pButton class="p-button-xsm" type="button"
+              style="max-width: 100% !important;background-color: rgb(0 0 0);border: none;" label="Details"
+              (click)="open(content, settlement)"></button>
+          </span>
 
-    <!-- <span class="rowvaluealign pad-top-3 pad-bottom-3 pad-right-3 p-button-sm"> <button pButton  type="button" label="Details" (click)="open(content, settlement)"></button> </span> -->
-</td>
-    </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage">
-            <tr>
-                <td colspan="8">No settlements found.</td>
-            </tr>
-        </ng-template>
-    </p-table>
+          <!-- <span class="rowvaluealign pad-top-3 pad-bottom-3 pad-right-3 p-button-sm"> <button pButton  type="button" label="Details" (click)="open(content, settlement)"></button> </span> -->
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="8">No settlements found.</td>
+      </tr>
+    </ng-template>
+  </p-table>
 
 
-<p-dialog  [(visible)]="openDialog" >
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Settlement Details</h4>
-  </div>
-  <div class="modal-body">
-    <div class="d-flex-center flex-dir-col w-100 dark">
-      <div class="d-flex-center" style="margin-top:15px; width:100%">
-         <span class="fs-18 fw-500 mr-r-5">Settled Amount</span>
-         <img src="../../../assets/img/settlement.png" alt="" class="h-24-px">
-      </div>
-      <span class="font-heavy fs-40 fw-900" style="text-align:center; width:100%; margin-top:17px">
-        <span class="fs-20">₹</span>
-        <span>{{totalTransactionAmount}}</span>
-      </span>
-      <div class="d-flex justify-cnt-space-btw flex-v-cntr" style="width:100%; padding-bottom:10px; border-bottom: solid 1px #eeecf9;">
-         <span class="fs-14  stl_timestamp">
-           {{totalTransactionDate}}
-         </span>
-      </div>
-      <div class="d-flex justify-cnt-space-btw flex-v-cntr w-100" style="margin-top:14px">
-         <div class="d-flex dark flex-dir-col fs-14">
+  <p-dialog [(visible)]="openDialog">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Settlement Details</h4>
+    </div>
+    <div class="modal-body">
+      <div class="d-flex-center flex-dir-col w-100 dark">
+        <div class="d-flex-center" style="margin-top:15px; width:100%">
+          <span class="fs-18 fw-500 mr-r-5">Settled Amount</span>
+          <img src="../../../assets/img/settlement.png" alt="" class="h-24-px">
+        </div>
+        <span class="font-heavy fs-40 fw-900" style="text-align:center; width:100%; margin-top:17px">
+          <span class="fs-20">₹</span>
+          <span>{{totalTransactionAmount}}</span>
+        </span>
+        <div class="d-flex justify-cnt-space-btw flex-v-cntr"
+          style="width:100%; padding-bottom:10px; border-bottom: solid 1px #eeecf9;">
+          <span class="fs-14  stl_timestamp">
+            {{totalTransactionDate}}
+          </span>
+        </div>
+        <div class="d-flex justify-cnt-space-btw flex-v-cntr w-100" style="margin-top:14px">
+          <div class="d-flex dark flex-dir-col fs-14">
             <span class="fs-12" style="color:#585371">Settled To:</span>
             <span class="fw-900" style="margin-top:16px">{{settledTo}}</span>
             <span class="stl_beneficiary_name">{{merchant_name | titlecase}}</span>
@@ -326,34 +220,34 @@
               <span class="stl_utr_text">UTR</span>:
               <span class="stl_utr">{{bankrefid}}</span>
             </span>
-         </div>
-      </div>
-      <!-- <div class="d-flex-center justify-cnt-space-btw w-100" style="margin:35px 0 16px;"> -->
-         <!-- <span class="fs-14 fw-900 font-heavy">All Transactions</span> -->
-         <!-- <span class="fs-14 download-btn d-flex-center" style="cursor:pointer; width:113px; margin:0" onclick="downloadData(true)"> -->
-          <!-- <img src="../../../assets/images/download.svg" alt="" class="h-14-px">&nbsp;Download -->
-          <!-- <i class="fa fa-download mr-1"></i> -->
+          </div>
+        </div>
+        <!-- <div class="d-flex-center justify-cnt-space-btw w-100" style="margin:35px 0 16px;"> -->
+        <!-- <span class="fs-14 fw-900 font-heavy">All Transactions</span> -->
+        <!-- <span class="fs-14 download-btn d-flex-center" style="cursor:pointer; width:113px; margin:0" onclick="downloadData(true)"> -->
+        <!-- <img src="../../../assets/images/download.svg" alt="" class="h-14-px">&nbsp;Download -->
+        <!-- <i class="fa fa-download mr-1"></i> -->
         <!-- </span> -->
-      <!-- </div> -->
-      <div class="w-100">
-         <div class="d-flex justify-cnt-space-btw flex-v-cntr w-100 fs-10"
-         style="padding: 12px 0; border-top:solid 1px #eeecf9; color:#8d8b97"
-         *ngFor="let transaction of detailedTransactionsData">
+        <!-- </div> -->
+        <div class="w-100">
+          <div class="d-flex justify-cnt-space-btw flex-v-cntr w-100 fs-10"
+            style="padding: 12px 0; border-top:solid 1px #eeecf9; color:#8d8b97"
+            *ngFor="let transaction of detailedTransactionsData">
             <div class="d-flex-center">
               <div class="icon-container d-flex-center" style="height:40px; width:40px">
                 <!-- <img src="../../../assets/images/payment_type_qr.png" alt="" style="height:14px;">
-                 -->
-                 <i class="fa fa-qrcode mr-1"></i>
+           -->
+                <i class="fa fa-qrcode mr-1"></i>
               </div>
-               <div class="d-flex justify-cnt-space-btw flex-dir-col" style="margin-left:10px;">
-                  <div style="display:flex;align-items:center">
-                    <span class="fs-12 dark">
-                      {{transaction._children.payer_name._value}}
-                    </span>&nbsp;<br/><br/>
-                    <!-- <span>By</span> -->
-                  </div>
-                  <span>UTR:{{transaction._children.utrid._value}}</span>
-               </div>
+              <div class="d-flex justify-cnt-space-btw flex-dir-col" style="margin-left:10px;">
+                <div style="display:flex;align-items:center">
+                  <span class="fs-12 dark">
+                    {{transaction._children.payer_name._value}}
+                  </span>&nbsp;<br /><br />
+                  <!-- <span>By</span> -->
+                </div>
+                <span>UTR:{{transaction._children.utrid._value}}</span>
+              </div>
             </div>
             <div class="d-flex justify-cnt-space-btw flex-dir-col">
               <div class="receive" style="margin-right:0;">
@@ -362,12 +256,13 @@
                 </span>
                 <img src="../../../assets/img/amount_in.png" alt="" style="height:8px">
               </div>
-               <span style="align-self: flex-end;">
+              <span style="align-self: flex-end;">
                 {{transaction._children.created_at._value}}
               </span>
             </div>
-         </div>
+          </div>
+        </div>
       </div>
-   </div>
-  </div>
-</p-dialog>
+    </div>
+  </p-dialog>
+</div>

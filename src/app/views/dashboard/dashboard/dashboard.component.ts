@@ -116,6 +116,9 @@ export class DashboardComponent implements OnInit {
   public dailyChartOptions: any;
   public Role = Role;
   avg_feedback: any;
+  negativeFeddback: any;
+  positiveFeddback: any;
+  neutralFeddback: any;
 
   constructor(private zithApiService: ZithapiService,
     public currencyPipe: CurrencyPipe,
@@ -216,6 +219,7 @@ export class DashboardComponent implements OnInit {
       // orient: 'vertical',
       // top: 'left',
       top: '100px',
+      left: '0px',
       // data: ['New', 'Repeat'],
       // textStyle: {
       //   fontSize: "0.6rem"
@@ -225,14 +229,22 @@ export class DashboardComponent implements OnInit {
       {
         type: 'pie',
         radius: ['50%', '70%'],
-        avoidLabelOverlap: false,
+        avoidLabelOverlap: true,
         label: {
-          show: false,
+          show: true,
           position: 'center',
-          fontSize: '0.7rem'
+          width: 150,
+          height: 150,
+          // fontSize: 14,
+          // color: 'auto',
+          borderColor: 'auto',
+          borderRadius: 75,
+          borderWidth: 1,
+          // fontSize: '0.7rem'
+          color: '#2E446E'
         },
         labelLine: {
-          show: false
+          show: true
         },
         emphasis: {
           label: {
@@ -258,7 +270,7 @@ export class DashboardComponent implements OnInit {
       }
     ]
   };
-
+f
   chartOptionTotalSalesMonthSum: EChartsOption = {
     xAxis: {
       type: 'value',
@@ -456,6 +468,7 @@ export class DashboardComponent implements OnInit {
 
 
   getSubMerchantsByParents(): void {
+    console.log(this.selectedMerchants);
     this.zithApiService.getSubmerchantsByParentId(this.selectedMerchants)
       // tslint:disable-next-line: no-shadowed-variable
       .subscribe(data => {
@@ -470,7 +483,18 @@ export class DashboardComponent implements OnInit {
       });
   }
 
+  filterMerchant(event) {
+    this.zithApiService.searchPrimaryMerchants(event.query)
+    .subscribe(data => {
+      this.merchantsData = data.body.data;
+    }, error => {
+  
+    });
+  
+  }
+  filterSubMerchant(event) {
 
+  }
   applyButton() {
     // this.showskel1=true
     this.showskel2 = true
@@ -491,32 +515,25 @@ export class DashboardComponent implements OnInit {
     this.getVisitsToday(this.selectedSubMerchants.map(o => o['id']));
     this.getTransactions(this.selectedSubMerchants.map(o => o['id']));
   }
+  getDateBeforeNMonths(date, months) {
+    date.setMonth(date.getMonth() + months);
+    return date;
+  }
   getTransactions(submerchantid) {
-    const startDate = this.formatDate(new Date());
+    let startDate = this.formatDate(this.getDateBeforeNMonths(new Date(), -6));   
     const endDate = this.formatDate(new Date());
     if (submerchantid !== undefined) {
+      this.zithApiService.getFeedbacksDashboard(startDate, endDate,submerchantid)
+      .subscribe(data=>{
+        this.avg_feedback = data.data.avg;
+        this.negativeFeddback = data.data.neg_fb_count;
+        this.positiveFeddback = data.data.pos_fb_count;
+        this.neutralFeddback = data.data.neu_fb_count;
+        this.generateChart('feedback_chart')
 
-      this.zithApiService.getFeedbacks(startDate, endDate, 1, Math.max(0, 1), submerchantid)
-        // tslint:disable-next-line: no-shadowed-variable
-        .subscribe(data => {
-          // // console.log(data);
-          // this.showfirst = true
-          // this.showtable = true
-          // this.transactionsData = data.pages.content;
-          this.avg_feedback = data.avg;
-          this.generateChart('feedback_chart')
+        console.log(data);
+      })
 
-          // this.transactionsDataCount = data.pages.total;
-          // if(data.pages.total === 0){
-          //   this.disableDownload = true
-          // } else {
-          //   this.disableDownload = false
-          // }
-          // this.loading = false;
-          // console.log(this.transactionsData);
-        }, error => {
-
-        });
     }
   }
 
@@ -528,6 +545,12 @@ export class DashboardComponent implements OnInit {
         // console.log(this.chartOptionTotalSalesToday.xAxis['data'])
         if (metricToday === 'sum') {
           this.chartOptionTotalSalesTodaySum = {
+            title:{
+              show: data['xaxis'].length===0,
+              text: 'No Data Available',
+              top: 'center',
+              left: 'center'
+            },
             color: ['#3398DB'],
             tooltip: {
               trigger: 'axis',
@@ -597,6 +620,12 @@ export class DashboardComponent implements OnInit {
           };
         } else {
           this.chartOptionTotalSalesTodayAverage = {
+            title:{
+              show: data['xaxis'].length===0,
+              text: 'No Data Available',
+              top: 'center',
+              left: 'center'
+            },
             color: ['#3398DB'],
             tooltip: {
               trigger: 'axis',
@@ -688,7 +717,13 @@ export class DashboardComponent implements OnInit {
         if (metricMonth === 'sum') {
 
           this.chartOptionTotalSalesMonthSum = {
-            color: ['#3398DB'],
+            title:{
+              show: data['yaxis'].length===0,
+              text: 'No Data Available',
+              top: 'center',
+              left: 'center'
+            },
+            color: ['#FF8600'],
             tooltip: {
               trigger: 'axis',
               axisPointer: {
@@ -728,7 +763,7 @@ export class DashboardComponent implements OnInit {
               axisTick: {
                 alignWithLabel: true,
               },
-
+              
               axisLabel: {
                 color: "rgba(0, 0, 0, 1)",
                 fontStyle: "normal",
@@ -746,7 +781,7 @@ export class DashboardComponent implements OnInit {
                 name: 'Sales',
                 data: this.chartOptionTotalSalesMonthSum.series['data'] = data['yaxis'],
                 type: 'bar',
-                color: '#549bc5'
+                color:'#FF8600',
               },
 
             ],
@@ -754,8 +789,14 @@ export class DashboardComponent implements OnInit {
           };
 
         } else {
-
+          console.log(data);
           this.chartOptionTotalSalesMonthAverage = {
+            title:{
+              show: data['yaxis'].length===0,
+              text: 'No Data Available',
+              top: 'center',
+              left: 'center'
+            },
             color: ['#3398DB'],
             tooltip: {
               trigger: 'axis',
@@ -819,7 +860,8 @@ export class DashboardComponent implements OnInit {
                 data: this.chartOptionTotalSalesMonthAverage.series['data'] = data['yaxis'],
                 type: 'line',
                 smooth: true,
-                color: '#549bc5'
+                // color: '#549bc5'
+                color:'#FF8600',
               },
 
             ],
@@ -910,15 +952,37 @@ export class DashboardComponent implements OnInit {
                 //   fontSize: "0.6rem"
                 // }
               },
+              title: {
+                text: 'Total Customers',
+                top:'20px',
+                left: 'left',
+              },
               series: [
                 {
                   type: 'pie',
                   radius: ['40%', '60%'],
                   avoidLabelOverlap: false,
+                  
                   label: {
-                    show: false,
+                    show: true,
                     position: 'center',
-                    fontSize: '0.7rem'
+                    width: 100,
+                    height: 100,
+                    borderColor: 'rgba(15, 18, 63, 0.25)',
+                    borderRadius: 75,
+                    borderWidth: 3,
+                    color: '#2E446E',
+                    formatter: function (params) {
+
+                      return `${params.value}`;
+                    },
+                    fontSize: '2rem',
+                    fontWeight:600,
+                    fontFamily:'Sofia Pro',
+                    shadowOffsetX:0,
+                    shadowOffsetY: 0,
+                    shadowBlur: 25,
+                    shadowColor:'rgba(15, 18, 63, 0.25)'
                   },
                   labelLine: {
                     show: false
@@ -927,17 +991,15 @@ export class DashboardComponent implements OnInit {
                   emphasis: {
                     label: {
                       show: true,
-                      fontSize: '0.7rem',
-                      fontWeight: 'bold',
+                      // fontSize: '0.7rem',
+                      fontSize: '2rem',
+                      fontWeight: 600,
+                      fontFamily:'Sofia Pro',
+                      color: '#2E446E',
                       formatter: function (params) {
-
-                        return `${params.name}: ${params.data['value']} (${params.percent}%)
-                           `;
+                        return `${params.data['value']}`;
                       }
                     },
-
-
-
                   },
                   data: this.new_repeat_options.series['data'] = new_data,
                 }
@@ -1085,29 +1147,34 @@ export class DashboardComponent implements OnInit {
               type: 'gauge',
               startAngle: 180,
               endAngle: 0,
-              min: 0,
+              min: 1,
               max: 5,
               splitNumber: 5,
               // detail: { formatter: '{value}' },
-              title: {
-                offsetCenter: [0, '-20%'],
-                fontSize: 10
-              },
+              // title: {
+              //   offsetCenter: [0, '-20%'],
+              //   fontSize: 10
+              // },
               detail: {
-                fontSize: 20,
-                offsetCenter: [0, '0%'],
-                valueAnimation: true,
+                // fontSize: 20,
+                // offsetCenter: [0, '0%'],
+                // valueAnimation: true,
+                fontSize: '1.8rem',
+                fontWeight:600,
+                fontFamily:'Sofia Pro',
+                offsetCenter: [0, '-120%'],
                 formatter: function (value) {
-                  return value + '/5';
+                  return value.toFixed(2) + '/5';
                 },
-                color: 'auto'
+                color: '#2E446E'
               },
               data: [
                 {
                   value: parseFloat(this.avg_feedback.toFixed(2)),
-                  name: 'Average Feedback'
+                  // name: 'Average Feedback'
                 }
               ],
+              
               itemStyle: {
                 color: '#1B1B1F'
               },
@@ -1143,15 +1210,15 @@ export class DashboardComponent implements OnInit {
                 color: 'transparent',
                 fontSize: 20
               },
-              pointer: {
-                icon: 'path://M12.8,0.7l12,40.1H0.7L12.8,0.7z',
-                length: '12%',
-                width: 20,
-                offsetCenter: [0, '-60%'],
-                itemStyle: {
-                  color: 'auto'
-                }
-              },
+              // pointer: {
+              //   icon: 'path://M12.8,0.7l12,40.1H0.7L12.8,0.7z',
+              //   length: '12%',
+              //   width: 20,
+              //   offsetCenter: [0, '-60%'],
+              //   itemStyle: {
+              //     color: 'auto'
+              //   }
+              // },
               // axisLabel: {
               //   color: '#464646',
               //   fontSize: 10,

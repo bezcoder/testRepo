@@ -30,7 +30,6 @@ import { ZicoinConfig } from './zicoins-config/zicoins-config.component';
 import { InputNumberModule } from 'primeng/inputnumber';
 import {ToolbarModule} from 'primeng/toolbar';
 import {RatingModule} from 'primeng/rating';
-import {RadioButtonModule} from 'primeng/radiobutton';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
@@ -52,6 +51,7 @@ import { FeedbackConfigComponent } from './feedback-config/feedback-config.compo
 import {SelectButtonModule} from 'primeng/selectbutton';
 import {PickListModule} from 'primeng/picklist';
 import { ChipModule } from 'primeng/chip';
+import {RadioButtonModule} from 'primeng/radiobutton';
 
 @NgModule({
   declarations: [ MerchantsComponent,ZicoinConfig,ParentNamePipe,

@@ -33,9 +33,6 @@ export class IntiateRefundComponent implements OnInit {
   }
 
   initiateRefund(transactionid:string){
-
-
-
     this.zithApiService.initiateRefundOTP(transactionid).subscribe(
       data => {
         if(data.toString().toLowerCase().includes("otp sent")){

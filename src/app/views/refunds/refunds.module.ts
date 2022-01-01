@@ -28,7 +28,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { SkeletonModule } from 'primeng/skeleton';
 import { MessageService } from 'primeng/api';
-import { CardModule } from '@coreui/angular';
+import { CardModule } from 'primeng/card';
 
 
 @NgModule({

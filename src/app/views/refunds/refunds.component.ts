@@ -145,7 +145,7 @@ export class RefundsComponent implements OnInit {
         this.cols = [
 
           { field: 'custname', header: 'Recieved From ' },
-          { field: 'utrid', header: 'UTR ID ' },
+          { field: 'utrid', header: 'Refund UTR ID ' },
           { field: 'zitharavpa', header: 'VPA ' },
           { field: 'createdate', header: 'Date & Time ' },
           { field: 'amount', header: 'Amount ' },
@@ -160,7 +160,7 @@ export class RefundsComponent implements OnInit {
         this.cols = [
 
           { field: 'custname', header: 'Recieved From ' },
-          { field: 'utrid', header: 'UTR ID ' },
+          { field: 'utrid', header: 'Refund UTR ID ' },
           { field: 'zitharavpa', header: 'VPA ' },
           { field: 'createdate', header: 'Date & Time ' },
           { field: 'amount', header: 'Amount ' },
@@ -177,7 +177,7 @@ export class RefundsComponent implements OnInit {
         this.cols = [
 
           { field: 'custname', header: 'Recieved From ' },
-          { field: 'utrid', header: 'UTR ID ' },
+          { field: 'utrid', header: 'Refund UTR ID ' },
           { field: 'zitharavpa', header: 'VPA ' },
           { field: 'createdate', header: 'Date & Time ' },
           { field: 'amount', header: 'Amount ' },
@@ -370,7 +370,7 @@ export class RefundsComponent implements OnInit {
   }
 
   getTransactions(event:LazyLoadEvent) {
-    console.log(event)
+    // console.log(event)
     this.loading = true;
     if(event!==undefined){
       this.page = Math.round(event.first/event.rows)+1
@@ -397,8 +397,8 @@ export class RefundsComponent implements OnInit {
     if(this.dateRangenew[1] === null || this.dateRangenew[1] === undefined ){
       this.dateRangenew[1] = this.dateRangenew[0]
     }
-    const startDate = this.formatDate(this.dateRangenew[0]);
-    const endDate = this.formatDate(this.dateRangenew[1]);
+    const startDate = this.formatDate(this.fromDate);
+    const endDate = this.formatDate(this.toDate);
     console.log(startDate, endDate);
 
     if(subMerchantsId !== undefined){
@@ -408,6 +408,9 @@ export class RefundsComponent implements OnInit {
       .subscribe(data => {
         console.log(data);
         this.transactionsData = data.pages.content;
+        this.transactionsDataCount = data.pages.total;
+        this.totaltrans = data.grandtotal;
+
         if(!this.showrefundtable){
           this.showrefundtable = true
         }
@@ -756,10 +759,10 @@ refundSwitch(status: string): boolean{
   }
 }
 
-initiateRefund(transactionid:string){
-  console.log("pressed")
-  this.displayOTP = true
-}
+// initiateRefund(transactionid:string){
+//   console.log("pressed")
+//   this.displayOTP = trSue
+// }
 
 getTerminals(){
   var submerchantids = Array.from(this.selectedSubMerchants).map(obj => obj['id'])
@@ -778,6 +781,15 @@ onClickTerminals(elem){
   if(this.smallscreen){
     elem.hide()
     this.visibleTerminals=true
+  }
+}
+
+splitTransId(str:string){
+
+  if(str.includes('|')){
+    return str.split('|')[1]
+  } else {
+    return str
   }
 }
 

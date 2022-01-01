@@ -1,4 +1,4 @@
-<c-card class="card-bkground" *hasRole="[Role.SuperUser,Role.Admin]">
+<div class="row mb-5 mx-2" *hasRole="[Role.SuperUser,Role.Admin]">
   <div *ngIf="showskel1" class=" col-12  " style="margin: 2%;">
     <div class="col-12  " style="margin: 2%;">
       <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
@@ -7,235 +7,189 @@
       <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton>
     </div>
   </div>
-<div class="row" *ngIf="!showskel1">
-  <div class=" card-child col-12  " style="margin: 2%;" *hasRole="[Role.SuperUser]">
-    <h6>Select Merchant</h6>
+  <div class="col-12" *ngIf="!showskel1">
+    <div class="row">
+      <div class=" col-6 px-3" *hasRole="[Role.SuperUser]">
+        <h6>Merchant</h6>
+        <div class="p-inputgroup" *hasRole="[Role.SuperUser]">
+          <span class="p-inputgroup-addon border-right-0 bg-white"> <i class="pi pi-search"></i> </span>
+          <p-dropdown  [filter]="true" styleClass='drpdown p-inputtext-sm'
+            (onChange)="getSubMerchantsByParents()" [options]="merchantsData" [(ngModel)]="selectedMerchants"
+            placeholder="Search Merchant" optionLabel="name" optionValue="id" class="customeranalytics-merchantDropDown">
+          </p-dropdown>
+          <!-- <p-autoComplete placeholder="Search Merchant" styleClass='searchdrpdwn input-border-radius w-100'
+            [(ngModel)]="selectedMerchants" [suggestions]="merchantsData" [showEmptyMessage]="true"
+            emptyMessage="No Merchants Found" (completeMethod)="filterMerchant($event)" [forceSelection]="true"
+            field="name" [minLength]="3" (onSelect)="getSubMerchantsByParents()"
+            class="customeranalytics-merchantDropDown"></p-autoComplete> -->
+        </div>
+      </div>
+      <div class="col-6">
+        <h6>Store</h6>
+        <div class="p-inputgroup">
+          <span class="p-inputgroup-addon border-right-0 bg-white"> <i class="pi pi-search"></i> </span>
+          <p-autoComplete placeholder="Search Store" [multiple]="true"
+            styleClass='searchdrpdwn input-border-radius w-100 border-left-none' [(ngModel)]="selectedSubMerchants"
+            [suggestions]="subMerchantsData" [showEmptyMessage]="true" emptyMessage="No Merchants Found"
+            [forceSelection]="true" field="name" [minLength]="3" (onSelect)="applyButton()"
+            class="customeranalytics-merchantDropDown"></p-autoComplete>
+        </div>
+        <!-- <p-multiSelect styleClass='mymultiselect p-inputtext-sm' (onPanelHide)="applyButton()"
+          tooltipStyleClass='ttltip' #selsubmerchant [maxSelectedLabels]="2" inputId="selmerchantinput"
+          [options]="subMerchantsData" [(ngModel)]="selectedSubMerchants" class="customeranalytics-storeMultiSelect"
+          defaultLabel="Search Store" optionLabel="name" display="chip">
+        </p-multiSelect> -->
+      </div>
+    </div>
 
-    <div >
-    <p-dropdown  *hasRole="[Role.SuperUser]" [filter]="true"  styleClass='drpdown p-inputtext-sm' (onChange)="getSubMerchantsByParents()"  [options]="merchantsData" [(ngModel)]="selectedMerchants" placeholder="Select Merchant" optionLabel="name" optionValue="id" >
-    </p-dropdown>
-  </div>
-  </div>
-  <div class="  card-child col-12 " style="margin: 2%;">
-    <h6>Select Stores</h6>
-    <p-multiSelect styleClass='mymultiselect p-inputtext-sm' (onPanelHide) = "applyButton()" tooltipStyleClass='ttltip' #selsubmerchant [maxSelectedLabels]= "2" inputId="selmerchantinput"  [options]="subMerchantsData" [(ngModel)]="selectedSubMerchants" defaultLabel="Select Stores" optionLabel="name" display="chip">
-      <!-- <p-footer >
-        <button style="margin: 1%;" pButton type="button" label="Close" style="background: white;color: black;" (click)="closemulti()"></button>
-        <button style="margin: 1%;" pButton style="float: right;background-color: #689F38;" type="button" label="Select" (click)="closemulti();applyButton()"></button>
-      </p-footer> -->
-    </p-multiSelect>
   </div>
 </div>
-</c-card>
-<div class="row">
-  <div class="col-lg-4 col-12" >
-    <c-card class="card-max-width" style="border-radius: 5%;">
-      <div *ngIf="showskel2" class=" col-12  " style="margin: 2%;">
+
+<div class="row mb-3 mx-2">
+  <div class="col">
+    <div class="row">
+      <div class="col" *ngIf="showskel2">
         <div class="custom-skeleton p-p-4">
-          <div class="p-d-flex p-mb-3">
-              <p-skeleton shape="circle" size="4rem" styleClass="p-mr-2"></p-skeleton>
-              <div>
-                  <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
-                  <p-skeleton width="5rem" styleClass="p-mb-2"></p-skeleton>
-                  <p-skeleton height=".5rem"></p-skeleton>
-              </div>
-          </div>
-          <p-skeleton width="100%" height="150px"></p-skeleton>
-          <div class="p-d-flex p-jc-between p-mt-3">
-              <p-skeleton width="4rem" height="2rem"></p-skeleton>
-              <p-skeleton width="4rem" height="2rem"></p-skeleton>
-          </div>
-      </div>
-      </div>
-      <div class="row" *ngIf="!showskel2">
-        <div class="col-12" style="text-align: center;">
-          <span style="font-size: 1.0rem;font-weight: bold;" >Total Customers</span><br>
-          <span class="h2 font-weight-bold mb-0" >{{totalCustomers}}</span>
+          <p-skeleton width="100%" height="100%"></p-skeleton>
         </div>
-        <div class="col-12">
-          <div echarts [options] = "new_repeat_options" class="demo-chart"></div>
-        </div>
-        <!-- <div class="col-6">
-          <h5 style="text-align: center;">New Customers</h5>
-        </div>
-        <div class="col-6">
-          <h5 style="text-align: center;">Repeat Customers</h5>
-        </div> -->
       </div>
-    </c-card>
+      <div class="col mr-2 customeranalytics-chartcard" *ngIf="!showskel2">
+        <h5 class="pt-3">
+          <img src="/assets/icons/customers.svg" width="25" />
+          Total Customers
+        </h5>
+        <p class="font-xs">
+          All the customers who spend time and money at your establishment.
+        </p>
+        <div class="col mr-3">
+          <div echarts style="height: 300px;" [options]="new_repeat_options" class="demo-chart"></div>
+        </div>
+      </div>
+    </div>
   </div>
-<div class="col-lg-4 col-12" >
-  <c-card class="card-max-width" style="border-radius: 5%;">
-    <div *ngIf="showskel2" class=" col-12  " style="margin: 2%;">
-      <div class="custom-skeleton p-p-4">
-        <div class="p-d-flex p-mb-3">
-            <p-skeleton shape="circle" size="4rem" styleClass="p-mr-2"></p-skeleton>
-            <div>
-                <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
-                <p-skeleton width="5rem" styleClass="p-mb-2"></p-skeleton>
-                <p-skeleton height=".5rem"></p-skeleton>
-            </div>
+  <div class="col">
+    <div class="row">
+      <div class="col" *ngIf="showskel2">
+        <div class="custom-skeleton p-p-4">
+          <p-skeleton width="100%" height="100%"></p-skeleton>
         </div>
-        <p-skeleton width="100%" height="150px"></p-skeleton>
-        <div class="p-d-flex p-jc-between p-mt-3">
-            <p-skeleton width="4rem" height="2rem"></p-skeleton>
-            <p-skeleton width="4rem" height="2rem"></p-skeleton>
+      </div>
+      <div class="col mr-2 customeranalytics-chartcard" *ngIf="!showskel2">
+        <h5 class="pt-3">
+          <img src="/assets/icons/frequentcustomers.svg" width="25" />
+          Frequent Customers
+        </h5>
+        <p class="font-xs">
+          Customers who you have connections with and who frequently visit your installation.
+        </p>
+        <div class="col mr-3">
+          <div echarts style="height: 300px;" [options]="rfmChartOptionsF" class="demo-chart"></div>
         </div>
-    </div>
-    </div>
-    <div class="row" *ngIf="!showskel2">
-      <div class="col-12" style="text-align: center;">
-        <span style="font-size: 1.0rem;font-weight: bold;" >Frequent Customers</span><br>
-        <span class="h2 font-weight-bold mb-0" >{{totalCustomers}}</span>
-      </div>
-      <div class="col-12">
-        <div echarts [options] = "rfmChartOptionsF" class="demo-chart"></div>
-      </div>
-      <!-- <div class="col-6">
-        <h5 style="text-align: center;">New Customers</h5>
-      </div>
-      <div class="col-6">
-        <h5 style="text-align: center;">Repeat Customers</h5>
-      </div> -->
-    </div>
-  </c-card>
-</div>
-<div class="col-lg-4 col-12" >
-  <c-card class="card-max-width" style="border-radius: 5%;">
-    <div *ngIf="showskel2" class=" col-12  " style="margin: 2%;">
-      <div class="custom-skeleton p-p-4">
-        <div class="p-d-flex p-mb-3">
-            <p-skeleton shape="circle" size="4rem" styleClass="p-mr-2"></p-skeleton>
-            <div>
-                <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
-                <p-skeleton width="5rem" styleClass="p-mb-2"></p-skeleton>
-                <p-skeleton height=".5rem"></p-skeleton>
-            </div>
-        </div>
-        <p-skeleton width="100%" height="150px"></p-skeleton>
-        <div class="p-d-flex p-jc-between p-mt-3">
-            <p-skeleton width="4rem" height="2rem"></p-skeleton>
-            <p-skeleton width="4rem" height="2rem"></p-skeleton>
-        </div>
-    </div>
-    </div>
-    <div class="row" *ngIf="!showskel2">
-      <div class="col-12" style="text-align: center;">
-        <span style="font-size: 1.0rem;font-weight: bold;" >Customers Based on Spend</span><br>
-        <span class="h2 font-weight-bold mb-0" >{{totalCustomers}}</span>
-      </div>
-      <div class="col-12">
-        <div echarts [options] = "rfmChartOptionsM" ></div>
-      </div>
-      <!-- <div class="col-6">
-        <h5 style="text-align: center;">New Customers</h5>
-      </div>
-      <div class="col-6">
-        <h5 style="text-align: center;">Repeat Customers</h5>
-      </div> -->
-    </div>
-  </c-card>
-</div>
-<!-- 0 -->
-
-<div class="col-lg-4 col-12" >
-  <c-card class="card-max-width" style="border-radius: 5%;">
-    <div *ngIf="showskel2" class=" col-12  " style="margin: 2%;">
-      <div class="custom-skeleton p-p-4">
-        <div class="p-d-flex p-mb-3">
-            <p-skeleton shape="circle" size="4rem" styleClass="p-mr-2"></p-skeleton>
-            <div>
-                <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
-                <p-skeleton width="5rem" styleClass="p-mb-2"></p-skeleton>
-                <p-skeleton height=".5rem"></p-skeleton>
-            </div>
-        </div>
-        <p-skeleton width="100%" height="150px"></p-skeleton>
-        <div class="p-d-flex p-jc-between p-mt-3">
-            <p-skeleton width="4rem" height="2rem"></p-skeleton>
-            <p-skeleton width="4rem" height="2rem"></p-skeleton>
-        </div>
-    </div>
-    </div>
-    <div class="row" *ngIf="!showskel2">
-      <div class="col-12" style="text-align: center;">
-        <span style="font-size: 1.0rem;font-weight: bold;" >Days since last purchase</span><br>
-        <span class="h2 font-weight-bold mb-0" >{{totalCustomers}}</span>
-      </div>
-      <div class="col-12">
-        <div echarts [options] = "rfmChartOptionsR" class="demo-chart"></div>
       </div>
     </div>
-  </c-card>
-</div>
-<div class="col-lg-12 col-12" style="height: 500px;" *ngIf="!this.smallscreen">
-  <c-card class="card-max-width" style="border-radius: 5%;height: 500px;">
-    <div *ngIf="showskel2" class=" col-12  " style="margin: 2%;">
-      <div class="custom-skeleton p-p-4">
-        <div class="p-d-flex p-mb-3">
-            <p-skeleton shape="circle" size="4rem" styleClass="p-mr-2"></p-skeleton>
-            <div>
-                <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
-                <p-skeleton width="5rem" styleClass="p-mb-2"></p-skeleton>
-                <p-skeleton height=".5rem"></p-skeleton>
-            </div>
-        </div>
-        <p-skeleton width="100%" height="150px"></p-skeleton>
-        <div class="p-d-flex p-jc-between p-mt-3">
-            <p-skeleton width="4rem" height="2rem"></p-skeleton>
-            <p-skeleton width="4rem" height="2rem"></p-skeleton>
-        </div>
-    </div>
-    </div>
-    <div class="row" *ngIf="!showskel2">
-      <div class="col-lg-12 col-12" style="text-align: center;">
-        <span style="font-size: 1.0rem;font-weight: bold;" >Customers Near you</span><br>
-      </div>
-      <div class="col-lg-12 col-12" style="margin-left: 5%;margin-bottom: 0.5%;">
-        <span> <i class="pi pi-map-marker" style="font-size: 1rem"></i> Within {{this.distance}} kms</span>
-      </div>
-      <div class="col-lg-4 col-8" style="margin-left: 5%">
-        <p-slider [(ngModel)]="this.distance" [animate]="true" [step]="10" [min] = "5" [max]="45" (onChange) = "onChangeDistance()"   ></p-slider>
-      </div>
-      <div class="col-2" *ngIf="this.showNearbyCustomerLoading">
-        <p-progressSpinner [style]="{width: '50px', height: '50px'}"></p-progressSpinner>
-      </div>
-      <div class="col-12">
-        <div echarts [options] = "nearbyCustChartOptions" class="tree-map-chart"></div>
-      </div>
-    </div>
-  </c-card>
-</div>
-<div class="col-lg-12 col-12" style="height: 500px;margin-top: 3%;" *ngIf="!this.smallscreen">
-  <c-card class="card-max-width" style="border-radius: 5%;height: 500px;">
-    <div *ngIf="showskel2" class=" col-12  " style="margin: 2%;">
-      <div class="custom-skeleton p-p-4">
-        <div class="p-d-flex p-mb-3">
-            <p-skeleton shape="circle" size="4rem" styleClass="p-mr-2"></p-skeleton>
-            <div>
-                <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
-                <p-skeleton width="5rem" styleClass="p-mb-2"></p-skeleton>
-                <p-skeleton height=".5rem"></p-skeleton>
-            </div>
-        </div>
-        <p-skeleton width="100%" height="150px"></p-skeleton>
-        <div class="p-d-flex p-jc-between p-mt-3">
-            <p-skeleton width="4rem" height="2rem"></p-skeleton>
-            <p-skeleton width="4rem" height="2rem"></p-skeleton>
-        </div>
-    </div>
-    </div>
-    <div class="row" *ngIf="!showskel2">
-      <div class="col-lg-12 col-12" style="text-align: center;">
-        <span style="font-size: 1.0rem;font-weight: bold;" >Your Customers</span><br>
-      </div>
-      <div class="col-12">
-        <div echarts [options] = "rfmSegmentsChartOptions" class="tree-map-chart"></div>
-      </div>
-    </div>
-  </c-card>
-</div>
+  </div>
 </div>
 
-<!-- </div> -->
+<div class="row mb-3 mx-2">
+  <div class="col">
+    <div class="row">
+      <div class="col" *ngIf="showskel2">
+        <div class="custom-skeleton p-p-4">
+          <p-skeleton width="100%" height="100%"></p-skeleton>
+        </div>
+      </div>
+      <div class="col mr-2 customeranalytics-chartcard" *ngIf="!showskel2">
+        <h5 class="pt-3">
+          <img src="/assets/icons/customerbasedspends.svg" width="25" />
+          Customers Based on Spend
+        </h5>
+        <p class="font-xs">
+          Customers are grouped on the basis of purchases they make at your location.
+        </p>
+          <div echarts style="height: 300px;" [options]="rfmChartOptionsM" class="demo-chart"></div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="row">
+      <div class="col" *ngIf="showskel2">
+        <div class="custom-skeleton p-p-4">
+          <p-skeleton width="100%" height="100%"></p-skeleton>
+        </div>
+      </div>
+      <div class="col mr-2 customeranalytics-chartcard" *ngIf="!showskel2">
+        <h5 class="pt-3">
+          <img src="/assets/icons/dayssincelastpurchase.svg" width="20" />
+          Days since last purchase
+        </h5>
+        <p class="font-xs">
+          The gap between two payments made to you by customers.
+        </p>
+          <div echarts style="height: 300px;" [options]="rfmChartOptionsR" class="demo-chart"></div>
+      </div>
+    </div>
+  </div>
+</div>
 
+<div class="row mb-3 mx-2">
+  <div class="col">
+    <div class="row">
+      <div class="col" *ngIf="showskel2">
+        <div class="custom-skeleton p-p-4">
+          <p-skeleton width="100%" height="100%"></p-skeleton>
+        </div>
+      </div>
+      <div class="col customeranalytics-chartcard" *ngIf="!showskel2">
+        <h5 class="pt-3 mb-3">
+          <img src="/assets/icons/customerbasedspends.svg" width="25" />
+          Customers Based on Spend
+        </h5>
+        <div class="row">
+          <div class="col-4">
+            <span class="mb-1"> <i class="pi pi-map-marker" style="font-size: 1rem"></i> Within {{this.distance}} kms</span>
+            <p-slider [(ngModel)]="this.distance" [animate]="true" [step]="10" [min]="5" [max]="45"
+              (onChange)="onChangeDistance()"></p-slider>
+          </div>
+        </div>
+          <div class="col-2" *ngIf="this.showNearbyCustomerLoading">
+            <p-progressSpinner [style]="{width: '50px', height: '50px'}"></p-progressSpinner>
+          </div>
+          <div echarts [options]="nearbyCustChartOptions" class="tree-map-chart"></div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="row" >
+    <div class="col-lg-12 col-12" style="margin-left: 5%;margin-bottom: 0.5%;">
+      <span> <i class="pi pi-map-marker" style="font-size: 1rem"></i> Within {{this.distance}} kms</span>
+    </div>
+    <div class="col-lg-4 col-8" style="margin-left: 5%">
+      <p-slider [(ngModel)]="this.distance" [animate]="true" [step]="10" [min]="5" [max]="45"
+        (onChange)="onChangeDistance()"></p-slider>
+    </div>
+    <div class="col-2" *ngIf="this.showNearbyCustomerLoading">
+      <p-progressSpinner [style]="{width: '50px', height: '50px'}"></p-progressSpinner>
+    </div>
+    <div class="col-12">
+      <div echarts style="height: 300px;" [options]="nearbyCustChartOptions" class="tree-map-chart"></div>
+    </div>
+  </div> -->
+</div>
+
+<div class="row mb-3 mx-2">
+  <div class="col">
+    <div class="row">
+      <div class="col" *ngIf="showskel2">
+        <div class="custom-skeleton p-p-4">
+          <p-skeleton width="100%" height="100%"></p-skeleton>
+        </div>
+      </div>
+      <div class="col customeranalytics-chartcard" *ngIf="!showskel2">
+        <h5 class="pt-3 mb-3">
+          <img src="/assets/icons/customerbasedspends.svg" width="25" />
+          Customers Based on Spend
+        </h5>
+        <div echarts [options]="rfmSegmentsChartOptions" class="tree-map-chart"></div>
+      </div>
+    </div>
+  </div>
+</div>

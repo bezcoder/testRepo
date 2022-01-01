@@ -29,7 +29,7 @@ export class CustomerAnalyticsComponent implements OnInit {
 
   @ViewChild('selsubmerchant') selsubmerchant;
   yesterdaySale: number;
-  changeOfSale:string;
+  changeOfSale: string;
   newCustomers: any;
   repeatedCustomers: any;
   totalCustomers: any;
@@ -40,43 +40,43 @@ export class CustomerAnalyticsComponent implements OnInit {
   todayVisits: any;
   yesterdayVisits: any;
   todaySale: number;
-  months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   public todaydate = new Date();
   month = this.todaydate.getMonth();
   year = this.todaydate.getFullYear();
-  public currentMonth = this.months[this.month] +" "+ this.year;
-  public pieChartColor:any = [
+  public currentMonth = this.months[this.month] + " " + this.year;
+  public pieChartColor: any = [
     {
-        backgroundColor: ['rgba(30, 169, 224, 0.8)',
-        'rgba(255,165,0,0.9)'
-        ]
-    }
-]
-public pieChartLabels = ['This Month', 'Last Month'];
-public pieChartOptions = {
-  responsive: true
-}
-public pieChartData:any = [
-  {
-      data: []
-  }
-];
-public daySalesPieChartColor:any = [
-  {
       backgroundColor: ['rgba(30, 169, 224, 0.8)',
-      'rgba(255,165,0,0.9)'
+        'rgba(255,165,0,0.9)'
       ]
+    }
+  ]
+  public pieChartLabels = ['This Month', 'Last Month'];
+  public pieChartOptions = {
+    responsive: true
   }
-]
-public daySalesPieChartLabels = ['Today', 'Yesterday'];
-public daySalesPieChartOptions = {
-responsive: true
-}
-public daySalesPieChartData:any = [
-{
-    data: []
-}
-];
+  public pieChartData: any = [
+    {
+      data: []
+    }
+  ];
+  public daySalesPieChartColor: any = [
+    {
+      backgroundColor: ['rgba(30, 169, 224, 0.8)',
+        'rgba(255,165,0,0.9)'
+      ]
+    }
+  ]
+  public daySalesPieChartLabels = ['Today', 'Yesterday'];
+  public daySalesPieChartOptions = {
+    responsive: true
+  }
+  public daySalesPieChartData: any = [
+    {
+      data: []
+    }
+  ];
   changeOfVisits: string;
   changeOfSaleMonth: string;
   changeOfVisitsMonth: string;
@@ -85,12 +85,12 @@ public daySalesPieChartData:any = [
   new_data: { name: string; value: any; }[];
   rfmM: any;
   rfmF: any;
-  new_repeat_options:EChartsOption;
-  rfmChartOptionsF: EChartsOption ;
-  rfmChartOptionsM:EChartsOption;
-  rfmChartOptionsR:EChartsOption
-  nearbyCustChartOptions:EChartsOption;
-  rfmSegmentsChartOptions:EChartsOption;
+  new_repeat_options: EChartsOption;
+  rfmChartOptionsF: EChartsOption;
+  rfmChartOptionsM: EChartsOption;
+  rfmChartOptionsR: EChartsOption
+  nearbyCustChartOptions: EChartsOption;
+  rfmSegmentsChartOptions: EChartsOption;
   distance: number = 25;
   subcat: boolean = true;
   showNearbyCustomerLoading: boolean = false;
@@ -100,27 +100,27 @@ public daySalesPieChartData:any = [
   showRFMSegmentsLoading: boolean = false;
   rfm_segments_data: any;
   constructor(private zithApiService: ZithapiService,
-              public currencyPipe: CurrencyPipe,
-              public router : Router,
-              public breakpointObserver : BreakpointObserver,
-              public roleService : RoleService) {
+    public currencyPipe: CurrencyPipe,
+    public router: Router,
+    public breakpointObserver: BreakpointObserver,
+    public roleService: RoleService) {
 
 
-                this.breakpointObserver.observe([
-                  '(max-width: 960px)'
-                    ]).subscribe(result => {
-                      if (result.matches) {
-                        this.smallscreen = true
-                        this.setChartOptions('weekdayFFday',[8])
-                      } else {
-                        // if necessary:
-                        this.smallscreen = false
-                        this.setChartOptions('weekdayFFday',[12])
+    this.breakpointObserver.observe([
+      '(max-width: 960px)'
+    ]).subscribe(result => {
+      if (result.matches) {
+        this.smallscreen = true
+        this.setChartOptions('weekdayFFday', [8])
+      } else {
+        // if necessary:
+        this.smallscreen = false
+        this.setChartOptions('weekdayFFday', [12])
 
-                      }
-                    });
+      }
+    });
 
-               }
+  }
 
   public subMerchantsData: any;
   public selectedSubMerchants: any;
@@ -153,29 +153,29 @@ public daySalesPieChartData:any = [
   public Role = Role;
 
 
-getLightTheme() {
+  getLightTheme() {
     return {
-        plugins: {
-            legend: {
-                labels: {
-                    color: '#495057'
-                }
-            }
+      plugins: {
+        legend: {
+          labels: {
+            color: '#495057'
+          }
         }
+      }
     }
-}
+  }
 
-getDarkTheme() {
+  getDarkTheme() {
     return {
-        plugins: {
-            legend: {
-                labels: {
-                    color: '#ebedef'
-                }
-            }
+      plugins: {
+        legend: {
+          labels: {
+            color: '#ebedef'
+          }
         }
+      }
     }
-}
+  }
 
 
   // new_repeat_options: EChartsOption = {
@@ -230,7 +230,7 @@ getDarkTheme() {
   onChartClick(event) {
     console.log(event);
 
-}
+  }
 
   setTime() {
     this.intmin = setInterval(function () {
@@ -254,62 +254,62 @@ getDarkTheme() {
     }, 1000);
   }
 
- async ngOnInit() {
+  async ngOnInit() {
 
-    if (!(await this.roleService.hasRole([Role.SuperUser,Role.Admin]))){
+    if (!(await this.roleService.hasRole([Role.SuperUser, Role.Admin]))) {
 
       this.router.navigate(['/transactions']);
-      } else {
+    } else {
 
-      }
+    }
 
-      // this.merchantListSettings = {
-      //   singleSelection: true,
-      //   showApply: false,
-      //   showCancel: false,
-      //   idField: 'id',
-      //   textField: 'name',
-      //   itemsShowLimit: 5,
-      //   clearSearchFilter: true,
-      //   noDataAvailablePlaceholderText: 'No Merchants',
-      //   searchPlaceholderText: 'Search Merchants',
-      //   allowSearchFilter: true
-      // };
-      // this.subMerchantListSettings = {
-      //   singleSelection: false,
-      //   showApply: true,
-      //   showCancel: true,
-      //   idField: 'id',
-      //   textField: 'name',
-      //   selectAllText: 'Select All Sub Merchants',
-      //   unSelectAllText: 'UnSelect All Sub Merchants',
-      //   itemsShowLimit: 5,
-      //   clearSearchFilter: true,
-      //   noDataAvailablePlaceholderText: 'No Sub Merchants',
-      //   searchPlaceholderText: 'Search Sub Merchants',
-      //   allowSearchFilter: true
-      // };
+    // this.merchantListSettings = {
+    //   singleSelection: true,
+    //   showApply: false,
+    //   showCancel: false,
+    //   idField: 'id',
+    //   textField: 'name',
+    //   itemsShowLimit: 5,
+    //   clearSearchFilter: true,
+    //   noDataAvailablePlaceholderText: 'No Merchants',
+    //   searchPlaceholderText: 'Search Merchants',
+    //   allowSearchFilter: true
+    // };
+    // this.subMerchantListSettings = {
+    //   singleSelection: false,
+    //   showApply: true,
+    //   showCancel: true,
+    //   idField: 'id',
+    //   textField: 'name',
+    //   selectAllText: 'Select All Sub Merchants',
+    //   unSelectAllText: 'UnSelect All Sub Merchants',
+    //   itemsShowLimit: 5,
+    //   clearSearchFilter: true,
+    //   noDataAvailablePlaceholderText: 'No Sub Merchants',
+    //   searchPlaceholderText: 'Search Sub Merchants',
+    //   allowSearchFilter: true
+    // };
 
-      // this.zithApiService.getTotalSalesApi('weekdays','average',['0c78cd49-c5e0-45ea-8a25-2ee63e8cbc0a','0ae61d35-46a3-4c35-9eae-c0ddc07d8502'])
-      // .subscribe(data => {
-      //   console.log('dashboard data')
-      //   console.log(data)
+    // this.zithApiService.getTotalSalesApi('weekdays','average',['0c78cd49-c5e0-45ea-8a25-2ee63e8cbc0a','0ae61d35-46a3-4c35-9eae-c0ddc07d8502'])
+    // .subscribe(data => {
+    //   console.log('dashboard data')
+    //   console.log(data)
 
-      // }, error => {
+    // }, error => {
 
-      // })
+    // })
 
-      this.initMerchant()
+    this.initMerchant()
 
   }
 
-  initMerchant(){
-    this.zithApiService.getUserRolesKC().subscribe((data:Array<String>) => {
-      if(data.includes(Role.SuperUser)){
+  initMerchant() {
+    this.zithApiService.getUserRolesKC().subscribe((data: Array<String>) => {
+      if (data.includes(Role.SuperUser)) {
 
         this.getAllParMerchants();
 
-      } else if(data.includes(Role.Admin)){
+      } else if (data.includes(Role.Admin)) {
 
         this.getAllSubMerchants()
 
@@ -322,26 +322,36 @@ getDarkTheme() {
             id: val
           }];
           this.applyButton()
-        }  )
+        })
 
 
 
-    }}, error => {
-
-    });
-   }
-
-
-  getAllSubMerchants(): void {
-    this.zithApiService.getSubMerchants()
-    // tslint:disable-next-line: no-shadowed-variable
-    .subscribe(data => {
-      this.subMerchantsData = data.body.data;
-      this.selectedSubMerchants = data.body.data;
-      this.applyButton()
+      }
     }, error => {
 
     });
+  }
+
+  filterMerchant(event) {
+    this.zithApiService.searchPrimaryMerchants(event.query)
+      .subscribe(data => {
+        this.merchantsData = data.body.data;
+      }, error => {
+
+      });
+
+  }
+
+  getAllSubMerchants(): void {
+    this.zithApiService.getSubMerchants()
+      // tslint:disable-next-line: no-shadowed-variable
+      .subscribe(data => {
+        this.subMerchantsData = data.body.data;
+        this.selectedSubMerchants = data.body.data;
+        this.applyButton()
+      }, error => {
+
+      });
   }
 
 
@@ -350,117 +360,123 @@ getDarkTheme() {
     console.log("dfdfdfd");
   }
 
-  closemulti(){
+  closemulti() {
     this.selsubmerchant.overlayVisible = false
     // selsubmerchant.hideOverlay();
 
   }
 
-  getAllParMerchants(): void{
+  getAllParMerchants(): void {
     this.zithApiService.getPrimaryMerchants()
-    // tslint:disable-next-line: no-shadowed-variable
-    .subscribe(data => {
-      this.merchantsData = data.body.data;
-      if(Array.from(data.body.data).length > 0){
-        this.selectedMerchants = data.body.data[0].id ;
-      }
+      // tslint:disable-next-line: no-shadowed-variable
+      .subscribe(data => {
+        this.merchantsData = data.body.data;
+        if (Array.from(data.body.data).length > 0) {
+          this.selectedMerchants = data.body.data[0].id;
+        }
 
-      this.showskel1 = false
+        this.showskel1 = false
 
-      // console.log(this.selectedMerchants,'-----selected merchants');
-      if(Array.from(data.body.data).length > 0){
-        this.getSubMerchantsByParents()
-      }
-    }, error => {
+        // console.log(this.selectedMerchants,'-----selected merchants');
+        if (Array.from(data.body.data).length > 0) {
+          this.getSubMerchantsByParents()
+        }
+      }, error => {
 
-    });
+      });
   }
 
 
 
-  getSubMerchantsByParents(): void{
+  getSubMerchantsByParents(): void {
     this.zithApiService.getSubmerchantsByParentId(this.selectedMerchants)
-    // tslint:disable-next-line: no-shadowed-variable
-    .subscribe(data => {
-      this.subMerchantsData = data.body.data;
-      this.selectedSubMerchants = data.body.data;
-      this.applyButton()
-      // this.getDashboardData(this.selectedSubMerchants.map(o => o['id'] ))
-      // this.getSettlements(this.page, this.pageSize, this.selectedSubMerchants);
-      console.log(this.subMerchantsData);
-    }, error => {
+      // tslint:disable-next-line: no-shadowed-variable
+      .subscribe(data => {
+        this.subMerchantsData = data.body.data;
+        this.selectedSubMerchants = data.body.data;
+        this.applyButton()
+        // this.getDashboardData(this.selectedSubMerchants.map(o => o['id'] ))
+        // this.getSettlements(this.page, this.pageSize, this.selectedSubMerchants);
+        console.log(this.subMerchantsData);
+      }, error => {
 
-    });
+      });
   }
 
 
   applyButton() {
     // this.showskel1=true
-    this.showskel2=true
-    this.showtotalsales=false
-    this.showtotalsalesMonth=false
+    this.showskel2 = true
+    this.showtotalsales = false
+    this.showtotalsalesMonth = false
 
-    this.getNewCustomers(this.selectedSubMerchants.map(o => o['id'] ));
+    this.getNewCustomers(this.selectedSubMerchants.map(o => o['id']));
     // this.getRepeatCustomers(this.selectedSubMerchants.map(o => o['id'] ));
-    this.getCustomerBase(this.selectedSubMerchants.map(o => o['id'] ));
-    this.getRFMF(this.selectedSubMerchants.map(o => o['id'] ))
-    this.getRFMM(this.selectedSubMerchants.map(o => o['id'] ))
-    this.getRFMR(this.selectedSubMerchants.map(o => o['id'] ))
-    this.getNearByCustomers(this.selectedSubMerchants.map(o => o['id'] ))
-    this.getRFMSegments(this.selectedSubMerchants.map(o => o['id'] ))
+    this.getCustomerBase(this.selectedSubMerchants.map(o => o['id']));
+    this.getRFMF(this.selectedSubMerchants.map(o => o['id']))
+    this.getRFMM(this.selectedSubMerchants.map(o => o['id']))
+    this.getRFMR(this.selectedSubMerchants.map(o => o['id']))
+    this.getNearByCustomers(this.selectedSubMerchants.map(o => o['id']))
+    this.getRFMSegments(this.selectedSubMerchants.map(o => o['id']))
 
   }
 
-  setChartOptions(chartname:string, options?:Array<any>){
+  setChartOptions(chartname: string, options?: Array<any>) {
 
-    switch ( chartname ) {
+    switch (chartname) {
       case 'new_repeat':
-        this.new_repeat_options  = {
-          title : {
-            show : this.totalCustomers===0,
-            text : 'No Data Available',
-            top : 'center',
-            left : 'center'
+        this.new_repeat_options = {
+          title: {
+            show: this.totalCustomers === 0,
+            text: 'No Data Available',
+            top: 'center',
+            left: 'center'
           },
           legend: {
-            orient: 'horizontal',
-            top: 'left',
-            data: ['New', 'Repeat'],
-            textStyle:{
-              fontSize: "0.6rem"
-            }
+            top: '100px',
+            orient: 'vertical',
+            left: 0,
           },
           series: [
             {
               type: 'pie',
-              radius: ['40%', '70%'],
-              avoidLabelOverlap: false,
+              radius: ['40%', '60%'],
+              avoidLabelOverlap: true,
               label: {
-                show: false,
+                show: true,
                 position: 'center',
+                width: 100,
+                height: 100,
+                borderColor: 'rgba(15, 18, 63, 0.25)',
+                borderRadius: 75,
+                borderWidth: 3,
+                formatter: function (params) {
+
+                  return `${params.percent}%`;
+                },
                 fontSize: '0.7rem',
-                fontWeight: 'bold',
-
-
+                shadowOffsetX: 0,
+                shadowOffsetY: 0,
+                shadowBlur: 25,
+                shadowColor: 'rgba(15, 18, 63, 0.25)'
               },
               labelLine: {
                 show: false
               },
+              color: ['#FF8600', '#3BBEB2'],
               emphasis: {
                 label: {
                   show: true,
-                  fontSize: '0.8rem',
+                  fontSize: '0.7rem',
                   fontWeight: 'bold',
                   formatter: function (params) {
                     return `${params.name}: ${params.data['value']} (${params.percent}%)
-                             `;
+                       `;
                   }
                 },
-
-
-
               },
-              data: this.new_data
+              data: this.new_data,
+              // center: ['80%', '40%']
             }
           ]
         };
@@ -468,35 +484,46 @@ getDarkTheme() {
 
       case 'rfm_m':
         this.rfmChartOptionsM = {
-          title : {
-            show : options[0],
-            text : 'No Data Available',
-            top : 'center',
-            left : 'center'
+          title: {
+            show: options[0],
+            text: 'No Data Available',
+            top: 'center',
+            left: 'center'
           },
-          color : ['#2eb85c','#e55353','#f9b115'],
+          color: ['#F2383A','#FEF000','#1EA614'],
           legend: {
-            orient: 'horizontal',
-            show : true,
-            top: 'left',
-            data:  ['Low','Medium','High'],
-            textStyle:{
-              fontSize: "0.8rem"
-            }
+            top: '100px',
+            orient: 'vertical',
+            left: 0,
+            // show: true,
+            data: ['Low', 'Medium', 'High'],
+            // textStyle: {
+            //   fontSize: "0.8rem"
+            // }
           },
           series: [
             {
               type: 'pie',
-              radius: ['40%', '70%'],
-              avoidLabelOverlap: false,
+              radius: ['40%', '60%'],
+              avoidLabelOverlap: true,
               label: {
-                show: false,
-                fontSize: '0.8rem',
-                fontWeight: 'bold',
-                position : 'center',
+                show: true,
+                position: 'center',
+                width: 100,
+                height: 100,
+                borderColor: 'rgba(15, 18, 63, 0.25)',
+                borderRadius: 75,
+                borderWidth: 3,
                 formatter: function (params) {
-                  return  `(${params.percent}%)`;
-                }
+
+                  return `${params.percent}%`;
+                },
+                fontSize: '0.7rem',
+                shadowOffsetX: 0,
+                shadowOffsetY: 0,
+                shadowBlur: 25,
+                shadowColor: 'rgba(15, 18, 63, 0.25)',
+                fontWeight: 'bold',
               },
               labelLine: {
                 show: false
@@ -504,12 +531,12 @@ getDarkTheme() {
               emphasis: {
                 label: {
                   show: true,
-                  fontSize: '0.8rem',
+                  fontSize: '0.7rem',
                   fontWeight: 'bold',
-                  margin : 50,
-                  padding : [-50, 0, 0, 0],
+                  margin: 50,
+                  padding: [-50, 0, 0, 0],
                   formatter: function (params) {
-                    return  `${params.data['name']}: (${params.percent}%) \n\n  ${ params.data['name'] === 'High' ? 'Greater than ₹'+params.data['label'] : params.data['name'] === 'Low' ? 'Less than ₹'+params.data['label'] : 'Around ₹'+params.data['label']  }
+                    return `${params.data['name']}: (${params.percent}%) \n\n  ${params.data['name'] === 'High' ? 'Greater than ₹' + params.data['label'] : params.data['name'] === 'Low' ? 'Less than ₹' + params.data['label'] : 'Around ₹' + params.data['label']}
                     `;
                   }
                 },
@@ -521,83 +548,47 @@ getDarkTheme() {
         break;
 
       case 'rfm_f':
-          this.rfmChartOptionsF = {
-            color : ['#2eb85c','#e55353','#f9b115'],
-            title : {
-              show : options[0],
-              text : 'No Data Available',
-              top : 'center',
-              left : 'center'
-            },
-            legend: {
-              orient: 'horizontal',
-              top: 'left',
-              show: true,
-              data: ['Low','Medium' ,'High'],
-              textStyle:{
-                fontSize: "0.8rem"
-              }
-            },
-            series: [
-              {
-                type: 'pie',
-                radius: ['40%', '70%'],
-                avoidLabelOverlap: false,
-                label: {
-                  show: false,
-                  position: 'center',
-                  fontSize: '0.7rem'
-                },
-                labelLine: {
-                  show: false
-                },
-                emphasis: {
-                  label: {
-                    show: true,
-                    fontSize: '0.8rem',
-                    fontWeight: 'bold',
-                    formatter: function (params) {
-                      return `${params.data['name']} (${params.percent}%)
-                               `;
-                    }
-                  },
-
-
-
-                },
-                data:  this.rfmF
-              }
-            ]
-          };
-          break;
-
-      case 'rfm_r':
-        this.rfmChartOptionsR = {
-          color : ['#2eb85c','#e55353','#f9b115'],
-          title : {
-            show : options[0],
-            text : 'No Data Available',
-            top : 'center',
-            left : 'center'
+        this.rfmChartOptionsF = {
+          color: ['#F2383A','#FEF000','#1EA614'],
+          title: {
+            show: options[0],
+            text: 'No Data Available',
+            top: 'center',
+            left: 'center'
           },
           legend: {
-            orient: 'horizontal',
-            top: 'left',
-            show: true,
-            data: ['Low','Medium' ,'High'],
-            textStyle:{
-              fontSize: "0.8rem"
-            }
+            top: '100px',
+            orient: 'vertical',
+            left: 0,
+            data: ['Low', 'Medium', 'High'],
+            // show: true,
+            // textStyle: {
+            //   fontSize: "0.7rem"
+            // }
           },
           series: [
             {
               type: 'pie',
-              radius: ['40%', '70%'],
-              avoidLabelOverlap: false,
+              radius: ['40%', '60%'],
+              avoidLabelOverlap: true,
               label: {
-                show: false,
+                show: true,
                 position: 'center',
-                fontSize: '0.7rem'
+                width: 100,
+                height: 100,
+                borderColor: 'rgba(15, 18, 63, 0.25)',
+                borderRadius: 75,
+                borderWidth: 3,
+                formatter: function (params) {
+      
+                  return `${params.percent}%`;
+                },
+                fontSize: '0.7rem',
+                shadowOffsetX: 0,
+                shadowOffsetY: 0,
+                shadowBlur: 25,
+                shadowColor: 'rgba(15, 18, 63, 0.25)',
+                fontWeight: 'bold',
               },
               labelLine: {
                 show: false
@@ -608,144 +599,218 @@ getDarkTheme() {
                   fontSize: '0.8rem',
                   fontWeight: 'bold',
                   formatter: function (params) {
-                    return `${params.percent}% ${params.data['name']}
-                             `;
+                    return `${params.data['name']} (${params.percent}%)
+                               `;
                   }
                 },
 
 
 
               },
-              data:  this.rfmR
+              data: this.rfmF
+            }
+          ]
+        };
+        break;
+
+      case 'rfm_r':
+        this.rfmChartOptionsR = {
+          title: {
+            show: options[0],
+            text: 'No Data Available',
+            top: 'center',
+            left: 'center'
+          },
+          color: ['#1EA614', '#FEF000', '#F2383A'],
+          legend: {
+            top: '100px',
+            orient: 'vertical',
+            left: 0,
+            data: ['Low', 'Medium', 'High'],
+            // textStyle: {
+            //   fontSize: "0.8rem"
+            // }
+          },
+          series: [
+            {
+              type: 'pie',
+              radius: ['40%', '60%'],
+              avoidLabelOverlap: true,
+              label: {
+                show: true,
+                position: 'center',
+                width: 100,
+                height: 100,
+                borderColor: 'rgba(15, 18, 63, 0.25)',
+                borderRadius: 75,
+                borderWidth: 3,
+                formatter: function (params) {
+      
+                  return `${params.percent}%`;
+                },
+                fontSize: '0.7rem',
+                shadowOffsetX: 0,
+                shadowOffsetY: 0,
+                shadowBlur: 25,
+                shadowColor: 'rgba(15, 18, 63, 0.25)',
+                fontWeight: 'bold',
+              },
+              labelLine: {
+                show: false
+              },
+              emphasis: {
+                label: {
+                  show: true,
+                  fontWeight: 'bold',
+                  formatter: function (params) {
+                    return `${params.percent}% ${params.data['name']}
+                             `;
+                  },
+                  fontSize: '0.7rem',
+                  margin: 50,
+                  padding: [-50, 0, 0, 0],
+                },
+
+
+
+              },
+              data: this.rfmR
             }
           ]
         };
         break;
       case 'nearby_customers':
-          this.nearbyCustChartOptions = {
-            title : {
-              show : options[0],
-              text : 'No Data Available',
-              top : 'center',
-              left : 'center'
-            },
+        this.nearbyCustChartOptions = {
+          title: {
+            show: options[0],
+            text: 'No Data Available',
+            top: 'center',
+            left: 'center'
+          },
 
-            // title: {
-            //   text: 'Disk Usage',
-            //   left: 'center'
-            // },
+          // title: {
+          //   text: 'Disk Usage',
+          //   left: 'center'
+          // },
 
-            tooltip: {
-              formatter: function (params) {
-                return `${params.name}: ${params.data['cnt']}`;
-              }
-            },
-            graphic : this.nearby_customer_data.map(function (item, dataIndex) {
-              return {
-                type: 'circle',
-                invisible: true,
-                draggable: false,
-              };
-            }),
+          tooltip: {
+            formatter: function (params) {
+              return `${params.name}: ${params.data['cnt']}`;
+            }
+          },
+          graphic: this.nearby_customer_data.map(function (item, dataIndex) {
+            return {
+              type: 'circle',
+              invisible: true,
+              draggable: false,
+            };
+          }),
 
-            series: [
-              {
-                // name: 'Nearby Customers',
-                type: 'treemap',
-                visibleMin: 10,
-                emphasis : {
-                  label : {
-                    show: true,
-                    fontSize: '0.8rem',
-                    fontWeight: 'bold',
-                    formatter: function (params) {
-                      return `${params.name}: ${params.data['cnt']}`;
-                    }
-                  }
-                },
-                height : 300,
-                roam :'move',
-                nodeClick : null,
-                breadcrumb : null,
+          series: [
+            {
+              // name: 'Nearby Customers',
+              type: 'treemap',
+              visibleMin: 10,
+              emphasis: {
                 label: {
                   show: true,
-                  // formatter: '{b}'
+                  fontSize: '0.8rem',
+                  fontWeight: 'bold',
                   formatter: function (params) {
-                              return `${params.name}`;
-                            }
-                },
-                itemStyle: {
-                  borderColor: '#fff',
-                },
-                // levels: this.getLevelOption(),
-                data: this.nearby_customer_data
-              }
-            ]
-          }
-          break;
+                    return `${params.name}: ${params.data['cnt']}`;
+                  }
+                }
+              },
+              itemStyle: {
+                borderWidth: 0,
+                gapWidth: 5,
+                shadowColor:'rgba(0, 0, 0, 0.14)'
+              },
+              color: ['#C1D100', '#FFAC32', '#32DAFF','#D1BC00','#0086D1','#D17100','#00D1AC','#8E00D1','#FFE600',
+                      '#D6FF32','#BFA622','#3F3DAA','#39A062','#18D0DC','#5F2E6E','#FFC632','#C07200'],
+              colorMappingBy: 'value',
+              height: 300,
+              roam: 'move',
+              nodeClick: null,
+              breadcrumb: null,
+              label: {
+                show: true,
+                // formatter: '{b}'
+                formatter: function (params) {
+                  return `${params.name}`;
+                }
+              },
+              // levels: this.getLevelOption(),
+              data: this.nearby_customer_data
+            }
+          ]
+        }
+        break;
 
       case 'rfm_segments':
-          this.rfmSegmentsChartOptions = {
-            title : {
-              show : options[0],
-              text : 'No Data Available',
-              top : 'center',
-              left : 'center'
-            },
+        this.rfmSegmentsChartOptions = {
+          title: {
+            show: options[0],
+            text: 'No Data Available',
+            top: 'center',
+            left: 'center'
+          },
 
-            // title: {
-            //   text: 'Disk Usage',
-            //   left: 'center'
-            // },
+          // title: {
+          //   text: 'Disk Usage',
+          //   left: 'center'
+          // },
 
-            tooltip: {
-              formatter: function (params) {
-                return `${params.name}: ${params.data['cnt']}`;
-              }
-            },
-            graphic : this.rfm_segments_data.map(function (item, dataIndex) {
-              return {
-                type: 'circle',
-                invisible: true,
-                draggable: false,
-              };
-            }),
+          tooltip: {
+            formatter: function (params) {
+              return `${params.name}: ${params.data['cnt']}`;
+            }
+          },
+          graphic: this.rfm_segments_data.map(function (item, dataIndex) {
+            return {
+              type: 'circle',
+              invisible: true,
+              draggable: false,
+            };
+          }),
 
-            series: [
-              {
-                // name: 'Nearby Customers',
-                type: 'treemap',
-                visibleMin: 10,
-                emphasis : {
-                  label : {
-                    show: true,
-                    fontSize: '0.8rem',
-                    fontWeight: 'bold',
-                    formatter: function (params) {
-                      return `${params.name}: ${params.data['cnt']}`;
-                    }
-                  }
-                },
-                height : 300,
-                roam :'move',
-                nodeClick : null,
-                breadcrumb : null,
+          series: [
+            {
+              // name: 'Nearby Customers',
+              type: 'treemap',
+              visibleMin: 10,
+              emphasis: {
                 label: {
                   show: true,
-                  // formatter: '{b}'
+                  fontSize: '0.8rem',
+                  fontWeight: 'bold',
                   formatter: function (params) {
-                              return `${params.name}`;
-                            }
-                },
-                itemStyle: {
-                  borderColor: '#fff',
-                },
-                // levels: this.getLevelOption(),
-                data: this.rfm_segments_data
-              }
-            ]
-          }
-          break;
+                    return `${params.name}: ${params.data['cnt']}`;
+                  }
+                }
+              },
+              height: 300,
+              roam: 'move',
+              nodeClick: null,
+              breadcrumb: null,
+              label: {
+                show: true,
+                // formatter: '{b}'
+                formatter: function (params) {
+                  return `${params.name}`;
+                }
+              },
+              itemStyle: {
+                borderWidth:0,
+                gapWidth: 5,
+                borderColor: '#fff',
+              },
+              // levels: this.getLevelOption(),
+              data: this.rfm_segments_data
+            }
+          ]
+        }
+        break;
     }
   }
 
@@ -780,39 +845,39 @@ getDarkTheme() {
   getNewCustomers(submerchantids) {
     console.log(submerchantids);
     this.zithApiService.getNewCustomers(submerchantids)
-    // tslint:disable-next-line: no-shadowed-variable
-    .subscribe(data => {
-      this.newCustomers = data.result;
+      // tslint:disable-next-line: no-shadowed-variable
+      .subscribe(data => {
+        this.newCustomers = data.result;
 
-      this.zithApiService.getRepeatCustomers(submerchantids)
-    // tslint:disable-next-line: no-shadowed-variable
-    .subscribe(data => {
-      this.repeatedCustomers = data.result;
+        this.zithApiService.getRepeatCustomers(submerchantids)
+          // tslint:disable-next-line: no-shadowed-variable
+          .subscribe(data => {
+            this.repeatedCustomers = data.result;
 
-       this.new_data = [
-        { name:'New', value : this.newCustomers},
-        { name:'Repeat', value : this.repeatedCustomers}
-      ]
+            this.new_data = [
+              { name: 'New', value: this.newCustomers },
+              { name: 'Repeat', value: this.repeatedCustomers }
+            ]
 
-      this.setChartOptions('new_repeat')
-
-
-
-      this.showskel2 = false
+            this.setChartOptions('new_repeat')
 
 
 
-
-    }, error => {
-
-    });
+            this.showskel2 = false;
 
 
-    }, error => {
 
-    });
+
+          }, error => {
+
+          });
+
+
+      }, error => {
+
+      });
   }
-//
+  //
   // getRepeatCustomers(submerchantids) {
   //   console.log(submerchantids);
   //   this.zithApiService.getRepeatCustomers(submerchantids)
@@ -829,16 +894,16 @@ getDarkTheme() {
   getCustomerBase(submerchantids) {
     console.log(submerchantids);
     this.zithApiService.getCustomerBase(submerchantids)
-    // tslint:disable-next-line: no-shadowed-variable
-    .subscribe(data => {
-      this.totalCustomers = data.result;
-      console.log(data);
-    }, error => {
+      // tslint:disable-next-line: no-shadowed-variable
+      .subscribe(data => {
+        this.totalCustomers = data.result;
+        console.log(data);
+      }, error => {
 
-    });
+      });
   }
 
-  getRFMM(submerchantids){
+  getRFMM(submerchantids) {
 
     this.zithApiService.getRFMCenterM(submerchantids).subscribe({
       next: data => {
@@ -846,67 +911,75 @@ getDarkTheme() {
         this.rfmM = data['data']
 
         this.setChartOptions('rfm_m', [Array.from(this.rfmM).length === 0])
+        this.showskel2 = false;
+
 
       },
-      error:error => {
+      error: error => {
 
       }
     })
   }
 
-  getRFMF(submerchantids){
+  getRFMF(submerchantids) {
 
     this.zithApiService.getRFMCenterF(submerchantids).subscribe({
       next: data => {
 
         this.rfmF = data['data']
-        this.setChartOptions('rfm_f',[Array.from(this.rfmF).length === 0])
+        this.setChartOptions('rfm_f', [Array.from(this.rfmF).length === 0])
+        this.showskel2 = false;
+
 
       },
-      error:error => {
+      error: error => {
 
       }
     })
   }
 
-  getRFMR(submerchantids){
+  getRFMR(submerchantids) {
 
     this.zithApiService.getRFMCenterR(submerchantids).subscribe({
       next: data => {
         this.rfmR = data['data']
-        this.setChartOptions('rfm_r',[Array.from(this.rfmR).length === 0])
+        this.setChartOptions('rfm_r', [Array.from(this.rfmR).length === 0])
+        this.showskel2 = false;
+
       },
-      error:error => {
+      error: error => {
 
       }
     })
   }
 
-  onChangeDistance(){
+  onChangeDistance() {
     this.showNearbyCustomerLoading = true
-    this.getNearByCustomers(this.selectedSubMerchants.map(o => o['id'] ))
+    this.getNearByCustomers(this.selectedSubMerchants.map(o => o['id']))
   }
 
-  getNearByCustomers(submerchantids){
+  getNearByCustomers(submerchantids) {
 
-    this.zithApiService.getNearbyCustomers(submerchantids,this.distance,this.subcat).subscribe({
+    this.zithApiService.getNearbyCustomers(submerchantids, this.distance, this.subcat).subscribe({
       next: data => {
         this.showNearbyCustomerLoading = false
         this.nearby_customer_data = data['data']
 
         // var arr = Array.from({length: Array.from(data['data']['xaxis']).length }, (_, i) => i + 1)
         // this.setChartOptions('nearby_customers',[arr,this.nearby_customer_data['yaxis']])
-        this.setChartOptions('nearby_customers',[Array.from(this.nearby_customer_data).length === 0])
+        this.setChartOptions('nearby_customers', [Array.from(this.nearby_customer_data).length === 0])
+        this.showskel2 = false;
+
         // console.log(data['data']['xaxis'])
 
       },
-      error:error => {
+      error: error => {
         this.showNearbyCustomerLoading = false
       }
     })
   }
 
-  getRFMSegments(submerchantids){
+  getRFMSegments(submerchantids) {
 
     this.zithApiService.getRFMSegments(submerchantids).subscribe({
       next: data => {
@@ -915,23 +988,25 @@ getDarkTheme() {
 
         // var arr = Array.from({length: Array.from(data['data']['xaxis']).length }, (_, i) => i + 1)
         // this.setChartOptions('nearby_customers',[arr,this.nearby_customer_data['yaxis']])
-        this.setChartOptions('rfm_segments',[Array.from(this.rfm_segments_data).length === 0])
+        this.setChartOptions('rfm_segments', [Array.from(this.rfm_segments_data).length === 0])
+        this.showskel2 = false;
+
         // console.log(data['data']['xaxis'])
 
       },
-      error:error => {
+      error: error => {
         this.showRFMSegmentsLoading = false
       }
     })
   }
 
 
-  changeValueFormatter(latest,previous){
+  changeValueFormatter(latest, previous) {
     var output = '';
-    var change = ((((latest-previous)/previous)*100))
-    if(!Number.isFinite(change)){
+    var change = ((((latest - previous) / previous) * 100))
+    if (!Number.isFinite(change)) {
       output = ''
-    } else if(change < 0 ){
+    } else if (change < 0) {
       output = (change * -1).toFixed(2).toString() + '%'
     } else {
       output = (change).toFixed(2).toString() + '%'

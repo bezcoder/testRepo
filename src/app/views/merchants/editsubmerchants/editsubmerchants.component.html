@@ -35,10 +35,10 @@
 
                 <tr>
                   <!-- <th style="width: 10%"></th> -->
-                  <th style="width: 10%;text-align-last: left;" >Sub Merchant Name </th>
-                  <th style="width: 10%;text-align-last: center;" >Status </th>
-                  <th style="width: 10%;text-align-last: center;" >Registered Date </th>
-                  <th style="width: 10%;text-align-last: center;">Actions</th>
+                  <th style="width: 10%;text-align-last: left;background: rgba(46, 68, 110, 0.12);" >Store Name </th>
+                  <th style="width: 10%;text-align-last: center;background: rgba(46, 68, 110, 0.12);" >Status </th>
+                  <th style="width: 10%;text-align-last: center;background: rgba(46, 68, 110, 0.12);" >Registered Date </th>
+                  <th style="width: 10%;text-align-last: center;background: rgba(46, 68, 110, 0.12);">Actions</th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-submerchants>
@@ -80,7 +80,7 @@
 
                         <span class="pad-left-3 p-column-title pad-bottom-3 pad-top-3">Registered Date</span>
 
-                       <span  class="rowvaluealign pad-right-3 pad-bottom-3 pad-top-3" > {{submerchants.regdate}} </span>
+                       <span  class="rowvaluealign pad-right-3 pad-bottom-3 pad-top-3" style="font-size: small;font-weight: bold;" > {{submerchants.regdate}} </span>
 
                     </td>
 

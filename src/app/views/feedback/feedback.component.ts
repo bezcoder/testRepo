@@ -594,42 +594,45 @@ setChartOptions(chartname:string, options?:Array<any>){
             endAngle: 0,
             min: 1,
             max: 5,
-            splitNumber: 8,
+            splitNumber: 5,
             axisLine: {
               lineStyle: {
-                width: 6,
+                // roundCap: true,
+                width: 60,
                 color: [
-                  [0.25, '#FF6E76'],
-                  [0.75, '#f9b115'],
-                  [1, '#178d3f']
+                  [0.20, '#F2383A'],
+                  [0.40, '#FEAF00'],
+                  [0.60, '#FEF000'],
+                  [0.80, '#9FCC00'],
+                  [1, '#1EA614']
                 ]
               }
             },
-            pointer: {
-              icon: 'path://M12.8,0.7l12,40.1H0.7L12.8,0.7z',
-              length: '12%',
-              width: 20,
-              offsetCenter: [0, '-60%'],
-              itemStyle: {
-                color: 'auto'
-              }
-            },
+            // pointer: {
+            //   icon: 'path://M12.8,0.7l12,40.1H0.7L12.8,0.7z',
+            //   length: '12%',
+            //   width: 20,
+            //   offsetCenter: [0, '-60%'],
+            //   itemStyle: {
+            //     color: 'auto'
+            //   }
+            // },
             axisTick: {
               length: 12,
               lineStyle: {
                 color: 'auto',
-                width: 2
+                width: 0
               }
             },
             splitLine: {
               length: 20,
               lineStyle: {
                 color: 'auto',
-                width: 5
+                width: 0
               }
             },
             axisLabel: {
-              color: '#464646',
+              color: 'transparent',
               fontSize: 10,
               distance: -40,
               formatter: function (value) {
@@ -647,14 +650,14 @@ setChartOptions(chartname:string, options?:Array<any>){
                 return '';
               }
             },
-            title: {
-              offsetCenter: [0, '-20%'],
-              fontSize: 10
-            },
+            // title: {
+            //   offsetCenter: [0, '-20%'],
+            //   fontSize: 10
+            // },
             detail: {
-              fontSize: 20,
-              offsetCenter: [0, '0%'],
-              valueAnimation: true,
+              // fontSize: 20,
+              // offsetCenter: [0, '0%'],
+              // valueAnimation: true,
               formatter: function (value) {
                 return value + '/5';
               },
@@ -663,7 +666,7 @@ setChartOptions(chartname:string, options?:Array<any>){
             data: [
               {
                 value: parseFloat(this.avg_feedback.toFixed(2)),
-                name: 'Average Feedback'
+                // name: 'Average Feedback'
               }
             ]
           }

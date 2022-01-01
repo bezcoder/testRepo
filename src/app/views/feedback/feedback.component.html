@@ -53,7 +53,6 @@
 
 <!-- <div class="container-fluid" style="margin-left: 3%;max-width: 95%;"> -->
 <c-card  class="card-bkground card" style="padding: 1%;">
-
   <div class="row">
     <div class="col-12">
       <div class="col-sm-12 col-12" style="padding-left: 0px !important;padding-right: 0px !important;" *ngIf="transactionsData">
@@ -75,10 +74,10 @@
             <span class="f-color">Merchant</span><br>
             <div >
               <div class="p-inputgroup">
-                <span class="p-inputgroup-addon"> <i class="pi pi-search"></i> </span>
+                <span class="p-inputgroup-addon border-right-0 bg-white "> <i class="pi pi-search"></i> </span>
               <p-autoComplete
             placeholder = "Merchant Name"
-            styleClass='searchdrpdwn input-border-radius w-100'
+            styleClass='searchdrpdwn input-border-radius w-100 border-left-none'
             [(ngModel)]="selectedMerchants"
             [suggestions]="merchantsData"
             [showEmptyMessage] = "true"
@@ -102,7 +101,7 @@
         <div class="col-lg-12 col-12" style="margin-bottom: 2%;" *hasRole="[Role.SuperUser, Role.Admin]">
           <span class="f-color">Select Store</span><br>
           <div>
-            <p-multiSelect styleClass='mymultiselect input-border-radius' tooltipStyleClass='ttltip' #selsubmerchant
+            <p-multiSelect styleClass='mymultiselect input-border-radius border-left-none' tooltipStyleClass='ttltip' #selsubmerchant
               [maxSelectedLabels]="2" inputId="selmerchantinput"
               (onPanelHide) = "getTransactions(undefined)"
               [options]="subMerchantsData" [(ngModel)]="selectedSubMerchants" defaultLabel="Select Stores"
@@ -126,10 +125,10 @@
     <p-skeleton class="col-lg-3 col-6" *ngIf="!this.showfirst" height="2rem" styleClass="p-mb-2"></p-skeleton>
     <div class="col-lg-4 col-6" style="margin-bottom: 5%;"  >
       <!-- <form [formGroup]="form"> -->
-        <span class="fieldttitle margin-left-16 f-color" >From (Date)</span><br>
+        <span class="fieldttitle margin-left-16 f-color" >From </span><br>
         <div class="fieldttitle" style="float: right;">
           <div class="p-inputgroup">
-            <span class="p-inputgroup-addon"> <i class="pi pi-calendar"></i> </span>
+            <span class="p-inputgroup-addon border-right-0 bg-white "> <i class="pi pi-calendar"></i> </span>
           <p-calendar  [style]="{'width':'100% !important'}"
             [selectOtherMonths]="true" [inputStyle]="{'width':'100% !important'}" [maxDate]="today"
               [(ngModel)]="fromDate"  id="picker" [touchUI]="this.smallscreen"
@@ -156,10 +155,10 @@
     <div class="col-lg-4 col-6">
 
       <!-- <form [formGroup]="form"> -->
-        <span class="fieldttitle f-color">To (Date)</span><br>
+        <span class="fieldttitle f-color">To </span><br>
         <div class="fieldttitle" style="float: left;">
           <div class="p-inputgroup">
-            <span class="p-inputgroup-addon"> <i class="pi pi-calendar"></i> </span>
+            <span class="p-inputgroup-addon border-right-0 bg-white "> <i class="pi pi-calendar"></i> </span>
           <p-calendar  [style]="{'width':'100% !important'}"
             [selectOtherMonths]="true" [inputStyle]="{'width':'100% !important'}" [maxDate]="today"
               [(ngModel)]="toDate"  id="picker" [touchUI]="this.smallscreen"
@@ -208,11 +207,11 @@
   </c-card>
 <p-table *ngIf="this.showfirst" #dt [autoLayout]="true" [columns]="cols" [value]="transactionsData"
   [(selection)]="selectedMerchants" [lazy]="true" (onLazyLoad)="getTransactions($event)" dataKey="id"
-  styleClass="p-datatable-transactions p-datatable-gridlines p-datatable-striped" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+  styleClass="p-datatable-transactions p-datatable-gridlines p-datatable-striped" [rowHover]="true" [rows]="10"
+  [showCurrentPageReport]="true"
   [rowsPerPageOptions]="[10,25,50]" [loading]="loading" [paginator]="true" [totalRecords]="transactionsDataCount"
    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
   [filterDelay]="0" [globalFilterFields]="['name','country.name','representative.name','status']">
-
   <ng-template pTemplate="caption">
     <div class="p-d-flex row">
     </div>
@@ -265,9 +264,6 @@
         {{col.header}}
       </th>
       <!-- <p-sortIcon [field]="columnscode[i]"></p-sortIcon> -->
-
-
-
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-transaction let-columns="columns">
